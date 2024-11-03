@@ -1,0 +1,112 @@
+program:
+    extern_def_list
+    ;
+
+extern_def_list:
+    extern_def extern_def_list 
+    | ε
+    ;
+
+extern_def:
+    type_spec extern_dec_list ';'
+    | type_spec func_dec compound_stat
+    ;
+
+type_spec:
+    INT | FLOAT | VOID | CHAR
+    ;
+
+extern_dec_list:
+    var_dec
+    | var_dec ',' extern_dec_list
+    ;
+
+var_dec:
+    CONST_ID
+    | var_dec '[' CONST_INT ']'
+    ;
+
+func_dec:
+    CONST_ID '(' var_list ')'
+    | CONST_ID '(' ')'
+    ;
+
+var_list:
+    param_dec ',' var_list
+    | param_dec
+    ;                                                                                                 
+						
+param_dec:
+    type_spec var_dec
+    ;
+
+compound_stat:
+    '{' def_list stmt_list '}'
+    ;
+
+stmt_list:
+    stmt, stmt_list
+    | ε
+    ;	
+
+stmt:
+    exp ';' 
+    | compound_stat
+    | RETURN exp ';'
+    | IF '(' exp ')' stmt
+    | IF '(' exp ')' stmt ELSE stmt
+    | while '(' exp ')' stmt
+    ;
+
+def_list:
+    def def_list
+    | ε	
+    ;
+
+def:
+    type_spec dec_list;
+
+dec_list:
+    dec
+    | dec ',' dec_list
+
+dec:
+    var_dec
+    | var_dec '=' exp
+								
+exp:
+    exp '=' exp
+    | exp AND exp
+    | exp OR exp
+    | exp '<' exp
+    | exp LE exp
+    | exp'['exp']'
+    | exp EQ exp
+    | exp NE exp
+    | exp '>' exp
+    | exp GE exp
+    | exp '+' exp
+    | exp '-' exp
+    | exp '*' exp
+    | exp '/' exp
+    | exp '%' exp
+    | CONST_ID
+    | CONST_INT
+    | CONST_FLOAT
+    | '(' exp ')'
+    | '-' exp
+    | NOT exp
+    | CONST_ID '(' args ')'
+    | CONST_ID '(' ')'
+    | exp LS exp
+    | exp RS exp
+    | INC exp
+    | DEC exp
+    | exp INC
+    | exp DEC
+    ;
+
+args:
+    exp ',' args
+    | exp
+    ;
