@@ -35,7 +35,7 @@
 // private implementation details that can be changed or removed.
 
 // "%code top" blocks.
-#line 31 "/home/arch_/Work/Compiler-CC/src/parser/parse.yy"
+#line 34 "/home/arch_/Work/Compiler-CC/src/parser/parse.yy"
 
   #include "lex.hh"
 
@@ -48,7 +48,7 @@
 
 
 // Unqualified %code blocks.
-#line 35 "/home/arch_/Work/Compiler-CC/src/parser/parse.yy"
+#line 38 "/home/arch_/Work/Compiler-CC/src/parser/parse.yy"
 
   #define yylex lexer.lex
 
@@ -230,6 +230,7 @@ namespace cc_ {
       case symbol_kind::S_INT: // INT
       case symbol_kind::S_FLOAT: // FLOAT
       case symbol_kind::S_CHAR: // CHAR
+      case symbol_kind::S_type_spec: // type_spec
         value.YY_MOVE_OR_COPY< std::string > (YY_MOVE (that.value));
         break;
 
@@ -265,6 +266,7 @@ namespace cc_ {
       case symbol_kind::S_INT: // INT
       case symbol_kind::S_FLOAT: // FLOAT
       case symbol_kind::S_CHAR: // CHAR
+      case symbol_kind::S_type_spec: // type_spec
         value.move< std::string > (YY_MOVE (that.value));
         break;
 
@@ -300,6 +302,7 @@ namespace cc_ {
       case symbol_kind::S_INT: // INT
       case symbol_kind::S_FLOAT: // FLOAT
       case symbol_kind::S_CHAR: // CHAR
+      case symbol_kind::S_type_spec: // type_spec
         value.copy< std::string > (that.value);
         break;
 
@@ -334,6 +337,7 @@ namespace cc_ {
       case symbol_kind::S_INT: // INT
       case symbol_kind::S_FLOAT: // FLOAT
       case symbol_kind::S_CHAR: // CHAR
+      case symbol_kind::S_type_spec: // type_spec
         value.move< std::string > (that.value);
         break;
 
@@ -613,6 +617,7 @@ namespace cc_ {
       case symbol_kind::S_INT: // INT
       case symbol_kind::S_FLOAT: // FLOAT
       case symbol_kind::S_CHAR: // CHAR
+      case symbol_kind::S_type_spec: // type_spec
         yylhs.value.emplace< std::string > ();
         break;
 
@@ -636,8 +641,32 @@ namespace cc_ {
         {
           switch (yyn)
             {
+  case 7: // type_spec: INT
+#line 92 "/home/arch_/Work/Compiler-CC/src/parser/parse.yy"
+        { yylhs.value.as < std::string > () = move(yystack_[0].value.as < std::string > ()); cout << yylhs.value.as < std::string > () << endl; }
+#line 648 "/home/arch_/Work/Compiler-CC/src/parser/parse.cc"
+    break;
 
-#line 641 "/home/arch_/Work/Compiler-CC/src/parser/parse.cc"
+  case 8: // type_spec: FLOAT
+#line 93 "/home/arch_/Work/Compiler-CC/src/parser/parse.yy"
+            { yylhs.value.as < std::string > () = move(yystack_[0].value.as < std::string > ()); cout << yylhs.value.as < std::string > () << endl; }
+#line 654 "/home/arch_/Work/Compiler-CC/src/parser/parse.cc"
+    break;
+
+  case 9: // type_spec: VOID
+#line 94 "/home/arch_/Work/Compiler-CC/src/parser/parse.yy"
+           { yylhs.value.as < std::string > () = move(yystack_[0].value.as < std::string > ()); cout << yylhs.value.as < std::string > () << endl; }
+#line 660 "/home/arch_/Work/Compiler-CC/src/parser/parse.cc"
+    break;
+
+  case 10: // type_spec: CHAR
+#line 95 "/home/arch_/Work/Compiler-CC/src/parser/parse.yy"
+           { yylhs.value.as < std::string > () = move(yystack_[0].value.as < std::string > ()); cout << yylhs.value.as < std::string > () << endl; }
+#line 666 "/home/arch_/Work/Compiler-CC/src/parser/parse.cc"
+    break;
+
+
+#line 670 "/home/arch_/Work/Compiler-CC/src/parser/parse.cc"
 
             default:
               break;
@@ -1229,14 +1258,14 @@ namespace cc_ {
   const unsigned char
   cc_parser::yyrline_[] =
   {
-       0,    73,    73,    77,    78,    82,    83,    87,    88,    89,
-      90,    94,    95,    99,   100,   104,   105,   109,   110,   114,
-     118,   122,   123,   127,   128,   129,   130,   131,   132,   133,
-     134,   135,   136,   140,   141,   145,   148,   149,   152,   153,
-     156,   157,   158,   159,   160,   161,   162,   163,   164,   165,
-     166,   167,   168,   169,   170,   171,   172,   173,   174,   175,
-     176,   177,   178,   179,   180,   181,   182,   183,   184,   185,
-     189,   190
+       0,    78,    78,    82,    83,    87,    88,    92,    93,    94,
+      95,    99,   100,   104,   105,   109,   110,   114,   115,   119,
+     123,   127,   128,   132,   133,   134,   135,   136,   137,   138,
+     139,   140,   141,   145,   146,   150,   153,   154,   157,   158,
+     161,   162,   163,   164,   165,   166,   167,   168,   169,   170,
+     171,   172,   173,   174,   175,   176,   177,   178,   179,   180,
+     181,   182,   183,   184,   185,   186,   187,   188,   189,   190,
+     194,   195
   };
 
   void
@@ -1269,9 +1298,9 @@ namespace cc_ {
 
 #line 14 "/home/arch_/Work/Compiler-CC/src/parser/parse.yy"
 } // cc_
-#line 1273 "/home/arch_/Work/Compiler-CC/src/parser/parse.cc"
+#line 1302 "/home/arch_/Work/Compiler-CC/src/parser/parse.cc"
 
-#line 193 "/home/arch_/Work/Compiler-CC/src/parser/parse.yy"
+#line 198 "/home/arch_/Work/Compiler-CC/src/parser/parse.yy"
 
 
 void cc_::cc_parser::error(const Location &loc, const std::string &msg) {

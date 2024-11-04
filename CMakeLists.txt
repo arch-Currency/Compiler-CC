@@ -36,10 +36,9 @@ if (NOT BISON_EXECUTABLE)
 endif()
 
 find_package(spdlog REQUIRED)
-find_package(fmt REQUIRED)
 find_package(nlohmann_json REQUIRED)
 
-include_directories(${LIB_DIR}/spdlog/include ${LIB_DIR}/fmt/include)
+include_directories(${LIB_DIR}/spdlog/include)
 
 option(BISON "Compile bison file" OFF)
 if(BISON)
@@ -75,22 +74,18 @@ file(GLOB_RECURSE HEADER ${INCLUDE_DIR}/*.hh ${INCLUDE_DIR}/*.hpp ${INCLUDE_DIR}
 add_executable(parser ${FILE} ${HEADER})
 
 target_link_libraries(parser PRIVATE 
-                            spdlog::spdlog 
-                            fmt::fmt
+                            spdlog::spdlog
                             nlohmann_json::nlohmann_json
                             )
 target_include_directories(parser PRIVATE 
                             ${INCLUDE_DIR} 
-                            ${LIB_DIR}/spdlog/include 
-                            ${LIB_DIR}/fmt/include
+                            ${LIB_DIR}/spdlog/include
                             )
 
 install(TARGETS parser RUNTIME DESTINATION ${CMAKE_INSTALL_PREFIX}/parser)  
 
 
 add_custom_target(clean-all
-    # COMMAND rm -rf ${SOURCE_DIR}/parser/parser.hpp
-    # COMMAND rm -rf ${SOURCE_DIR}/parser/parser.cpp
     COMMAND rm -rf *
     COMMENT "Removing all files in the build directory"
 )

@@ -25,6 +25,9 @@
     {
         class cc_Lexer;
     }
+    using std::cout;
+    using std::endl;
+    using std::move;
     // extern unique_ptr<programNode> startNode;
 }
 
@@ -37,6 +40,8 @@
 }
 
 %start program
+
+%type <std::string> type_spec
 
 %token LE GE EQ NE LT GT
 %token INC DEC
@@ -84,10 +89,10 @@ extern_def:
     ;
 
 type_spec:
-    INT 
-    | FLOAT 
-    | VOID 
-    | CHAR  
+    INT { $$ = move($1); cout << $$ << endl; }
+    | FLOAT { $$ = move($1); cout << $$ << endl; }
+    | VOID { $$ = move($1); cout << $$ << endl; }
+    | CHAR { $$ = move($1); cout << $$ << endl; }
     ;
 
 extern_dec_list:

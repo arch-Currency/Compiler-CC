@@ -56,9 +56,12 @@
     {
         class cc_Lexer;
     }
+    using std::cout;
+    using std::endl;
+    using std::move;
     // extern unique_ptr<programNode> startNode;
 
-#line 62 "/home/arch_/Work/Compiler-CC/src/parser/parse.hh"
+#line 65 "/home/arch_/Work/Compiler-CC/src/parser/parse.hh"
 
 # include <cassert>
 # include <cstdlib> // std::abort
@@ -199,7 +202,7 @@
 
 #line 14 "/home/arch_/Work/Compiler-CC/src/parser/parse.yy"
 namespace cc_ {
-#line 203 "/home/arch_/Work/Compiler-CC/src/parser/parse.hh"
+#line 206 "/home/arch_/Work/Compiler-CC/src/parser/parse.hh"
 
 
 
@@ -432,6 +435,7 @@ namespace cc_ {
       // INT
       // FLOAT
       // CHAR
+      // type_spec
       char dummy4[sizeof (std::string)];
     };
 
@@ -668,6 +672,7 @@ namespace cc_ {
       case symbol_kind::S_INT: // INT
       case symbol_kind::S_FLOAT: // FLOAT
       case symbol_kind::S_CHAR: // CHAR
+      case symbol_kind::S_type_spec: // type_spec
         value.move< std::string > (std::move (that.value));
         break;
 
@@ -791,6 +796,7 @@ switch (yykind)
       case symbol_kind::S_INT: // INT
       case symbol_kind::S_FLOAT: // FLOAT
       case symbol_kind::S_CHAR: // CHAR
+      case symbol_kind::S_type_spec: // type_spec
         value.template destroy< std::string > ();
         break;
 
@@ -2133,6 +2139,7 @@ switch (yykind)
       case symbol_kind::S_INT: // INT
       case symbol_kind::S_FLOAT: // FLOAT
       case symbol_kind::S_CHAR: // CHAR
+      case symbol_kind::S_type_spec: // type_spec
         value.copy< std::string > (YY_MOVE (that.value));
         break;
 
@@ -2184,6 +2191,7 @@ switch (yykind)
       case symbol_kind::S_INT: // INT
       case symbol_kind::S_FLOAT: // FLOAT
       case symbol_kind::S_CHAR: // CHAR
+      case symbol_kind::S_type_spec: // type_spec
         value.move< std::string > (YY_MOVE (s.value));
         break;
 
@@ -2254,7 +2262,7 @@ switch (yykind)
 
 #line 14 "/home/arch_/Work/Compiler-CC/src/parser/parse.yy"
 } // cc_
-#line 2258 "/home/arch_/Work/Compiler-CC/src/parser/parse.hh"
+#line 2266 "/home/arch_/Work/Compiler-CC/src/parser/parse.hh"
 
 
 
