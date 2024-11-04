@@ -59,7 +59,7 @@
     using std::cout;
     using std::endl;
     using std::move;
-    // extern unique_ptr<programNode> startNode;
+    extern std::unique_ptr<programNode> startNode;
 
 #line 65 "/home/arch_/Work/Compiler-CC/src/parser/parse.hh"
 
@@ -422,6 +422,20 @@ namespace cc_ {
     union union_type
     {
       // CONST_CHAR
+      // ADD
+      // MINUS
+      // TIMES
+      // DIV
+      // MOD
+      // ASSIGN
+      // COMMA
+      // SEMI
+      // LP
+      // RP
+      // LSB
+      // RSB
+      // LB
+      // RB
       char dummy1[sizeof (char)];
 
       // CONST_FLOAT
@@ -430,13 +444,83 @@ namespace cc_ {
       // CONST_INT
       char dummy3[sizeof (int)];
 
+      // compound_stat
+      char dummy4[sizeof (ptr<cmpdNode>)];
+
+      // exp
+      char dummy5[sizeof (ptr<expNode>)];
+
+      // extern_def
+      char dummy6[sizeof (ptr<externDefNode>)];
+
+      // func_dec
+      char dummy7[sizeof (ptr<funcDecNode>)];
+
+      // dec
+      char dummy8[sizeof (ptr<innerVarDecNode>)];
+
+      // def
+      char dummy9[sizeof (ptr<innerVarDefNode>)];
+
+      // program
+      // extern_def_list
+      char dummy10[sizeof (ptr<programNode>)];
+
+      // args
+      char dummy11[sizeof (ptr<std::vector<ptr<expNode>>>)];
+
+      // dec_list
+      char dummy12[sizeof (ptr<std::vector<ptr<innerVarDecNode>>>)];
+
+      // def_list
+      char dummy13[sizeof (ptr<std::vector<ptr<innerVarDefNode>>>)];
+
+      // stmt_list
+      char dummy14[sizeof (ptr<std::vector<ptr<stmtNode>>>)];
+
+      // extern_dec_list
+      char dummy15[sizeof (ptr<std::vector<ptr<varDecNode>>>)];
+
+      // var_list
+      char dummy16[sizeof (ptr<std::vector<std::pair<std::string, ptr<varDecNode>>>>)];
+
+      // stmt
+      char dummy17[sizeof (ptr<stmtNode>)];
+
+      // var_dec
+      char dummy18[sizeof (ptr<varDecNode>)];
+
+      // param_dec
+      char dummy19[sizeof (std::pair<std::string, ptr<varDecNode>>)];
+
+      // LE
+      // GE
+      // EQ
+      // NE
+      // LT
+      // GT
+      // INC
+      // DEC
+      // NOT
+      // AND
+      // OR
+      // LS
+      // RS
+      // CONST_STRING
       // CONST_ID
       // VOID
       // INT
       // FLOAT
       // CHAR
+      // WHILE
+      // FOR
+      // IF
+      // ELSE
+      // RETURN
+      // BREAK
+      // CONTINUE
       // type_spec
-      char dummy4[sizeof (std::string)];
+      char dummy20[sizeof (std::string)];
     };
 
     /// The size of the largest semantic type.
@@ -656,6 +740,20 @@ namespace cc_ {
         switch (this->kind ())
     {
       case symbol_kind::S_CONST_CHAR: // CONST_CHAR
+      case symbol_kind::S_ADD: // ADD
+      case symbol_kind::S_MINUS: // MINUS
+      case symbol_kind::S_TIMES: // TIMES
+      case symbol_kind::S_DIV: // DIV
+      case symbol_kind::S_MOD: // MOD
+      case symbol_kind::S_ASSIGN: // ASSIGN
+      case symbol_kind::S_COMMA: // COMMA
+      case symbol_kind::S_SEMI: // SEMI
+      case symbol_kind::S_LP: // LP
+      case symbol_kind::S_RP: // RP
+      case symbol_kind::S_LSB: // LSB
+      case symbol_kind::S_RSB: // RSB
+      case symbol_kind::S_LB: // LB
+      case symbol_kind::S_RB: // RB
         value.move< char > (std::move (that.value));
         break;
 
@@ -667,11 +765,97 @@ namespace cc_ {
         value.move< int > (std::move (that.value));
         break;
 
+      case symbol_kind::S_compound_stat: // compound_stat
+        value.move< ptr<cmpdNode> > (std::move (that.value));
+        break;
+
+      case symbol_kind::S_exp: // exp
+        value.move< ptr<expNode> > (std::move (that.value));
+        break;
+
+      case symbol_kind::S_extern_def: // extern_def
+        value.move< ptr<externDefNode> > (std::move (that.value));
+        break;
+
+      case symbol_kind::S_func_dec: // func_dec
+        value.move< ptr<funcDecNode> > (std::move (that.value));
+        break;
+
+      case symbol_kind::S_dec: // dec
+        value.move< ptr<innerVarDecNode> > (std::move (that.value));
+        break;
+
+      case symbol_kind::S_def: // def
+        value.move< ptr<innerVarDefNode> > (std::move (that.value));
+        break;
+
+      case symbol_kind::S_program: // program
+      case symbol_kind::S_extern_def_list: // extern_def_list
+        value.move< ptr<programNode> > (std::move (that.value));
+        break;
+
+      case symbol_kind::S_args: // args
+        value.move< ptr<std::vector<ptr<expNode>>> > (std::move (that.value));
+        break;
+
+      case symbol_kind::S_dec_list: // dec_list
+        value.move< ptr<std::vector<ptr<innerVarDecNode>>> > (std::move (that.value));
+        break;
+
+      case symbol_kind::S_def_list: // def_list
+        value.move< ptr<std::vector<ptr<innerVarDefNode>>> > (std::move (that.value));
+        break;
+
+      case symbol_kind::S_stmt_list: // stmt_list
+        value.move< ptr<std::vector<ptr<stmtNode>>> > (std::move (that.value));
+        break;
+
+      case symbol_kind::S_extern_dec_list: // extern_dec_list
+        value.move< ptr<std::vector<ptr<varDecNode>>> > (std::move (that.value));
+        break;
+
+      case symbol_kind::S_var_list: // var_list
+        value.move< ptr<std::vector<std::pair<std::string, ptr<varDecNode>>>> > (std::move (that.value));
+        break;
+
+      case symbol_kind::S_stmt: // stmt
+        value.move< ptr<stmtNode> > (std::move (that.value));
+        break;
+
+      case symbol_kind::S_var_dec: // var_dec
+        value.move< ptr<varDecNode> > (std::move (that.value));
+        break;
+
+      case symbol_kind::S_param_dec: // param_dec
+        value.move< std::pair<std::string, ptr<varDecNode>> > (std::move (that.value));
+        break;
+
+      case symbol_kind::S_LE: // LE
+      case symbol_kind::S_GE: // GE
+      case symbol_kind::S_EQ: // EQ
+      case symbol_kind::S_NE: // NE
+      case symbol_kind::S_LT: // LT
+      case symbol_kind::S_GT: // GT
+      case symbol_kind::S_INC: // INC
+      case symbol_kind::S_DEC: // DEC
+      case symbol_kind::S_NOT: // NOT
+      case symbol_kind::S_AND: // AND
+      case symbol_kind::S_OR: // OR
+      case symbol_kind::S_LS: // LS
+      case symbol_kind::S_RS: // RS
+      case symbol_kind::S_CONST_STRING: // CONST_STRING
       case symbol_kind::S_CONST_ID: // CONST_ID
       case symbol_kind::S_VOID: // VOID
       case symbol_kind::S_INT: // INT
       case symbol_kind::S_FLOAT: // FLOAT
       case symbol_kind::S_CHAR: // CHAR
+      case symbol_kind::S_WHILE: // WHILE
+      case symbol_kind::S_FOR: // FOR
+      case symbol_kind::S_IF: // IF
+      case symbol_kind::S_ELSE: // ELSE
+      case symbol_kind::S_RETURN: // RETURN
+      case symbol_kind::S_BREAK: // BREAK
+      case symbol_kind::S_CONTINUE: // CONTINUE
       case symbol_kind::S_type_spec: // type_spec
         value.move< std::string > (std::move (that.value));
         break;
@@ -742,6 +926,230 @@ namespace cc_ {
 #endif
 
 #if 201103L <= YY_CPLUSPLUS
+      basic_symbol (typename Base::kind_type t, ptr<cmpdNode>&& v, location_type&& l)
+        : Base (t)
+        , value (std::move (v))
+        , location (std::move (l))
+      {}
+#else
+      basic_symbol (typename Base::kind_type t, const ptr<cmpdNode>& v, const location_type& l)
+        : Base (t)
+        , value (v)
+        , location (l)
+      {}
+#endif
+
+#if 201103L <= YY_CPLUSPLUS
+      basic_symbol (typename Base::kind_type t, ptr<expNode>&& v, location_type&& l)
+        : Base (t)
+        , value (std::move (v))
+        , location (std::move (l))
+      {}
+#else
+      basic_symbol (typename Base::kind_type t, const ptr<expNode>& v, const location_type& l)
+        : Base (t)
+        , value (v)
+        , location (l)
+      {}
+#endif
+
+#if 201103L <= YY_CPLUSPLUS
+      basic_symbol (typename Base::kind_type t, ptr<externDefNode>&& v, location_type&& l)
+        : Base (t)
+        , value (std::move (v))
+        , location (std::move (l))
+      {}
+#else
+      basic_symbol (typename Base::kind_type t, const ptr<externDefNode>& v, const location_type& l)
+        : Base (t)
+        , value (v)
+        , location (l)
+      {}
+#endif
+
+#if 201103L <= YY_CPLUSPLUS
+      basic_symbol (typename Base::kind_type t, ptr<funcDecNode>&& v, location_type&& l)
+        : Base (t)
+        , value (std::move (v))
+        , location (std::move (l))
+      {}
+#else
+      basic_symbol (typename Base::kind_type t, const ptr<funcDecNode>& v, const location_type& l)
+        : Base (t)
+        , value (v)
+        , location (l)
+      {}
+#endif
+
+#if 201103L <= YY_CPLUSPLUS
+      basic_symbol (typename Base::kind_type t, ptr<innerVarDecNode>&& v, location_type&& l)
+        : Base (t)
+        , value (std::move (v))
+        , location (std::move (l))
+      {}
+#else
+      basic_symbol (typename Base::kind_type t, const ptr<innerVarDecNode>& v, const location_type& l)
+        : Base (t)
+        , value (v)
+        , location (l)
+      {}
+#endif
+
+#if 201103L <= YY_CPLUSPLUS
+      basic_symbol (typename Base::kind_type t, ptr<innerVarDefNode>&& v, location_type&& l)
+        : Base (t)
+        , value (std::move (v))
+        , location (std::move (l))
+      {}
+#else
+      basic_symbol (typename Base::kind_type t, const ptr<innerVarDefNode>& v, const location_type& l)
+        : Base (t)
+        , value (v)
+        , location (l)
+      {}
+#endif
+
+#if 201103L <= YY_CPLUSPLUS
+      basic_symbol (typename Base::kind_type t, ptr<programNode>&& v, location_type&& l)
+        : Base (t)
+        , value (std::move (v))
+        , location (std::move (l))
+      {}
+#else
+      basic_symbol (typename Base::kind_type t, const ptr<programNode>& v, const location_type& l)
+        : Base (t)
+        , value (v)
+        , location (l)
+      {}
+#endif
+
+#if 201103L <= YY_CPLUSPLUS
+      basic_symbol (typename Base::kind_type t, ptr<std::vector<ptr<expNode>>>&& v, location_type&& l)
+        : Base (t)
+        , value (std::move (v))
+        , location (std::move (l))
+      {}
+#else
+      basic_symbol (typename Base::kind_type t, const ptr<std::vector<ptr<expNode>>>& v, const location_type& l)
+        : Base (t)
+        , value (v)
+        , location (l)
+      {}
+#endif
+
+#if 201103L <= YY_CPLUSPLUS
+      basic_symbol (typename Base::kind_type t, ptr<std::vector<ptr<innerVarDecNode>>>&& v, location_type&& l)
+        : Base (t)
+        , value (std::move (v))
+        , location (std::move (l))
+      {}
+#else
+      basic_symbol (typename Base::kind_type t, const ptr<std::vector<ptr<innerVarDecNode>>>& v, const location_type& l)
+        : Base (t)
+        , value (v)
+        , location (l)
+      {}
+#endif
+
+#if 201103L <= YY_CPLUSPLUS
+      basic_symbol (typename Base::kind_type t, ptr<std::vector<ptr<innerVarDefNode>>>&& v, location_type&& l)
+        : Base (t)
+        , value (std::move (v))
+        , location (std::move (l))
+      {}
+#else
+      basic_symbol (typename Base::kind_type t, const ptr<std::vector<ptr<innerVarDefNode>>>& v, const location_type& l)
+        : Base (t)
+        , value (v)
+        , location (l)
+      {}
+#endif
+
+#if 201103L <= YY_CPLUSPLUS
+      basic_symbol (typename Base::kind_type t, ptr<std::vector<ptr<stmtNode>>>&& v, location_type&& l)
+        : Base (t)
+        , value (std::move (v))
+        , location (std::move (l))
+      {}
+#else
+      basic_symbol (typename Base::kind_type t, const ptr<std::vector<ptr<stmtNode>>>& v, const location_type& l)
+        : Base (t)
+        , value (v)
+        , location (l)
+      {}
+#endif
+
+#if 201103L <= YY_CPLUSPLUS
+      basic_symbol (typename Base::kind_type t, ptr<std::vector<ptr<varDecNode>>>&& v, location_type&& l)
+        : Base (t)
+        , value (std::move (v))
+        , location (std::move (l))
+      {}
+#else
+      basic_symbol (typename Base::kind_type t, const ptr<std::vector<ptr<varDecNode>>>& v, const location_type& l)
+        : Base (t)
+        , value (v)
+        , location (l)
+      {}
+#endif
+
+#if 201103L <= YY_CPLUSPLUS
+      basic_symbol (typename Base::kind_type t, ptr<std::vector<std::pair<std::string, ptr<varDecNode>>>>&& v, location_type&& l)
+        : Base (t)
+        , value (std::move (v))
+        , location (std::move (l))
+      {}
+#else
+      basic_symbol (typename Base::kind_type t, const ptr<std::vector<std::pair<std::string, ptr<varDecNode>>>>& v, const location_type& l)
+        : Base (t)
+        , value (v)
+        , location (l)
+      {}
+#endif
+
+#if 201103L <= YY_CPLUSPLUS
+      basic_symbol (typename Base::kind_type t, ptr<stmtNode>&& v, location_type&& l)
+        : Base (t)
+        , value (std::move (v))
+        , location (std::move (l))
+      {}
+#else
+      basic_symbol (typename Base::kind_type t, const ptr<stmtNode>& v, const location_type& l)
+        : Base (t)
+        , value (v)
+        , location (l)
+      {}
+#endif
+
+#if 201103L <= YY_CPLUSPLUS
+      basic_symbol (typename Base::kind_type t, ptr<varDecNode>&& v, location_type&& l)
+        : Base (t)
+        , value (std::move (v))
+        , location (std::move (l))
+      {}
+#else
+      basic_symbol (typename Base::kind_type t, const ptr<varDecNode>& v, const location_type& l)
+        : Base (t)
+        , value (v)
+        , location (l)
+      {}
+#endif
+
+#if 201103L <= YY_CPLUSPLUS
+      basic_symbol (typename Base::kind_type t, std::pair<std::string, ptr<varDecNode>>&& v, location_type&& l)
+        : Base (t)
+        , value (std::move (v))
+        , location (std::move (l))
+      {}
+#else
+      basic_symbol (typename Base::kind_type t, const std::pair<std::string, ptr<varDecNode>>& v, const location_type& l)
+        : Base (t)
+        , value (v)
+        , location (l)
+      {}
+#endif
+
+#if 201103L <= YY_CPLUSPLUS
       basic_symbol (typename Base::kind_type t, std::string&& v, location_type&& l)
         : Base (t)
         , value (std::move (v))
@@ -780,6 +1188,20 @@ namespace cc_ {
 switch (yykind)
     {
       case symbol_kind::S_CONST_CHAR: // CONST_CHAR
+      case symbol_kind::S_ADD: // ADD
+      case symbol_kind::S_MINUS: // MINUS
+      case symbol_kind::S_TIMES: // TIMES
+      case symbol_kind::S_DIV: // DIV
+      case symbol_kind::S_MOD: // MOD
+      case symbol_kind::S_ASSIGN: // ASSIGN
+      case symbol_kind::S_COMMA: // COMMA
+      case symbol_kind::S_SEMI: // SEMI
+      case symbol_kind::S_LP: // LP
+      case symbol_kind::S_RP: // RP
+      case symbol_kind::S_LSB: // LSB
+      case symbol_kind::S_RSB: // RSB
+      case symbol_kind::S_LB: // LB
+      case symbol_kind::S_RB: // RB
         value.template destroy< char > ();
         break;
 
@@ -791,11 +1213,97 @@ switch (yykind)
         value.template destroy< int > ();
         break;
 
+      case symbol_kind::S_compound_stat: // compound_stat
+        value.template destroy< ptr<cmpdNode> > ();
+        break;
+
+      case symbol_kind::S_exp: // exp
+        value.template destroy< ptr<expNode> > ();
+        break;
+
+      case symbol_kind::S_extern_def: // extern_def
+        value.template destroy< ptr<externDefNode> > ();
+        break;
+
+      case symbol_kind::S_func_dec: // func_dec
+        value.template destroy< ptr<funcDecNode> > ();
+        break;
+
+      case symbol_kind::S_dec: // dec
+        value.template destroy< ptr<innerVarDecNode> > ();
+        break;
+
+      case symbol_kind::S_def: // def
+        value.template destroy< ptr<innerVarDefNode> > ();
+        break;
+
+      case symbol_kind::S_program: // program
+      case symbol_kind::S_extern_def_list: // extern_def_list
+        value.template destroy< ptr<programNode> > ();
+        break;
+
+      case symbol_kind::S_args: // args
+        value.template destroy< ptr<std::vector<ptr<expNode>>> > ();
+        break;
+
+      case symbol_kind::S_dec_list: // dec_list
+        value.template destroy< ptr<std::vector<ptr<innerVarDecNode>>> > ();
+        break;
+
+      case symbol_kind::S_def_list: // def_list
+        value.template destroy< ptr<std::vector<ptr<innerVarDefNode>>> > ();
+        break;
+
+      case symbol_kind::S_stmt_list: // stmt_list
+        value.template destroy< ptr<std::vector<ptr<stmtNode>>> > ();
+        break;
+
+      case symbol_kind::S_extern_dec_list: // extern_dec_list
+        value.template destroy< ptr<std::vector<ptr<varDecNode>>> > ();
+        break;
+
+      case symbol_kind::S_var_list: // var_list
+        value.template destroy< ptr<std::vector<std::pair<std::string, ptr<varDecNode>>>> > ();
+        break;
+
+      case symbol_kind::S_stmt: // stmt
+        value.template destroy< ptr<stmtNode> > ();
+        break;
+
+      case symbol_kind::S_var_dec: // var_dec
+        value.template destroy< ptr<varDecNode> > ();
+        break;
+
+      case symbol_kind::S_param_dec: // param_dec
+        value.template destroy< std::pair<std::string, ptr<varDecNode>> > ();
+        break;
+
+      case symbol_kind::S_LE: // LE
+      case symbol_kind::S_GE: // GE
+      case symbol_kind::S_EQ: // EQ
+      case symbol_kind::S_NE: // NE
+      case symbol_kind::S_LT: // LT
+      case symbol_kind::S_GT: // GT
+      case symbol_kind::S_INC: // INC
+      case symbol_kind::S_DEC: // DEC
+      case symbol_kind::S_NOT: // NOT
+      case symbol_kind::S_AND: // AND
+      case symbol_kind::S_OR: // OR
+      case symbol_kind::S_LS: // LS
+      case symbol_kind::S_RS: // RS
+      case symbol_kind::S_CONST_STRING: // CONST_STRING
       case symbol_kind::S_CONST_ID: // CONST_ID
       case symbol_kind::S_VOID: // VOID
       case symbol_kind::S_INT: // INT
       case symbol_kind::S_FLOAT: // FLOAT
       case symbol_kind::S_CHAR: // CHAR
+      case symbol_kind::S_WHILE: // WHILE
+      case symbol_kind::S_FOR: // FOR
+      case symbol_kind::S_IF: // IF
+      case symbol_kind::S_ELSE: // ELSE
+      case symbol_kind::S_RETURN: // RETURN
+      case symbol_kind::S_BREAK: // BREAK
+      case symbol_kind::S_CONTINUE: // CONTINUE
       case symbol_kind::S_type_spec: // type_spec
         value.template destroy< std::string > ();
         break;
@@ -898,9 +1406,8 @@ switch (yykind)
       {
 #if !defined _MSC_VER || defined __clang__
         YY_ASSERT (tok == token::YYEOF
-                   || (token::YYerror <= tok && tok <= token::RS)
-                   || tok == token::CONST_STRING
-                   || (token::WHILE <= tok && tok <= token::LOWER_ELSE));
+                   || (token::YYerror <= tok && tok <= token::YYUNDEF)
+                   || (token::UMIUS <= tok && tok <= token::LOWER_ELSE));
 #endif
       }
 #if 201103L <= YY_CPLUSPLUS
@@ -912,7 +1419,8 @@ switch (yykind)
 #endif
       {
 #if !defined _MSC_VER || defined __clang__
-        YY_ASSERT (tok == token::CONST_CHAR);
+        YY_ASSERT (tok == token::CONST_CHAR
+                   || (token::ADD <= tok && tok <= token::RB));
 #endif
       }
 #if 201103L <= YY_CPLUSPLUS
@@ -948,7 +1456,8 @@ switch (yykind)
 #endif
       {
 #if !defined _MSC_VER || defined __clang__
-        YY_ASSERT ((token::CONST_ID <= tok && tok <= token::CHAR));
+        YY_ASSERT ((token::LE <= tok && tok <= token::RS)
+                   || (token::CONST_STRING <= tok && tok <= token::CONTINUE));
 #endif
       }
     };
@@ -1047,196 +1556,196 @@ switch (yykind)
 #if 201103L <= YY_CPLUSPLUS
       static
       symbol_type
-      make_LE (location_type l)
+      make_LE (std::string v, location_type l)
       {
-        return symbol_type (token::LE, std::move (l));
+        return symbol_type (token::LE, std::move (v), std::move (l));
       }
 #else
       static
       symbol_type
-      make_LE (const location_type& l)
+      make_LE (const std::string& v, const location_type& l)
       {
-        return symbol_type (token::LE, l);
+        return symbol_type (token::LE, v, l);
       }
 #endif
 #if 201103L <= YY_CPLUSPLUS
       static
       symbol_type
-      make_GE (location_type l)
+      make_GE (std::string v, location_type l)
       {
-        return symbol_type (token::GE, std::move (l));
+        return symbol_type (token::GE, std::move (v), std::move (l));
       }
 #else
       static
       symbol_type
-      make_GE (const location_type& l)
+      make_GE (const std::string& v, const location_type& l)
       {
-        return symbol_type (token::GE, l);
+        return symbol_type (token::GE, v, l);
       }
 #endif
 #if 201103L <= YY_CPLUSPLUS
       static
       symbol_type
-      make_EQ (location_type l)
+      make_EQ (std::string v, location_type l)
       {
-        return symbol_type (token::EQ, std::move (l));
+        return symbol_type (token::EQ, std::move (v), std::move (l));
       }
 #else
       static
       symbol_type
-      make_EQ (const location_type& l)
+      make_EQ (const std::string& v, const location_type& l)
       {
-        return symbol_type (token::EQ, l);
+        return symbol_type (token::EQ, v, l);
       }
 #endif
 #if 201103L <= YY_CPLUSPLUS
       static
       symbol_type
-      make_NE (location_type l)
+      make_NE (std::string v, location_type l)
       {
-        return symbol_type (token::NE, std::move (l));
+        return symbol_type (token::NE, std::move (v), std::move (l));
       }
 #else
       static
       symbol_type
-      make_NE (const location_type& l)
+      make_NE (const std::string& v, const location_type& l)
       {
-        return symbol_type (token::NE, l);
+        return symbol_type (token::NE, v, l);
       }
 #endif
 #if 201103L <= YY_CPLUSPLUS
       static
       symbol_type
-      make_LT (location_type l)
+      make_LT (std::string v, location_type l)
       {
-        return symbol_type (token::LT, std::move (l));
+        return symbol_type (token::LT, std::move (v), std::move (l));
       }
 #else
       static
       symbol_type
-      make_LT (const location_type& l)
+      make_LT (const std::string& v, const location_type& l)
       {
-        return symbol_type (token::LT, l);
+        return symbol_type (token::LT, v, l);
       }
 #endif
 #if 201103L <= YY_CPLUSPLUS
       static
       symbol_type
-      make_GT (location_type l)
+      make_GT (std::string v, location_type l)
       {
-        return symbol_type (token::GT, std::move (l));
+        return symbol_type (token::GT, std::move (v), std::move (l));
       }
 #else
       static
       symbol_type
-      make_GT (const location_type& l)
+      make_GT (const std::string& v, const location_type& l)
       {
-        return symbol_type (token::GT, l);
+        return symbol_type (token::GT, v, l);
       }
 #endif
 #if 201103L <= YY_CPLUSPLUS
       static
       symbol_type
-      make_INC (location_type l)
+      make_INC (std::string v, location_type l)
       {
-        return symbol_type (token::INC, std::move (l));
+        return symbol_type (token::INC, std::move (v), std::move (l));
       }
 #else
       static
       symbol_type
-      make_INC (const location_type& l)
+      make_INC (const std::string& v, const location_type& l)
       {
-        return symbol_type (token::INC, l);
+        return symbol_type (token::INC, v, l);
       }
 #endif
 #if 201103L <= YY_CPLUSPLUS
       static
       symbol_type
-      make_DEC (location_type l)
+      make_DEC (std::string v, location_type l)
       {
-        return symbol_type (token::DEC, std::move (l));
+        return symbol_type (token::DEC, std::move (v), std::move (l));
       }
 #else
       static
       symbol_type
-      make_DEC (const location_type& l)
+      make_DEC (const std::string& v, const location_type& l)
       {
-        return symbol_type (token::DEC, l);
+        return symbol_type (token::DEC, v, l);
       }
 #endif
 #if 201103L <= YY_CPLUSPLUS
       static
       symbol_type
-      make_NOT (location_type l)
+      make_NOT (std::string v, location_type l)
       {
-        return symbol_type (token::NOT, std::move (l));
+        return symbol_type (token::NOT, std::move (v), std::move (l));
       }
 #else
       static
       symbol_type
-      make_NOT (const location_type& l)
+      make_NOT (const std::string& v, const location_type& l)
       {
-        return symbol_type (token::NOT, l);
+        return symbol_type (token::NOT, v, l);
       }
 #endif
 #if 201103L <= YY_CPLUSPLUS
       static
       symbol_type
-      make_AND (location_type l)
+      make_AND (std::string v, location_type l)
       {
-        return symbol_type (token::AND, std::move (l));
+        return symbol_type (token::AND, std::move (v), std::move (l));
       }
 #else
       static
       symbol_type
-      make_AND (const location_type& l)
+      make_AND (const std::string& v, const location_type& l)
       {
-        return symbol_type (token::AND, l);
+        return symbol_type (token::AND, v, l);
       }
 #endif
 #if 201103L <= YY_CPLUSPLUS
       static
       symbol_type
-      make_OR (location_type l)
+      make_OR (std::string v, location_type l)
       {
-        return symbol_type (token::OR, std::move (l));
+        return symbol_type (token::OR, std::move (v), std::move (l));
       }
 #else
       static
       symbol_type
-      make_OR (const location_type& l)
+      make_OR (const std::string& v, const location_type& l)
       {
-        return symbol_type (token::OR, l);
+        return symbol_type (token::OR, v, l);
       }
 #endif
 #if 201103L <= YY_CPLUSPLUS
       static
       symbol_type
-      make_LS (location_type l)
+      make_LS (std::string v, location_type l)
       {
-        return symbol_type (token::LS, std::move (l));
+        return symbol_type (token::LS, std::move (v), std::move (l));
       }
 #else
       static
       symbol_type
-      make_LS (const location_type& l)
+      make_LS (const std::string& v, const location_type& l)
       {
-        return symbol_type (token::LS, l);
+        return symbol_type (token::LS, v, l);
       }
 #endif
 #if 201103L <= YY_CPLUSPLUS
       static
       symbol_type
-      make_RS (location_type l)
+      make_RS (std::string v, location_type l)
       {
-        return symbol_type (token::RS, std::move (l));
+        return symbol_type (token::RS, std::move (v), std::move (l));
       }
 #else
       static
       symbol_type
-      make_RS (const location_type& l)
+      make_RS (const std::string& v, const location_type& l)
       {
-        return symbol_type (token::RS, l);
+        return symbol_type (token::RS, v, l);
       }
 #endif
 #if 201103L <= YY_CPLUSPLUS
@@ -1287,16 +1796,16 @@ switch (yykind)
 #if 201103L <= YY_CPLUSPLUS
       static
       symbol_type
-      make_CONST_STRING (location_type l)
+      make_CONST_STRING (std::string v, location_type l)
       {
-        return symbol_type (token::CONST_STRING, std::move (l));
+        return symbol_type (token::CONST_STRING, std::move (v), std::move (l));
       }
 #else
       static
       symbol_type
-      make_CONST_STRING (const location_type& l)
+      make_CONST_STRING (const std::string& v, const location_type& l)
       {
-        return symbol_type (token::CONST_STRING, l);
+        return symbol_type (token::CONST_STRING, v, l);
       }
 #endif
 #if 201103L <= YY_CPLUSPLUS
@@ -1377,316 +1886,316 @@ switch (yykind)
 #if 201103L <= YY_CPLUSPLUS
       static
       symbol_type
-      make_WHILE (location_type l)
+      make_WHILE (std::string v, location_type l)
       {
-        return symbol_type (token::WHILE, std::move (l));
+        return symbol_type (token::WHILE, std::move (v), std::move (l));
       }
 #else
       static
       symbol_type
-      make_WHILE (const location_type& l)
+      make_WHILE (const std::string& v, const location_type& l)
       {
-        return symbol_type (token::WHILE, l);
+        return symbol_type (token::WHILE, v, l);
       }
 #endif
 #if 201103L <= YY_CPLUSPLUS
       static
       symbol_type
-      make_FOR (location_type l)
+      make_FOR (std::string v, location_type l)
       {
-        return symbol_type (token::FOR, std::move (l));
+        return symbol_type (token::FOR, std::move (v), std::move (l));
       }
 #else
       static
       symbol_type
-      make_FOR (const location_type& l)
+      make_FOR (const std::string& v, const location_type& l)
       {
-        return symbol_type (token::FOR, l);
+        return symbol_type (token::FOR, v, l);
       }
 #endif
 #if 201103L <= YY_CPLUSPLUS
       static
       symbol_type
-      make_IF (location_type l)
+      make_IF (std::string v, location_type l)
       {
-        return symbol_type (token::IF, std::move (l));
+        return symbol_type (token::IF, std::move (v), std::move (l));
       }
 #else
       static
       symbol_type
-      make_IF (const location_type& l)
+      make_IF (const std::string& v, const location_type& l)
       {
-        return symbol_type (token::IF, l);
+        return symbol_type (token::IF, v, l);
       }
 #endif
 #if 201103L <= YY_CPLUSPLUS
       static
       symbol_type
-      make_ELSE (location_type l)
+      make_ELSE (std::string v, location_type l)
       {
-        return symbol_type (token::ELSE, std::move (l));
+        return symbol_type (token::ELSE, std::move (v), std::move (l));
       }
 #else
       static
       symbol_type
-      make_ELSE (const location_type& l)
+      make_ELSE (const std::string& v, const location_type& l)
       {
-        return symbol_type (token::ELSE, l);
+        return symbol_type (token::ELSE, v, l);
       }
 #endif
 #if 201103L <= YY_CPLUSPLUS
       static
       symbol_type
-      make_RETURN (location_type l)
+      make_RETURN (std::string v, location_type l)
       {
-        return symbol_type (token::RETURN, std::move (l));
+        return symbol_type (token::RETURN, std::move (v), std::move (l));
       }
 #else
       static
       symbol_type
-      make_RETURN (const location_type& l)
+      make_RETURN (const std::string& v, const location_type& l)
       {
-        return symbol_type (token::RETURN, l);
+        return symbol_type (token::RETURN, v, l);
       }
 #endif
 #if 201103L <= YY_CPLUSPLUS
       static
       symbol_type
-      make_BREAK (location_type l)
+      make_BREAK (std::string v, location_type l)
       {
-        return symbol_type (token::BREAK, std::move (l));
+        return symbol_type (token::BREAK, std::move (v), std::move (l));
       }
 #else
       static
       symbol_type
-      make_BREAK (const location_type& l)
+      make_BREAK (const std::string& v, const location_type& l)
       {
-        return symbol_type (token::BREAK, l);
+        return symbol_type (token::BREAK, v, l);
       }
 #endif
 #if 201103L <= YY_CPLUSPLUS
       static
       symbol_type
-      make_CONTINUE (location_type l)
+      make_CONTINUE (std::string v, location_type l)
       {
-        return symbol_type (token::CONTINUE, std::move (l));
+        return symbol_type (token::CONTINUE, std::move (v), std::move (l));
       }
 #else
       static
       symbol_type
-      make_CONTINUE (const location_type& l)
+      make_CONTINUE (const std::string& v, const location_type& l)
       {
-        return symbol_type (token::CONTINUE, l);
+        return symbol_type (token::CONTINUE, v, l);
       }
 #endif
 #if 201103L <= YY_CPLUSPLUS
       static
       symbol_type
-      make_ADD (location_type l)
+      make_ADD (char v, location_type l)
       {
-        return symbol_type (token::ADD, std::move (l));
+        return symbol_type (token::ADD, std::move (v), std::move (l));
       }
 #else
       static
       symbol_type
-      make_ADD (const location_type& l)
+      make_ADD (const char& v, const location_type& l)
       {
-        return symbol_type (token::ADD, l);
+        return symbol_type (token::ADD, v, l);
       }
 #endif
 #if 201103L <= YY_CPLUSPLUS
       static
       symbol_type
-      make_MINUS (location_type l)
+      make_MINUS (char v, location_type l)
       {
-        return symbol_type (token::MINUS, std::move (l));
+        return symbol_type (token::MINUS, std::move (v), std::move (l));
       }
 #else
       static
       symbol_type
-      make_MINUS (const location_type& l)
+      make_MINUS (const char& v, const location_type& l)
       {
-        return symbol_type (token::MINUS, l);
+        return symbol_type (token::MINUS, v, l);
       }
 #endif
 #if 201103L <= YY_CPLUSPLUS
       static
       symbol_type
-      make_TIMES (location_type l)
+      make_TIMES (char v, location_type l)
       {
-        return symbol_type (token::TIMES, std::move (l));
+        return symbol_type (token::TIMES, std::move (v), std::move (l));
       }
 #else
       static
       symbol_type
-      make_TIMES (const location_type& l)
+      make_TIMES (const char& v, const location_type& l)
       {
-        return symbol_type (token::TIMES, l);
+        return symbol_type (token::TIMES, v, l);
       }
 #endif
 #if 201103L <= YY_CPLUSPLUS
       static
       symbol_type
-      make_DIV (location_type l)
+      make_DIV (char v, location_type l)
       {
-        return symbol_type (token::DIV, std::move (l));
+        return symbol_type (token::DIV, std::move (v), std::move (l));
       }
 #else
       static
       symbol_type
-      make_DIV (const location_type& l)
+      make_DIV (const char& v, const location_type& l)
       {
-        return symbol_type (token::DIV, l);
+        return symbol_type (token::DIV, v, l);
       }
 #endif
 #if 201103L <= YY_CPLUSPLUS
       static
       symbol_type
-      make_MOD (location_type l)
+      make_MOD (char v, location_type l)
       {
-        return symbol_type (token::MOD, std::move (l));
+        return symbol_type (token::MOD, std::move (v), std::move (l));
       }
 #else
       static
       symbol_type
-      make_MOD (const location_type& l)
+      make_MOD (const char& v, const location_type& l)
       {
-        return symbol_type (token::MOD, l);
+        return symbol_type (token::MOD, v, l);
       }
 #endif
 #if 201103L <= YY_CPLUSPLUS
       static
       symbol_type
-      make_ASSIGN (location_type l)
+      make_ASSIGN (char v, location_type l)
       {
-        return symbol_type (token::ASSIGN, std::move (l));
+        return symbol_type (token::ASSIGN, std::move (v), std::move (l));
       }
 #else
       static
       symbol_type
-      make_ASSIGN (const location_type& l)
+      make_ASSIGN (const char& v, const location_type& l)
       {
-        return symbol_type (token::ASSIGN, l);
+        return symbol_type (token::ASSIGN, v, l);
       }
 #endif
 #if 201103L <= YY_CPLUSPLUS
       static
       symbol_type
-      make_COMMA (location_type l)
+      make_COMMA (char v, location_type l)
       {
-        return symbol_type (token::COMMA, std::move (l));
+        return symbol_type (token::COMMA, std::move (v), std::move (l));
       }
 #else
       static
       symbol_type
-      make_COMMA (const location_type& l)
+      make_COMMA (const char& v, const location_type& l)
       {
-        return symbol_type (token::COMMA, l);
+        return symbol_type (token::COMMA, v, l);
       }
 #endif
 #if 201103L <= YY_CPLUSPLUS
       static
       symbol_type
-      make_SEMI (location_type l)
+      make_SEMI (char v, location_type l)
       {
-        return symbol_type (token::SEMI, std::move (l));
+        return symbol_type (token::SEMI, std::move (v), std::move (l));
       }
 #else
       static
       symbol_type
-      make_SEMI (const location_type& l)
+      make_SEMI (const char& v, const location_type& l)
       {
-        return symbol_type (token::SEMI, l);
+        return symbol_type (token::SEMI, v, l);
       }
 #endif
 #if 201103L <= YY_CPLUSPLUS
       static
       symbol_type
-      make_LP (location_type l)
+      make_LP (char v, location_type l)
       {
-        return symbol_type (token::LP, std::move (l));
+        return symbol_type (token::LP, std::move (v), std::move (l));
       }
 #else
       static
       symbol_type
-      make_LP (const location_type& l)
+      make_LP (const char& v, const location_type& l)
       {
-        return symbol_type (token::LP, l);
+        return symbol_type (token::LP, v, l);
       }
 #endif
 #if 201103L <= YY_CPLUSPLUS
       static
       symbol_type
-      make_RP (location_type l)
+      make_RP (char v, location_type l)
       {
-        return symbol_type (token::RP, std::move (l));
+        return symbol_type (token::RP, std::move (v), std::move (l));
       }
 #else
       static
       symbol_type
-      make_RP (const location_type& l)
+      make_RP (const char& v, const location_type& l)
       {
-        return symbol_type (token::RP, l);
+        return symbol_type (token::RP, v, l);
       }
 #endif
 #if 201103L <= YY_CPLUSPLUS
       static
       symbol_type
-      make_LSB (location_type l)
+      make_LSB (char v, location_type l)
       {
-        return symbol_type (token::LSB, std::move (l));
+        return symbol_type (token::LSB, std::move (v), std::move (l));
       }
 #else
       static
       symbol_type
-      make_LSB (const location_type& l)
+      make_LSB (const char& v, const location_type& l)
       {
-        return symbol_type (token::LSB, l);
+        return symbol_type (token::LSB, v, l);
       }
 #endif
 #if 201103L <= YY_CPLUSPLUS
       static
       symbol_type
-      make_RSB (location_type l)
+      make_RSB (char v, location_type l)
       {
-        return symbol_type (token::RSB, std::move (l));
+        return symbol_type (token::RSB, std::move (v), std::move (l));
       }
 #else
       static
       symbol_type
-      make_RSB (const location_type& l)
+      make_RSB (const char& v, const location_type& l)
       {
-        return symbol_type (token::RSB, l);
+        return symbol_type (token::RSB, v, l);
       }
 #endif
 #if 201103L <= YY_CPLUSPLUS
       static
       symbol_type
-      make_LB (location_type l)
+      make_LB (char v, location_type l)
       {
-        return symbol_type (token::LB, std::move (l));
+        return symbol_type (token::LB, std::move (v), std::move (l));
       }
 #else
       static
       symbol_type
-      make_LB (const location_type& l)
+      make_LB (const char& v, const location_type& l)
       {
-        return symbol_type (token::LB, l);
+        return symbol_type (token::LB, v, l);
       }
 #endif
 #if 201103L <= YY_CPLUSPLUS
       static
       symbol_type
-      make_RB (location_type l)
+      make_RB (char v, location_type l)
       {
-        return symbol_type (token::RB, std::move (l));
+        return symbol_type (token::RB, std::move (v), std::move (l));
       }
 #else
       static
       symbol_type
-      make_RB (const location_type& l)
+      make_RB (const char& v, const location_type& l)
       {
-        return symbol_type (token::RB, l);
+        return symbol_type (token::RB, v, l);
       }
 #endif
 #if 201103L <= YY_CPLUSPLUS
@@ -2049,7 +2558,7 @@ switch (yykind)
     /// Constants.
     enum
     {
-      yylast_ = 519,     ///< Last index in yytable_.
+      yylast_ = 581,     ///< Last index in yytable_.
       yynnts_ = 19,  ///< Number of nonterminal symbols.
       yyfinal_ = 9 ///< Termination state number.
     };
@@ -2123,6 +2632,20 @@ switch (yykind)
     switch (this->kind ())
     {
       case symbol_kind::S_CONST_CHAR: // CONST_CHAR
+      case symbol_kind::S_ADD: // ADD
+      case symbol_kind::S_MINUS: // MINUS
+      case symbol_kind::S_TIMES: // TIMES
+      case symbol_kind::S_DIV: // DIV
+      case symbol_kind::S_MOD: // MOD
+      case symbol_kind::S_ASSIGN: // ASSIGN
+      case symbol_kind::S_COMMA: // COMMA
+      case symbol_kind::S_SEMI: // SEMI
+      case symbol_kind::S_LP: // LP
+      case symbol_kind::S_RP: // RP
+      case symbol_kind::S_LSB: // LSB
+      case symbol_kind::S_RSB: // RSB
+      case symbol_kind::S_LB: // LB
+      case symbol_kind::S_RB: // RB
         value.copy< char > (YY_MOVE (that.value));
         break;
 
@@ -2134,11 +2657,97 @@ switch (yykind)
         value.copy< int > (YY_MOVE (that.value));
         break;
 
+      case symbol_kind::S_compound_stat: // compound_stat
+        value.copy< ptr<cmpdNode> > (YY_MOVE (that.value));
+        break;
+
+      case symbol_kind::S_exp: // exp
+        value.copy< ptr<expNode> > (YY_MOVE (that.value));
+        break;
+
+      case symbol_kind::S_extern_def: // extern_def
+        value.copy< ptr<externDefNode> > (YY_MOVE (that.value));
+        break;
+
+      case symbol_kind::S_func_dec: // func_dec
+        value.copy< ptr<funcDecNode> > (YY_MOVE (that.value));
+        break;
+
+      case symbol_kind::S_dec: // dec
+        value.copy< ptr<innerVarDecNode> > (YY_MOVE (that.value));
+        break;
+
+      case symbol_kind::S_def: // def
+        value.copy< ptr<innerVarDefNode> > (YY_MOVE (that.value));
+        break;
+
+      case symbol_kind::S_program: // program
+      case symbol_kind::S_extern_def_list: // extern_def_list
+        value.copy< ptr<programNode> > (YY_MOVE (that.value));
+        break;
+
+      case symbol_kind::S_args: // args
+        value.copy< ptr<std::vector<ptr<expNode>>> > (YY_MOVE (that.value));
+        break;
+
+      case symbol_kind::S_dec_list: // dec_list
+        value.copy< ptr<std::vector<ptr<innerVarDecNode>>> > (YY_MOVE (that.value));
+        break;
+
+      case symbol_kind::S_def_list: // def_list
+        value.copy< ptr<std::vector<ptr<innerVarDefNode>>> > (YY_MOVE (that.value));
+        break;
+
+      case symbol_kind::S_stmt_list: // stmt_list
+        value.copy< ptr<std::vector<ptr<stmtNode>>> > (YY_MOVE (that.value));
+        break;
+
+      case symbol_kind::S_extern_dec_list: // extern_dec_list
+        value.copy< ptr<std::vector<ptr<varDecNode>>> > (YY_MOVE (that.value));
+        break;
+
+      case symbol_kind::S_var_list: // var_list
+        value.copy< ptr<std::vector<std::pair<std::string, ptr<varDecNode>>>> > (YY_MOVE (that.value));
+        break;
+
+      case symbol_kind::S_stmt: // stmt
+        value.copy< ptr<stmtNode> > (YY_MOVE (that.value));
+        break;
+
+      case symbol_kind::S_var_dec: // var_dec
+        value.copy< ptr<varDecNode> > (YY_MOVE (that.value));
+        break;
+
+      case symbol_kind::S_param_dec: // param_dec
+        value.copy< std::pair<std::string, ptr<varDecNode>> > (YY_MOVE (that.value));
+        break;
+
+      case symbol_kind::S_LE: // LE
+      case symbol_kind::S_GE: // GE
+      case symbol_kind::S_EQ: // EQ
+      case symbol_kind::S_NE: // NE
+      case symbol_kind::S_LT: // LT
+      case symbol_kind::S_GT: // GT
+      case symbol_kind::S_INC: // INC
+      case symbol_kind::S_DEC: // DEC
+      case symbol_kind::S_NOT: // NOT
+      case symbol_kind::S_AND: // AND
+      case symbol_kind::S_OR: // OR
+      case symbol_kind::S_LS: // LS
+      case symbol_kind::S_RS: // RS
+      case symbol_kind::S_CONST_STRING: // CONST_STRING
       case symbol_kind::S_CONST_ID: // CONST_ID
       case symbol_kind::S_VOID: // VOID
       case symbol_kind::S_INT: // INT
       case symbol_kind::S_FLOAT: // FLOAT
       case symbol_kind::S_CHAR: // CHAR
+      case symbol_kind::S_WHILE: // WHILE
+      case symbol_kind::S_FOR: // FOR
+      case symbol_kind::S_IF: // IF
+      case symbol_kind::S_ELSE: // ELSE
+      case symbol_kind::S_RETURN: // RETURN
+      case symbol_kind::S_BREAK: // BREAK
+      case symbol_kind::S_CONTINUE: // CONTINUE
       case symbol_kind::S_type_spec: // type_spec
         value.copy< std::string > (YY_MOVE (that.value));
         break;
@@ -2175,6 +2784,20 @@ switch (yykind)
     switch (this->kind ())
     {
       case symbol_kind::S_CONST_CHAR: // CONST_CHAR
+      case symbol_kind::S_ADD: // ADD
+      case symbol_kind::S_MINUS: // MINUS
+      case symbol_kind::S_TIMES: // TIMES
+      case symbol_kind::S_DIV: // DIV
+      case symbol_kind::S_MOD: // MOD
+      case symbol_kind::S_ASSIGN: // ASSIGN
+      case symbol_kind::S_COMMA: // COMMA
+      case symbol_kind::S_SEMI: // SEMI
+      case symbol_kind::S_LP: // LP
+      case symbol_kind::S_RP: // RP
+      case symbol_kind::S_LSB: // LSB
+      case symbol_kind::S_RSB: // RSB
+      case symbol_kind::S_LB: // LB
+      case symbol_kind::S_RB: // RB
         value.move< char > (YY_MOVE (s.value));
         break;
 
@@ -2186,11 +2809,97 @@ switch (yykind)
         value.move< int > (YY_MOVE (s.value));
         break;
 
+      case symbol_kind::S_compound_stat: // compound_stat
+        value.move< ptr<cmpdNode> > (YY_MOVE (s.value));
+        break;
+
+      case symbol_kind::S_exp: // exp
+        value.move< ptr<expNode> > (YY_MOVE (s.value));
+        break;
+
+      case symbol_kind::S_extern_def: // extern_def
+        value.move< ptr<externDefNode> > (YY_MOVE (s.value));
+        break;
+
+      case symbol_kind::S_func_dec: // func_dec
+        value.move< ptr<funcDecNode> > (YY_MOVE (s.value));
+        break;
+
+      case symbol_kind::S_dec: // dec
+        value.move< ptr<innerVarDecNode> > (YY_MOVE (s.value));
+        break;
+
+      case symbol_kind::S_def: // def
+        value.move< ptr<innerVarDefNode> > (YY_MOVE (s.value));
+        break;
+
+      case symbol_kind::S_program: // program
+      case symbol_kind::S_extern_def_list: // extern_def_list
+        value.move< ptr<programNode> > (YY_MOVE (s.value));
+        break;
+
+      case symbol_kind::S_args: // args
+        value.move< ptr<std::vector<ptr<expNode>>> > (YY_MOVE (s.value));
+        break;
+
+      case symbol_kind::S_dec_list: // dec_list
+        value.move< ptr<std::vector<ptr<innerVarDecNode>>> > (YY_MOVE (s.value));
+        break;
+
+      case symbol_kind::S_def_list: // def_list
+        value.move< ptr<std::vector<ptr<innerVarDefNode>>> > (YY_MOVE (s.value));
+        break;
+
+      case symbol_kind::S_stmt_list: // stmt_list
+        value.move< ptr<std::vector<ptr<stmtNode>>> > (YY_MOVE (s.value));
+        break;
+
+      case symbol_kind::S_extern_dec_list: // extern_dec_list
+        value.move< ptr<std::vector<ptr<varDecNode>>> > (YY_MOVE (s.value));
+        break;
+
+      case symbol_kind::S_var_list: // var_list
+        value.move< ptr<std::vector<std::pair<std::string, ptr<varDecNode>>>> > (YY_MOVE (s.value));
+        break;
+
+      case symbol_kind::S_stmt: // stmt
+        value.move< ptr<stmtNode> > (YY_MOVE (s.value));
+        break;
+
+      case symbol_kind::S_var_dec: // var_dec
+        value.move< ptr<varDecNode> > (YY_MOVE (s.value));
+        break;
+
+      case symbol_kind::S_param_dec: // param_dec
+        value.move< std::pair<std::string, ptr<varDecNode>> > (YY_MOVE (s.value));
+        break;
+
+      case symbol_kind::S_LE: // LE
+      case symbol_kind::S_GE: // GE
+      case symbol_kind::S_EQ: // EQ
+      case symbol_kind::S_NE: // NE
+      case symbol_kind::S_LT: // LT
+      case symbol_kind::S_GT: // GT
+      case symbol_kind::S_INC: // INC
+      case symbol_kind::S_DEC: // DEC
+      case symbol_kind::S_NOT: // NOT
+      case symbol_kind::S_AND: // AND
+      case symbol_kind::S_OR: // OR
+      case symbol_kind::S_LS: // LS
+      case symbol_kind::S_RS: // RS
+      case symbol_kind::S_CONST_STRING: // CONST_STRING
       case symbol_kind::S_CONST_ID: // CONST_ID
       case symbol_kind::S_VOID: // VOID
       case symbol_kind::S_INT: // INT
       case symbol_kind::S_FLOAT: // FLOAT
       case symbol_kind::S_CHAR: // CHAR
+      case symbol_kind::S_WHILE: // WHILE
+      case symbol_kind::S_FOR: // FOR
+      case symbol_kind::S_IF: // IF
+      case symbol_kind::S_ELSE: // ELSE
+      case symbol_kind::S_RETURN: // RETURN
+      case symbol_kind::S_BREAK: // BREAK
+      case symbol_kind::S_CONTINUE: // CONTINUE
       case symbol_kind::S_type_spec: // type_spec
         value.move< std::string > (YY_MOVE (s.value));
         break;
@@ -2262,7 +2971,7 @@ switch (yykind)
 
 #line 14 "/home/arch_/Work/Compiler-CC/src/parser/parse.yy"
 } // cc_
-#line 2266 "/home/arch_/Work/Compiler-CC/src/parser/parse.hh"
+#line 2975 "/home/arch_/Work/Compiler-CC/src/parser/parse.hh"
 
 
 

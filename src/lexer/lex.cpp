@@ -721,67 +721,67 @@ do_action:	/* This label is used only to access EOF actions. */
 case 1:
 YY_RULE_SETUP
 #line 27 "/home/arch_/Work/Compiler-CC/src/lexer/lex.l"
-{ location.next_word(yyleng); return cc_parser::make_LE(location); }
+{ location.next_word(yyleng); return cc_parser::make_LE("<=", location); }
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
 #line 28 "/home/arch_/Work/Compiler-CC/src/lexer/lex.l"
-{ location.next_word(yyleng); return cc_parser::make_GE(location); }
+{ location.next_word(yyleng); return cc_parser::make_GE(">=", location); }
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
 #line 29 "/home/arch_/Work/Compiler-CC/src/lexer/lex.l"
-{ location.next_word(yyleng); return cc_parser::make_EQ(location); }
+{ location.next_word(yyleng); return cc_parser::make_EQ("==", location); }
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
 #line 30 "/home/arch_/Work/Compiler-CC/src/lexer/lex.l"
-{ location.next_word(yyleng); return cc_parser::make_NE(location); }
+{ location.next_word(yyleng); return cc_parser::make_NE("!=", location); }
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
 #line 31 "/home/arch_/Work/Compiler-CC/src/lexer/lex.l"
-{ location.next_word(yyleng); return cc_parser::make_LT(location); }
+{ location.next_word(yyleng); return cc_parser::make_LT("<", location); }
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
 #line 32 "/home/arch_/Work/Compiler-CC/src/lexer/lex.l"
-{ location.next_word(yyleng); return cc_parser::make_GT(location); }
+{ location.next_word(yyleng); return cc_parser::make_GT(">", location); }
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
 #line 33 "/home/arch_/Work/Compiler-CC/src/lexer/lex.l"
-{ location.next_word(yyleng); return cc_parser::make_LS(location); }
+{ location.next_word(yyleng); return cc_parser::make_LS("<<", location); }
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
 #line 34 "/home/arch_/Work/Compiler-CC/src/lexer/lex.l"
-{ location.next_word(yyleng); return cc_parser::make_RS(location); }
+{ location.next_word(yyleng); return cc_parser::make_RS(">>", location); }
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
 #line 35 "/home/arch_/Work/Compiler-CC/src/lexer/lex.l"
-{ location.next_word(yyleng); return cc_parser::make_INC(location); }
+{ location.next_word(yyleng); return cc_parser::make_INC("++", location); }
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
 #line 36 "/home/arch_/Work/Compiler-CC/src/lexer/lex.l"
-{ location.next_word(yyleng); return cc_parser::make_DEC(location); }
+{ location.next_word(yyleng); return cc_parser::make_DEC("--", location); }
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
 #line 37 "/home/arch_/Work/Compiler-CC/src/lexer/lex.l"
-{ location.next_word(yyleng); return cc_parser::make_NOT(location); }
+{ location.next_word(yyleng); return cc_parser::make_NOT("!", location); }
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
 #line 38 "/home/arch_/Work/Compiler-CC/src/lexer/lex.l"
-{ location.next_word(yyleng); return cc_parser::make_AND(location); }
+{ location.next_word(yyleng); return cc_parser::make_AND("&&", location); }
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
 #line 39 "/home/arch_/Work/Compiler-CC/src/lexer/lex.l"
-{ location.next_word(yyleng); return cc_parser::make_OR(location); }
+{ location.next_word(yyleng); return cc_parser::make_OR("||", location); }
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
@@ -806,37 +806,37 @@ YY_RULE_SETUP
 case 18:
 YY_RULE_SETUP
 #line 44 "/home/arch_/Work/Compiler-CC/src/lexer/lex.l"
-{ location.next_word(yyleng); return cc_parser::make_WHILE(location); }
+{ location.next_word(yyleng); return cc_parser::make_WHILE("while", location); }
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
 #line 45 "/home/arch_/Work/Compiler-CC/src/lexer/lex.l"
-{ location.next_word(yyleng); return cc_parser::make_FOR(location); }
+{ location.next_word(yyleng); return cc_parser::make_FOR("for", location); }
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
 #line 46 "/home/arch_/Work/Compiler-CC/src/lexer/lex.l"
-{ location.next_word(yyleng); return cc_parser::make_IF(location); }
+{ location.next_word(yyleng); return cc_parser::make_IF("if", location); }
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
 #line 47 "/home/arch_/Work/Compiler-CC/src/lexer/lex.l"
-{ location.next_word(yyleng); return cc_parser::make_ELSE(location); }
+{ location.next_word(yyleng); return cc_parser::make_ELSE("else", location); }
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
 #line 48 "/home/arch_/Work/Compiler-CC/src/lexer/lex.l"
-{ location.next_word(yyleng); return cc_parser::make_RETURN(location); }
+{ location.next_word(yyleng); return cc_parser::make_RETURN("return", location); }
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
 #line 49 "/home/arch_/Work/Compiler-CC/src/lexer/lex.l"
-{ location.next_word(yyleng); return cc_parser::make_BREAK(location); }
+{ location.next_word(yyleng); return cc_parser::make_BREAK("break", location); }
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
 #line 50 "/home/arch_/Work/Compiler-CC/src/lexer/lex.l"
-{ location.next_word(yyleng); return cc_parser::make_CONTINUE(location); }
+{ location.next_word(yyleng); return cc_parser::make_CONTINUE("continue", location); }
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
@@ -857,7 +857,7 @@ case 28:
 /* rule 28 can match eol */
 YY_RULE_SETUP
 #line 54 "/home/arch_/Work/Compiler-CC/src/lexer/lex.l"
-{ location.next_word(yyleng); return cc_parser::make_CONST_STRING(location); }
+{ location.next_word(yyleng); return cc_parser::make_CONST_STRING(yytext, location); }
 	YY_BREAK
 case 29:
 YY_RULE_SETUP
@@ -881,20 +881,20 @@ YY_RULE_SETUP
 {
     location.next_word(yyleng);
     switch (yytext[0]) {
-        case '+': return cc_parser::make_ADD(location);
-        case '-': return cc_parser::make_MINUS(location);
-        case '*': return cc_parser::make_TIMES(location);
-        case '/': return cc_parser::make_DIV(location);
-        case '%': return cc_parser::make_MOD(location);
-        case '=': return cc_parser::make_ASSIGN(location);
-        case ',': return cc_parser::make_COMMA(location);
-        case ';': return cc_parser::make_SEMI(location);
-        case '(': return cc_parser::make_LP(location);
-        case ')': return cc_parser::make_RP(location);
-        case '{': return cc_parser::make_LB(location);
-        case '}': return cc_parser::make_RB(location);
-        case '[': return cc_parser::make_LSB(location);
-        case ']': return cc_parser::make_RSB(location);
+        case '+': return cc_parser::make_ADD('+', location);
+        case '-': return cc_parser::make_MINUS('-', location);
+        case '*': return cc_parser::make_TIMES('*', location);
+        case '/': return cc_parser::make_DIV('/', location);
+        case '%': return cc_parser::make_MOD('%', location);
+        case '=': return cc_parser::make_ASSIGN('=', location);
+        case ',': return cc_parser::make_COMMA(',', location);
+        case ';': return cc_parser::make_SEMI(';', location);
+        case '(': return cc_parser::make_LP('(', location);
+        case ')': return cc_parser::make_RP(')', location);
+        case '{': return cc_parser::make_LB('{', location);
+        case '}': return cc_parser::make_RB('}', location);
+        case '[': return cc_parser::make_LSB('[', location);
+        case ']': return cc_parser::make_RSB(']', location);
         default: return cc_parser::make_YYerror(location);
     }
 }   
