@@ -18,11 +18,14 @@
 {
     #include <iostream>
     #include <string>
+    #include <memory>
     #include "location.h"
+    #include "ast.hh"
     namespace cc_
     {
         class cc_Lexer;
     }
+    // extern unique_ptr<programNode> startNode;
 }
 
 %code top {
@@ -39,12 +42,15 @@
 %token INC DEC
 %token NOT AND OR 
 %token LS RS
-%token CONST_INT CONST_FLOAT CONST_CHAR 
+%token <int> CONST_INT 
+%token <float> CONST_FLOAT 
+%token <char> CONST_CHAR 
 %token CONST_STRING 
-%token CONST_ID
-%token VOID INT FLOAT CHAR
+%token <std::string> CONST_ID
+%token <std::string> VOID INT FLOAT CHAR
 %token WHILE FOR IF ELSE RETURN BREAK CONTINUE
-%token ADD MINUS TIMES DIV MOD ASSIGN COMMA SEMI LP RP LSB RSB LB RB 
+%token ADD MINUS TIMES DIV MOD ASSIGN COMMA SEMI
+%token LP RP LSB RSB LB RB 
 
 %left LSB
 %right UMIUS
@@ -69,31 +75,34 @@ program:
 
 extern_def_list:
     extern_def extern_def_list
-    | /* ε */	
+    | /* ε */ 
     ;
 
 extern_def:
-    type_spec extern_dec_list SEMI
-    | type_spec func_dec compound_stat
+    type_spec extern_dec_list SEMI 
+    | type_spec func_dec compound_stat 
     ;
 
 type_spec:
-    INT | FLOAT | VOID | CHAR
+    INT 
+    | FLOAT 
+    | VOID 
+    | CHAR  
     ;
 
 extern_dec_list:
-    var_dec
+    var_dec 
     | var_dec COMMA extern_dec_list
     ;
 
 var_dec:
-    CONST_ID
-    | var_dec LSB CONST_INT RSB
+    CONST_ID 
+    | var_dec LSB CONST_INT RSB 
     ;
 
 func_dec:
-    CONST_ID LP var_list RP 
-    | CONST_ID LP RP
+    CONST_ID LP var_list RP
+    | CONST_ID LP RP 
     ;
 
 var_list:
@@ -102,21 +111,21 @@ var_list:
     ;                                                                                                 
 						
 param_dec:
-    type_spec var_dec
+    type_spec var_dec 
     ;
 
 compound_stat:
-    LB def_list stmt_list RB
+    LB def_list stmt_list RB 
     ;
 
 stmt_list:
     stmt stmt_list
-    | /* ε */	
+    | /* ε */ 
     ;	
 
 stmt:
     exp SEMI 
-    | compound_stat
+    | compound_stat 
     | RETURN exp SEMI
     | RETURN SEMI
     | IF LP exp RP stmt %prec LOWER_ELSE
@@ -129,7 +138,7 @@ stmt:
 
 def_list:
     def def_list
-    | /* ε */	
+    | /* ε */ 
     ;
 
 def:

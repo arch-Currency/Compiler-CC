@@ -1,7 +1,7 @@
 int a[20];
-char b;
+char b, c, d;
 /* this is a test */
-int main()
+int main(char a, int b)
 {
     float c = ++0.1;
     int a = (b >> 2);

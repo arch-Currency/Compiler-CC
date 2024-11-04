@@ -786,22 +786,22 @@ YY_RULE_SETUP
 case 14:
 YY_RULE_SETUP
 #line 40 "/home/arch_/Work/Compiler-CC/src/lexer/lex.l"
-{ location.next_word(yyleng); return cc_parser::make_VOID(location); }
+{ location.next_word(yyleng); return cc_parser::make_VOID("void",location); }
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
 #line 41 "/home/arch_/Work/Compiler-CC/src/lexer/lex.l"
-{ location.next_word(yyleng); return cc_parser::make_INT(location); }
+{ location.next_word(yyleng); return cc_parser::make_INT("int",location); }
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
 #line 42 "/home/arch_/Work/Compiler-CC/src/lexer/lex.l"
-{ location.next_word(yyleng); return cc_parser::make_FLOAT(location); }
+{ location.next_word(yyleng); return cc_parser::make_FLOAT("float",location); }
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
 #line 43 "/home/arch_/Work/Compiler-CC/src/lexer/lex.l"
-{ location.next_word(yyleng); return cc_parser::make_CHAR(location); }
+{ location.next_word(yyleng); return cc_parser::make_CHAR("char",location); }
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
@@ -841,17 +841,17 @@ YY_RULE_SETUP
 case 25:
 YY_RULE_SETUP
 #line 51 "/home/arch_/Work/Compiler-CC/src/lexer/lex.l"
-{ location.next_word(yyleng); return cc_parser::make_CONST_INT(location); }
+{ location.next_word(yyleng); return cc_parser::make_CONST_INT(std::stoi(yytext), location); }
 	YY_BREAK
 case 26:
 YY_RULE_SETUP
 #line 52 "/home/arch_/Work/Compiler-CC/src/lexer/lex.l"
-{ location.next_word(yyleng); return cc_parser::make_CONST_FLOAT(location); }
+{ location.next_word(yyleng); return cc_parser::make_CONST_FLOAT(std::stof(yytext), location); }
 	YY_BREAK
 case 27:
 YY_RULE_SETUP
 #line 53 "/home/arch_/Work/Compiler-CC/src/lexer/lex.l"
-{ location.next_word(yyleng); return cc_parser::make_CONST_CHAR(location); }
+{ location.next_word(yyleng); return cc_parser::make_CONST_CHAR(yytext[0], location); }
 	YY_BREAK
 case 28:
 /* rule 28 can match eol */
@@ -862,7 +862,7 @@ YY_RULE_SETUP
 case 29:
 YY_RULE_SETUP
 #line 55 "/home/arch_/Work/Compiler-CC/src/lexer/lex.l"
-{ std::cout<<yytext<<std::endl; location.next_word(yyleng); return cc_parser::make_CONST_ID(location); }
+{ location.next_word(yyleng); return cc_parser::make_CONST_ID(yytext, location); }
 	YY_BREAK
 case 30:
 YY_RULE_SETUP

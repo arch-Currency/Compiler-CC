@@ -37,10 +37,10 @@ OPERATOR ([+*/%=,-;[\](){}])
 "!"         { location.next_word(yyleng); return cc_parser::make_NOT(location); }
 "&&"        { location.next_word(yyleng); return cc_parser::make_AND(location); }
 "||"        { location.next_word(yyleng); return cc_parser::make_OR(location); }
-"void"      { location.next_word(yyleng); return cc_parser::make_VOID(location); }
-"int"       { location.next_word(yyleng); return cc_parser::make_INT(location); }
-"float"     { location.next_word(yyleng); return cc_parser::make_FLOAT(location); }
-"char"      { location.next_word(yyleng); return cc_parser::make_CHAR(location); }
+"void"      { location.next_word(yyleng); return cc_parser::make_VOID("void",location); }
+"int"       { location.next_word(yyleng); return cc_parser::make_INT("int",location); }
+"float"     { location.next_word(yyleng); return cc_parser::make_FLOAT("float",location); }
+"char"      { location.next_word(yyleng); return cc_parser::make_CHAR("char",location); }
 "while"     { location.next_word(yyleng); return cc_parser::make_WHILE(location); }
 "for"       { location.next_word(yyleng); return cc_parser::make_FOR(location); }
 "if"        { location.next_word(yyleng); return cc_parser::make_IF(location); }
@@ -48,11 +48,11 @@ OPERATOR ([+*/%=,-;[\](){}])
 "return"    { location.next_word(yyleng); return cc_parser::make_RETURN(location); }
 "break"     { location.next_word(yyleng); return cc_parser::make_BREAK(location); }
 "continue"  { location.next_word(yyleng); return cc_parser::make_CONTINUE(location); }
-{INT}       { location.next_word(yyleng); return cc_parser::make_CONST_INT(location); }
-{FLOAT}     { location.next_word(yyleng); return cc_parser::make_CONST_FLOAT(location); }
-{CHAR}      { location.next_word(yyleng); return cc_parser::make_CONST_CHAR(location); }
+{INT}       { location.next_word(yyleng); return cc_parser::make_CONST_INT(std::stoi(yytext), location); }
+{FLOAT}     { location.next_word(yyleng); return cc_parser::make_CONST_FLOAT(std::stof(yytext), location); }
+{CHAR}      { location.next_word(yyleng); return cc_parser::make_CONST_CHAR(yytext[0], location); }
 {STRING}    { location.next_word(yyleng); return cc_parser::make_CONST_STRING(location); }
-{ID}        { std::cout<<yytext<<std::endl; location.next_word(yyleng); return cc_parser::make_CONST_ID(location); }
+{ID}        { location.next_word(yyleng); return cc_parser::make_CONST_ID(yytext, location); }
 {_COMMENT}  { location.next_word(yyleng); }
 {COMMENT}   { location.next_word(yyleng); }
 {OPERATOR} {

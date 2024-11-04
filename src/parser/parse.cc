@@ -35,7 +35,7 @@
 // private implementation details that can be changed or removed.
 
 // "%code top" blocks.
-#line 28 "/home/arch_/Work/Compiler-CC/src/parser/parse.yy"
+#line 31 "/home/arch_/Work/Compiler-CC/src/parser/parse.yy"
 
   #include "lex.hh"
 
@@ -48,7 +48,7 @@
 
 
 // Unqualified %code blocks.
-#line 32 "/home/arch_/Work/Compiler-CC/src/parser/parse.yy"
+#line 35 "/home/arch_/Work/Compiler-CC/src/parser/parse.yy"
 
   #define yylex lexer.lex
 
@@ -213,6 +213,26 @@ namespace cc_ {
   {
     switch (that.kind ())
     {
+      case symbol_kind::S_CONST_CHAR: // CONST_CHAR
+        value.YY_MOVE_OR_COPY< char > (YY_MOVE (that.value));
+        break;
+
+      case symbol_kind::S_CONST_FLOAT: // CONST_FLOAT
+        value.YY_MOVE_OR_COPY< float > (YY_MOVE (that.value));
+        break;
+
+      case symbol_kind::S_CONST_INT: // CONST_INT
+        value.YY_MOVE_OR_COPY< int > (YY_MOVE (that.value));
+        break;
+
+      case symbol_kind::S_CONST_ID: // CONST_ID
+      case symbol_kind::S_VOID: // VOID
+      case symbol_kind::S_INT: // INT
+      case symbol_kind::S_FLOAT: // FLOAT
+      case symbol_kind::S_CHAR: // CHAR
+        value.YY_MOVE_OR_COPY< std::string > (YY_MOVE (that.value));
+        break;
+
       default:
         break;
     }
@@ -228,6 +248,26 @@ namespace cc_ {
   {
     switch (that.kind ())
     {
+      case symbol_kind::S_CONST_CHAR: // CONST_CHAR
+        value.move< char > (YY_MOVE (that.value));
+        break;
+
+      case symbol_kind::S_CONST_FLOAT: // CONST_FLOAT
+        value.move< float > (YY_MOVE (that.value));
+        break;
+
+      case symbol_kind::S_CONST_INT: // CONST_INT
+        value.move< int > (YY_MOVE (that.value));
+        break;
+
+      case symbol_kind::S_CONST_ID: // CONST_ID
+      case symbol_kind::S_VOID: // VOID
+      case symbol_kind::S_INT: // INT
+      case symbol_kind::S_FLOAT: // FLOAT
+      case symbol_kind::S_CHAR: // CHAR
+        value.move< std::string > (YY_MOVE (that.value));
+        break;
+
       default:
         break;
     }
@@ -243,6 +283,26 @@ namespace cc_ {
     state = that.state;
     switch (that.kind ())
     {
+      case symbol_kind::S_CONST_CHAR: // CONST_CHAR
+        value.copy< char > (that.value);
+        break;
+
+      case symbol_kind::S_CONST_FLOAT: // CONST_FLOAT
+        value.copy< float > (that.value);
+        break;
+
+      case symbol_kind::S_CONST_INT: // CONST_INT
+        value.copy< int > (that.value);
+        break;
+
+      case symbol_kind::S_CONST_ID: // CONST_ID
+      case symbol_kind::S_VOID: // VOID
+      case symbol_kind::S_INT: // INT
+      case symbol_kind::S_FLOAT: // FLOAT
+      case symbol_kind::S_CHAR: // CHAR
+        value.copy< std::string > (that.value);
+        break;
+
       default:
         break;
     }
@@ -257,6 +317,26 @@ namespace cc_ {
     state = that.state;
     switch (that.kind ())
     {
+      case symbol_kind::S_CONST_CHAR: // CONST_CHAR
+        value.move< char > (that.value);
+        break;
+
+      case symbol_kind::S_CONST_FLOAT: // CONST_FLOAT
+        value.move< float > (that.value);
+        break;
+
+      case symbol_kind::S_CONST_INT: // CONST_INT
+        value.move< int > (that.value);
+        break;
+
+      case symbol_kind::S_CONST_ID: // CONST_ID
+      case symbol_kind::S_VOID: // VOID
+      case symbol_kind::S_INT: // INT
+      case symbol_kind::S_FLOAT: // FLOAT
+      case symbol_kind::S_CHAR: // CHAR
+        value.move< std::string > (that.value);
+        break;
+
       default:
         break;
     }
@@ -516,6 +596,26 @@ namespace cc_ {
          when using variants.  */
       switch (yyr1_[yyn])
     {
+      case symbol_kind::S_CONST_CHAR: // CONST_CHAR
+        yylhs.value.emplace< char > ();
+        break;
+
+      case symbol_kind::S_CONST_FLOAT: // CONST_FLOAT
+        yylhs.value.emplace< float > ();
+        break;
+
+      case symbol_kind::S_CONST_INT: // CONST_INT
+        yylhs.value.emplace< int > ();
+        break;
+
+      case symbol_kind::S_CONST_ID: // CONST_ID
+      case symbol_kind::S_VOID: // VOID
+      case symbol_kind::S_INT: // INT
+      case symbol_kind::S_FLOAT: // FLOAT
+      case symbol_kind::S_CHAR: // CHAR
+        yylhs.value.emplace< std::string > ();
+        break;
+
       default:
         break;
     }
@@ -537,7 +637,7 @@ namespace cc_ {
           switch (yyn)
             {
 
-#line 541 "/home/arch_/Work/Compiler-CC/src/parser/parse.cc"
+#line 641 "/home/arch_/Work/Compiler-CC/src/parser/parse.cc"
 
             default:
               break;
@@ -1129,14 +1229,14 @@ namespace cc_ {
   const unsigned char
   cc_parser::yyrline_[] =
   {
-       0,    67,    67,    71,    72,    76,    77,    81,    81,    81,
-      81,    85,    86,    90,    91,    95,    96,   100,   101,   105,
-     109,   113,   114,   118,   119,   120,   121,   122,   123,   124,
-     125,   126,   127,   131,   132,   136,   139,   140,   143,   144,
-     147,   148,   149,   150,   151,   152,   153,   154,   155,   156,
-     157,   158,   159,   160,   161,   162,   163,   164,   165,   166,
-     167,   168,   169,   170,   171,   172,   173,   174,   175,   176,
-     180,   181
+       0,    73,    73,    77,    78,    82,    83,    87,    88,    89,
+      90,    94,    95,    99,   100,   104,   105,   109,   110,   114,
+     118,   122,   123,   127,   128,   129,   130,   131,   132,   133,
+     134,   135,   136,   140,   141,   145,   148,   149,   152,   153,
+     156,   157,   158,   159,   160,   161,   162,   163,   164,   165,
+     166,   167,   168,   169,   170,   171,   172,   173,   174,   175,
+     176,   177,   178,   179,   180,   181,   182,   183,   184,   185,
+     189,   190
   };
 
   void
@@ -1169,9 +1269,9 @@ namespace cc_ {
 
 #line 14 "/home/arch_/Work/Compiler-CC/src/parser/parse.yy"
 } // cc_
-#line 1173 "/home/arch_/Work/Compiler-CC/src/parser/parse.cc"
+#line 1273 "/home/arch_/Work/Compiler-CC/src/parser/parse.cc"
 
-#line 184 "/home/arch_/Work/Compiler-CC/src/parser/parse.yy"
+#line 193 "/home/arch_/Work/Compiler-CC/src/parser/parse.yy"
 
 
 void cc_::cc_parser::error(const Location &loc, const std::string &msg) {

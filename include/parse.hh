@@ -49,13 +49,16 @@
 
     #include <iostream>
     #include <string>
+    #include <memory>
     #include "location.h"
+    #include "ast.hh"
     namespace cc_
     {
         class cc_Lexer;
     }
+    // extern unique_ptr<programNode> startNode;
 
-#line 59 "/home/arch_/Work/Compiler-CC/src/parser/parse.hh"
+#line 62 "/home/arch_/Work/Compiler-CC/src/parser/parse.hh"
 
 # include <cassert>
 # include <cstdlib> // std::abort
@@ -196,7 +199,7 @@
 
 #line 14 "/home/arch_/Work/Compiler-CC/src/parser/parse.yy"
 namespace cc_ {
-#line 200 "/home/arch_/Work/Compiler-CC/src/parser/parse.hh"
+#line 203 "/home/arch_/Work/Compiler-CC/src/parser/parse.hh"
 
 
 
@@ -414,7 +417,23 @@ namespace cc_ {
 
     /// An auxiliary type to compute the largest semantic type.
     union union_type
-    {    };
+    {
+      // CONST_CHAR
+      char dummy1[sizeof (char)];
+
+      // CONST_FLOAT
+      char dummy2[sizeof (float)];
+
+      // CONST_INT
+      char dummy3[sizeof (int)];
+
+      // CONST_ID
+      // VOID
+      // INT
+      // FLOAT
+      // CHAR
+      char dummy4[sizeof (std::string)];
+    };
 
     /// The size of the largest semantic type.
     enum { size = sizeof (union_type) };
@@ -632,6 +651,26 @@ namespace cc_ {
       {
         switch (this->kind ())
     {
+      case symbol_kind::S_CONST_CHAR: // CONST_CHAR
+        value.move< char > (std::move (that.value));
+        break;
+
+      case symbol_kind::S_CONST_FLOAT: // CONST_FLOAT
+        value.move< float > (std::move (that.value));
+        break;
+
+      case symbol_kind::S_CONST_INT: // CONST_INT
+        value.move< int > (std::move (that.value));
+        break;
+
+      case symbol_kind::S_CONST_ID: // CONST_ID
+      case symbol_kind::S_VOID: // VOID
+      case symbol_kind::S_INT: // INT
+      case symbol_kind::S_FLOAT: // FLOAT
+      case symbol_kind::S_CHAR: // CHAR
+        value.move< std::string > (std::move (that.value));
+        break;
+
       default:
         break;
     }
@@ -651,6 +690,62 @@ namespace cc_ {
 #else
       basic_symbol (typename Base::kind_type t, const location_type& l)
         : Base (t)
+        , location (l)
+      {}
+#endif
+
+#if 201103L <= YY_CPLUSPLUS
+      basic_symbol (typename Base::kind_type t, char&& v, location_type&& l)
+        : Base (t)
+        , value (std::move (v))
+        , location (std::move (l))
+      {}
+#else
+      basic_symbol (typename Base::kind_type t, const char& v, const location_type& l)
+        : Base (t)
+        , value (v)
+        , location (l)
+      {}
+#endif
+
+#if 201103L <= YY_CPLUSPLUS
+      basic_symbol (typename Base::kind_type t, float&& v, location_type&& l)
+        : Base (t)
+        , value (std::move (v))
+        , location (std::move (l))
+      {}
+#else
+      basic_symbol (typename Base::kind_type t, const float& v, const location_type& l)
+        : Base (t)
+        , value (v)
+        , location (l)
+      {}
+#endif
+
+#if 201103L <= YY_CPLUSPLUS
+      basic_symbol (typename Base::kind_type t, int&& v, location_type&& l)
+        : Base (t)
+        , value (std::move (v))
+        , location (std::move (l))
+      {}
+#else
+      basic_symbol (typename Base::kind_type t, const int& v, const location_type& l)
+        : Base (t)
+        , value (v)
+        , location (l)
+      {}
+#endif
+
+#if 201103L <= YY_CPLUSPLUS
+      basic_symbol (typename Base::kind_type t, std::string&& v, location_type&& l)
+        : Base (t)
+        , value (std::move (v))
+        , location (std::move (l))
+      {}
+#else
+      basic_symbol (typename Base::kind_type t, const std::string& v, const location_type& l)
+        : Base (t)
+        , value (v)
         , location (l)
       {}
 #endif
@@ -679,6 +774,26 @@ namespace cc_ {
         // Value type destructor.
 switch (yykind)
     {
+      case symbol_kind::S_CONST_CHAR: // CONST_CHAR
+        value.template destroy< char > ();
+        break;
+
+      case symbol_kind::S_CONST_FLOAT: // CONST_FLOAT
+        value.template destroy< float > ();
+        break;
+
+      case symbol_kind::S_CONST_INT: // CONST_INT
+        value.template destroy< int > ();
+        break;
+
+      case symbol_kind::S_CONST_ID: // CONST_ID
+      case symbol_kind::S_VOID: // VOID
+      case symbol_kind::S_INT: // INT
+      case symbol_kind::S_FLOAT: // FLOAT
+      case symbol_kind::S_CHAR: // CHAR
+        value.template destroy< std::string > ();
+        break;
+
       default:
         break;
     }
@@ -777,7 +892,57 @@ switch (yykind)
       {
 #if !defined _MSC_VER || defined __clang__
         YY_ASSERT (tok == token::YYEOF
-                   || (token::YYerror <= tok && tok <= token::LOWER_ELSE));
+                   || (token::YYerror <= tok && tok <= token::RS)
+                   || tok == token::CONST_STRING
+                   || (token::WHILE <= tok && tok <= token::LOWER_ELSE));
+#endif
+      }
+#if 201103L <= YY_CPLUSPLUS
+      symbol_type (int tok, char v, location_type l)
+        : super_type (token_kind_type (tok), std::move (v), std::move (l))
+#else
+      symbol_type (int tok, const char& v, const location_type& l)
+        : super_type (token_kind_type (tok), v, l)
+#endif
+      {
+#if !defined _MSC_VER || defined __clang__
+        YY_ASSERT (tok == token::CONST_CHAR);
+#endif
+      }
+#if 201103L <= YY_CPLUSPLUS
+      symbol_type (int tok, float v, location_type l)
+        : super_type (token_kind_type (tok), std::move (v), std::move (l))
+#else
+      symbol_type (int tok, const float& v, const location_type& l)
+        : super_type (token_kind_type (tok), v, l)
+#endif
+      {
+#if !defined _MSC_VER || defined __clang__
+        YY_ASSERT (tok == token::CONST_FLOAT);
+#endif
+      }
+#if 201103L <= YY_CPLUSPLUS
+      symbol_type (int tok, int v, location_type l)
+        : super_type (token_kind_type (tok), std::move (v), std::move (l))
+#else
+      symbol_type (int tok, const int& v, const location_type& l)
+        : super_type (token_kind_type (tok), v, l)
+#endif
+      {
+#if !defined _MSC_VER || defined __clang__
+        YY_ASSERT (tok == token::CONST_INT);
+#endif
+      }
+#if 201103L <= YY_CPLUSPLUS
+      symbol_type (int tok, std::string v, location_type l)
+        : super_type (token_kind_type (tok), std::move (v), std::move (l))
+#else
+      symbol_type (int tok, const std::string& v, const location_type& l)
+        : super_type (token_kind_type (tok), v, l)
+#endif
+      {
+#if !defined _MSC_VER || defined __clang__
+        YY_ASSERT ((token::CONST_ID <= tok && tok <= token::CHAR));
 #endif
       }
     };
@@ -1071,46 +1236,46 @@ switch (yykind)
 #if 201103L <= YY_CPLUSPLUS
       static
       symbol_type
-      make_CONST_INT (location_type l)
+      make_CONST_INT (int v, location_type l)
       {
-        return symbol_type (token::CONST_INT, std::move (l));
+        return symbol_type (token::CONST_INT, std::move (v), std::move (l));
       }
 #else
       static
       symbol_type
-      make_CONST_INT (const location_type& l)
+      make_CONST_INT (const int& v, const location_type& l)
       {
-        return symbol_type (token::CONST_INT, l);
+        return symbol_type (token::CONST_INT, v, l);
       }
 #endif
 #if 201103L <= YY_CPLUSPLUS
       static
       symbol_type
-      make_CONST_FLOAT (location_type l)
+      make_CONST_FLOAT (float v, location_type l)
       {
-        return symbol_type (token::CONST_FLOAT, std::move (l));
+        return symbol_type (token::CONST_FLOAT, std::move (v), std::move (l));
       }
 #else
       static
       symbol_type
-      make_CONST_FLOAT (const location_type& l)
+      make_CONST_FLOAT (const float& v, const location_type& l)
       {
-        return symbol_type (token::CONST_FLOAT, l);
+        return symbol_type (token::CONST_FLOAT, v, l);
       }
 #endif
 #if 201103L <= YY_CPLUSPLUS
       static
       symbol_type
-      make_CONST_CHAR (location_type l)
+      make_CONST_CHAR (char v, location_type l)
       {
-        return symbol_type (token::CONST_CHAR, std::move (l));
+        return symbol_type (token::CONST_CHAR, std::move (v), std::move (l));
       }
 #else
       static
       symbol_type
-      make_CONST_CHAR (const location_type& l)
+      make_CONST_CHAR (const char& v, const location_type& l)
       {
-        return symbol_type (token::CONST_CHAR, l);
+        return symbol_type (token::CONST_CHAR, v, l);
       }
 #endif
 #if 201103L <= YY_CPLUSPLUS
@@ -1131,76 +1296,76 @@ switch (yykind)
 #if 201103L <= YY_CPLUSPLUS
       static
       symbol_type
-      make_CONST_ID (location_type l)
+      make_CONST_ID (std::string v, location_type l)
       {
-        return symbol_type (token::CONST_ID, std::move (l));
+        return symbol_type (token::CONST_ID, std::move (v), std::move (l));
       }
 #else
       static
       symbol_type
-      make_CONST_ID (const location_type& l)
+      make_CONST_ID (const std::string& v, const location_type& l)
       {
-        return symbol_type (token::CONST_ID, l);
+        return symbol_type (token::CONST_ID, v, l);
       }
 #endif
 #if 201103L <= YY_CPLUSPLUS
       static
       symbol_type
-      make_VOID (location_type l)
+      make_VOID (std::string v, location_type l)
       {
-        return symbol_type (token::VOID, std::move (l));
+        return symbol_type (token::VOID, std::move (v), std::move (l));
       }
 #else
       static
       symbol_type
-      make_VOID (const location_type& l)
+      make_VOID (const std::string& v, const location_type& l)
       {
-        return symbol_type (token::VOID, l);
+        return symbol_type (token::VOID, v, l);
       }
 #endif
 #if 201103L <= YY_CPLUSPLUS
       static
       symbol_type
-      make_INT (location_type l)
+      make_INT (std::string v, location_type l)
       {
-        return symbol_type (token::INT, std::move (l));
+        return symbol_type (token::INT, std::move (v), std::move (l));
       }
 #else
       static
       symbol_type
-      make_INT (const location_type& l)
+      make_INT (const std::string& v, const location_type& l)
       {
-        return symbol_type (token::INT, l);
+        return symbol_type (token::INT, v, l);
       }
 #endif
 #if 201103L <= YY_CPLUSPLUS
       static
       symbol_type
-      make_FLOAT (location_type l)
+      make_FLOAT (std::string v, location_type l)
       {
-        return symbol_type (token::FLOAT, std::move (l));
+        return symbol_type (token::FLOAT, std::move (v), std::move (l));
       }
 #else
       static
       symbol_type
-      make_FLOAT (const location_type& l)
+      make_FLOAT (const std::string& v, const location_type& l)
       {
-        return symbol_type (token::FLOAT, l);
+        return symbol_type (token::FLOAT, v, l);
       }
 #endif
 #if 201103L <= YY_CPLUSPLUS
       static
       symbol_type
-      make_CHAR (location_type l)
+      make_CHAR (std::string v, location_type l)
       {
-        return symbol_type (token::CHAR, std::move (l));
+        return symbol_type (token::CHAR, std::move (v), std::move (l));
       }
 #else
       static
       symbol_type
-      make_CHAR (const location_type& l)
+      make_CHAR (const std::string& v, const location_type& l)
       {
-        return symbol_type (token::CHAR, l);
+        return symbol_type (token::CHAR, v, l);
       }
 #endif
 #if 201103L <= YY_CPLUSPLUS
@@ -1951,6 +2116,26 @@ switch (yykind)
   {
     switch (this->kind ())
     {
+      case symbol_kind::S_CONST_CHAR: // CONST_CHAR
+        value.copy< char > (YY_MOVE (that.value));
+        break;
+
+      case symbol_kind::S_CONST_FLOAT: // CONST_FLOAT
+        value.copy< float > (YY_MOVE (that.value));
+        break;
+
+      case symbol_kind::S_CONST_INT: // CONST_INT
+        value.copy< int > (YY_MOVE (that.value));
+        break;
+
+      case symbol_kind::S_CONST_ID: // CONST_ID
+      case symbol_kind::S_VOID: // VOID
+      case symbol_kind::S_INT: // INT
+      case symbol_kind::S_FLOAT: // FLOAT
+      case symbol_kind::S_CHAR: // CHAR
+        value.copy< std::string > (YY_MOVE (that.value));
+        break;
+
       default:
         break;
     }
@@ -1982,6 +2167,26 @@ switch (yykind)
     super_type::move (s);
     switch (this->kind ())
     {
+      case symbol_kind::S_CONST_CHAR: // CONST_CHAR
+        value.move< char > (YY_MOVE (s.value));
+        break;
+
+      case symbol_kind::S_CONST_FLOAT: // CONST_FLOAT
+        value.move< float > (YY_MOVE (s.value));
+        break;
+
+      case symbol_kind::S_CONST_INT: // CONST_INT
+        value.move< int > (YY_MOVE (s.value));
+        break;
+
+      case symbol_kind::S_CONST_ID: // CONST_ID
+      case symbol_kind::S_VOID: // VOID
+      case symbol_kind::S_INT: // INT
+      case symbol_kind::S_FLOAT: // FLOAT
+      case symbol_kind::S_CHAR: // CHAR
+        value.move< std::string > (YY_MOVE (s.value));
+        break;
+
       default:
         break;
     }
@@ -2049,7 +2254,7 @@ switch (yykind)
 
 #line 14 "/home/arch_/Work/Compiler-CC/src/parser/parse.yy"
 } // cc_
-#line 2053 "/home/arch_/Work/Compiler-CC/src/parser/parse.hh"
+#line 2258 "/home/arch_/Work/Compiler-CC/src/parser/parse.hh"
 
 
 
