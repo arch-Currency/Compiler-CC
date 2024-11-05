@@ -17,6 +17,7 @@
 %code requires
 {
     #include <iostream>
+    #include <type_traits>
     #include <string>
     #include <memory>
     #include "location.h"
@@ -89,8 +90,8 @@ program:
     ;
 
 extern_def_list:
-    extern_def extern_def_list { $2->children.push_back(move($1)); $$ = move($2); }
-    | /* ε */ { if(!$$) $$ = std::make_unique<programNode>(); }
+    extern_def_list extern_def { $1->children.push_back(move($2)); $$ = move($1); }
+    | extern_def { if(!$$) $$ = std::make_unique<programNode>(); $$->children.push_back(move($1)); }
     ;
 
 extern_def:
@@ -121,7 +122,7 @@ func_dec:
     ;
 
 var_list:
-    param_dec COMMA var_list { $3->push_back(move($1)); $$ = move($3); }
+    var_list COMMA param_dec { $1->push_back(move($3)); $$ = move($1); }
     | param_dec { if(!$$) $$ = std::make_unique<std::vector<std::pair<std::string, ptr<varDecNode>>>>(); $$->push_back(move($1)); }
     ;                                                                                                 
 						
@@ -134,8 +135,8 @@ compound_stat:
     ;
 
 stmt_list:
-    stmt stmt_list { $2->push_back(move($1)); $$ = move($2);  }
-    | /* ε */ { if(!$$) $$ = std::make_unique<std::vector<ptr<stmtNode>>>(); }
+    stmt_list stmt { $1->push_back(move($2)); $$ = move($1);  }
+    | stmt { if(!$$) $$ = std::make_unique<std::vector<ptr<stmtNode>>>(); $$->push_back(move($1)); }
     ;	
 
 stmt:
@@ -153,8 +154,8 @@ stmt:
     ;
 
 def_list:
-    def def_list { $2->push_back(move($1)); $$ = move($2); }
-    | /* ε */ { if(!$$) $$ = std::make_unique<std::vector<ptr<innerVarDefNode>>>(); }
+    def_list def  { $1->push_back(move($2)); $$ = move($1); }
+    | def  { if(!$$) $$ = std::make_unique<std::vector<ptr<innerVarDefNode>>>(); $$->push_back(move($1)); }
     ;
 
 def:
@@ -162,8 +163,8 @@ def:
     ;
 
 dec_list:
-    dec { if(!$$) $$ = std::make_unique<std::vector<ptr<innerVarDecNode>>>(); $$->push_back(move($1)); }
-    | dec COMMA dec_list { $3->push_back(move($1)); $$ = move($3); }
+     dec_list COMMA dec { $1->push_back(move($3)); $$ = move($1); }
+     | dec { if(!$$) $$ = std::make_unique<std::vector<ptr<innerVarDecNode>>>(); $$->push_back(move($1)); }
     ;
 
 dec:
@@ -188,14 +189,15 @@ exp:
     | exp DIV exp { if(!$$) $$ = std::make_unique<expNode>(); $$->type = $2; $$->children.push_back(move($1)); $$->children.push_back(move($3)); }
     | exp MOD exp { if(!$$) $$ = std::make_unique<expNode>(); $$->type = $2; $$->children.push_back(move($1)); $$->children.push_back(move($3)); }
     | MINUS exp  %prec UMIUS { if(!$$) $$ = std::make_unique<expNode>(); $$->type = "Negative"; $$->children.push_back(move($2)); }
-    | CONST_ID { if(!$$) $$ = std::make_unique<expNode>(); $$->type = "CONST_ID"; $$->var = $1; }
-    | CONST_INT { if(!$$) $$ = std::make_unique<expNode>(); $$->type = "CONST_INT"; $$->var = $1; }
-    | CONST_FLOAT { if(!$$) $$ = std::make_unique<expNode>(); $$->type = "CONST_FLOAT"; $$->var = $1; }
-    | CONST_STRING { if(!$$) $$ = std::make_unique<expNode>(); $$->type = "CONST_STRING"; $$->var = $1; }
+    | CONST_CHAR { if(!$$) $$ = std::make_unique<expNode>(); $$->type = "char"; $$->var = $1; }
+    | CONST_ID { if(!$$) $$ = std::make_unique<expNode>(); $$->type = "id"; $$->var = $1; }
+    | CONST_INT { if(!$$) $$ = std::make_unique<expNode>(); $$->type = "int"; $$->var = $1; }
+    | CONST_FLOAT { if(!$$) $$ = std::make_unique<expNode>(); $$->type = "float"; $$->var = $1; }
+    | CONST_STRING { if(!$$) $$ = std::make_unique<expNode>(); $$->type = "string"; $$->var = $1; }
     | LP exp RP { if(!$$) $$ = std::make_unique<expNode>(); $$->type = "Prior"; $$->children.push_back(move($2)); }
     | NOT exp { if(!$$) $$ = std::make_unique<expNode>(); $$->type = "NOT"; $$->children.push_back(move($2)); }
-    | CONST_ID LP args RP { if(!$$) $$ = std::make_unique<expNode>(); $$->type = "FUNC_CALL"; $$->var = $1; $$->args = move(*$3); }
-    | CONST_ID LP RP  { if(!$$) $$ = std::make_unique<expNode>(); $$->type = "FUNC_CALL"; $$->var = $1; }
+    | CONST_ID LP args RP { if(!$$) $$ = std::make_unique<expNode>(); $$->type = "function"; $$->var = $1; $$->args = move(*$3); }
+    | CONST_ID LP RP  { if(!$$) $$ = std::make_unique<expNode>(); $$->type = "function"; $$->var = $1; }
     | exp LS exp { if(!$$) $$ = std::make_unique<expNode>(); $$->type = $2; $$->children.push_back(move($1)); $$->children.push_back(move($3)); }
     | exp RS exp { if(!$$) $$ = std::make_unique<expNode>(); $$->type = $2; $$->children.push_back(move($1)); $$->children.push_back(move($3)); }
     | INC exp { if(!$$) $$ = std::make_unique<expNode>(); $$->type = "F_INC"; $$->children.push_back(move($2)); }

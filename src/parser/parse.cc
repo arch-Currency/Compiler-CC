@@ -35,7 +35,7 @@
 // private implementation details that can be changed or removed.
 
 // "%code top" blocks.
-#line 34 "/home/arch_/Work/Compiler-CC/src/parser/parse.yy"
+#line 35 "/home/arch_/Work/Compiler-CC/src/parser/parse.yy"
 
   #include "lex.hh"
 
@@ -48,7 +48,7 @@
 
 
 // Unqualified %code blocks.
-#line 38 "/home/arch_/Work/Compiler-CC/src/parser/parse.yy"
+#line 39 "/home/arch_/Work/Compiler-CC/src/parser/parse.yy"
 
   #define yylex lexer.lex
 
@@ -1142,433 +1142,439 @@ namespace cc_ {
           switch (yyn)
             {
   case 2: // program: extern_def_list
-#line 88 "/home/arch_/Work/Compiler-CC/src/parser/parse.yy"
+#line 89 "/home/arch_/Work/Compiler-CC/src/parser/parse.yy"
                     { yylhs.value.as < ptr<programNode> > () = move(yystack_[0].value.as < ptr<programNode> > ()); startNode = move(yylhs.value.as < ptr<programNode> > ()); }
 #line 1148 "/home/arch_/Work/Compiler-CC/src/parser/parse.cc"
     break;
 
-  case 3: // extern_def_list: extern_def extern_def_list
-#line 92 "/home/arch_/Work/Compiler-CC/src/parser/parse.yy"
-                               { yystack_[0].value.as < ptr<programNode> > ()->children.push_back(move(yystack_[1].value.as < ptr<externDefNode> > ())); yylhs.value.as < ptr<programNode> > () = move(yystack_[0].value.as < ptr<programNode> > ()); }
+  case 3: // extern_def_list: extern_def_list extern_def
+#line 93 "/home/arch_/Work/Compiler-CC/src/parser/parse.yy"
+                               { yystack_[1].value.as < ptr<programNode> > ()->children.push_back(move(yystack_[0].value.as < ptr<externDefNode> > ())); yylhs.value.as < ptr<programNode> > () = move(yystack_[1].value.as < ptr<programNode> > ()); }
 #line 1154 "/home/arch_/Work/Compiler-CC/src/parser/parse.cc"
     break;
 
-  case 4: // extern_def_list: %empty
-#line 93 "/home/arch_/Work/Compiler-CC/src/parser/parse.yy"
-               { if(!yylhs.value.as < ptr<programNode> > ()) yylhs.value.as < ptr<programNode> > () = std::make_unique<programNode>(); }
+  case 4: // extern_def_list: extern_def
+#line 94 "/home/arch_/Work/Compiler-CC/src/parser/parse.yy"
+                 { if(!yylhs.value.as < ptr<programNode> > ()) yylhs.value.as < ptr<programNode> > () = std::make_unique<programNode>(); yylhs.value.as < ptr<programNode> > ()->children.push_back(move(yystack_[0].value.as < ptr<externDefNode> > ())); }
 #line 1160 "/home/arch_/Work/Compiler-CC/src/parser/parse.cc"
     break;
 
   case 5: // extern_def: type_spec extern_dec_list SEMI
-#line 97 "/home/arch_/Work/Compiler-CC/src/parser/parse.yy"
+#line 98 "/home/arch_/Work/Compiler-CC/src/parser/parse.yy"
                                    { if(!yylhs.value.as < ptr<externDefNode> > ()) yylhs.value.as < ptr<externDefNode> > () = std::make_unique<externDefNode>(); ptr<externVarDefNode> temp = std::make_unique<externVarDefNode>(); temp->type = yystack_[2].value.as < std::string > (); temp->children= move(*yystack_[1].value.as < ptr<std::vector<ptr<varDecNode>>> > ()); yylhs.value.as < ptr<externDefNode> > () = move(temp); }
 #line 1166 "/home/arch_/Work/Compiler-CC/src/parser/parse.cc"
     break;
 
   case 6: // extern_def: type_spec func_dec compound_stat
-#line 98 "/home/arch_/Work/Compiler-CC/src/parser/parse.yy"
+#line 99 "/home/arch_/Work/Compiler-CC/src/parser/parse.yy"
                                        { if(!yylhs.value.as < ptr<externDefNode> > ()) yylhs.value.as < ptr<externDefNode> > () = std::make_unique<externDefNode>(); ptr<externFuncDefNode> temp = std::make_unique<externFuncDefNode>(); temp->type = yystack_[2].value.as < std::string > (); temp->funcDec = move(yystack_[1].value.as < ptr<funcDecNode> > ()); temp->compound = move(yystack_[0].value.as < ptr<cmpdNode> > ()); yylhs.value.as < ptr<externDefNode> > () = move(temp); }
 #line 1172 "/home/arch_/Work/Compiler-CC/src/parser/parse.cc"
     break;
 
   case 7: // type_spec: INT
-#line 102 "/home/arch_/Work/Compiler-CC/src/parser/parse.yy"
+#line 103 "/home/arch_/Work/Compiler-CC/src/parser/parse.yy"
         { yylhs.value.as < std::string > () = move(yystack_[0].value.as < std::string > ()); }
 #line 1178 "/home/arch_/Work/Compiler-CC/src/parser/parse.cc"
     break;
 
   case 8: // type_spec: FLOAT
-#line 103 "/home/arch_/Work/Compiler-CC/src/parser/parse.yy"
+#line 104 "/home/arch_/Work/Compiler-CC/src/parser/parse.yy"
             { yylhs.value.as < std::string > () = move(yystack_[0].value.as < std::string > ()); }
 #line 1184 "/home/arch_/Work/Compiler-CC/src/parser/parse.cc"
     break;
 
   case 9: // type_spec: VOID
-#line 104 "/home/arch_/Work/Compiler-CC/src/parser/parse.yy"
+#line 105 "/home/arch_/Work/Compiler-CC/src/parser/parse.yy"
            { yylhs.value.as < std::string > () = move(yystack_[0].value.as < std::string > ()); }
 #line 1190 "/home/arch_/Work/Compiler-CC/src/parser/parse.cc"
     break;
 
   case 10: // type_spec: CHAR
-#line 105 "/home/arch_/Work/Compiler-CC/src/parser/parse.yy"
+#line 106 "/home/arch_/Work/Compiler-CC/src/parser/parse.yy"
            { yylhs.value.as < std::string > () = move(yystack_[0].value.as < std::string > ()); }
 #line 1196 "/home/arch_/Work/Compiler-CC/src/parser/parse.cc"
     break;
 
   case 11: // extern_dec_list: var_dec
-#line 109 "/home/arch_/Work/Compiler-CC/src/parser/parse.yy"
+#line 110 "/home/arch_/Work/Compiler-CC/src/parser/parse.yy"
              { if(!yylhs.value.as < ptr<std::vector<ptr<varDecNode>>> > ()) yylhs.value.as < ptr<std::vector<ptr<varDecNode>>> > () = std::make_unique<std::vector<ptr<varDecNode>>>(); yylhs.value.as < ptr<std::vector<ptr<varDecNode>>> > ()->push_back(move(yystack_[0].value.as < ptr<varDecNode> > ())); }
 #line 1202 "/home/arch_/Work/Compiler-CC/src/parser/parse.cc"
     break;
 
   case 12: // extern_dec_list: var_dec COMMA extern_dec_list
-#line 110 "/home/arch_/Work/Compiler-CC/src/parser/parse.yy"
+#line 111 "/home/arch_/Work/Compiler-CC/src/parser/parse.yy"
                                     { yystack_[0].value.as < ptr<std::vector<ptr<varDecNode>>> > ()->push_back(move(yystack_[2].value.as < ptr<varDecNode> > ())); yylhs.value.as < ptr<std::vector<ptr<varDecNode>>> > () = move(yystack_[0].value.as < ptr<std::vector<ptr<varDecNode>>> > ()); }
 #line 1208 "/home/arch_/Work/Compiler-CC/src/parser/parse.cc"
     break;
 
   case 13: // var_dec: CONST_ID
-#line 114 "/home/arch_/Work/Compiler-CC/src/parser/parse.yy"
+#line 115 "/home/arch_/Work/Compiler-CC/src/parser/parse.yy"
              { if(!yylhs.value.as < ptr<varDecNode> > ()) yylhs.value.as < ptr<varDecNode> > () = std::make_unique<varDecNode>(); yylhs.value.as < ptr<varDecNode> > ()->name = move(yystack_[0].value.as < std::string > ()); }
 #line 1214 "/home/arch_/Work/Compiler-CC/src/parser/parse.cc"
     break;
 
   case 14: // var_dec: var_dec LSB CONST_INT RSB
-#line 115 "/home/arch_/Work/Compiler-CC/src/parser/parse.yy"
+#line 116 "/home/arch_/Work/Compiler-CC/src/parser/parse.yy"
                                 { yystack_[3].value.as < ptr<varDecNode> > ()->dim.push_back(yystack_[1].value.as < int > ()); yylhs.value.as < ptr<varDecNode> > () = move(yystack_[3].value.as < ptr<varDecNode> > ()); }
 #line 1220 "/home/arch_/Work/Compiler-CC/src/parser/parse.cc"
     break;
 
   case 15: // func_dec: CONST_ID LP var_list RP
-#line 119 "/home/arch_/Work/Compiler-CC/src/parser/parse.yy"
+#line 120 "/home/arch_/Work/Compiler-CC/src/parser/parse.yy"
                             { if(!yylhs.value.as < ptr<funcDecNode> > ()) yylhs.value.as < ptr<funcDecNode> > () = std::make_unique<funcDecNode>(); yylhs.value.as < ptr<funcDecNode> > ()->name = yystack_[3].value.as < std::string > (); yylhs.value.as < ptr<funcDecNode> > ()->params = move(*yystack_[1].value.as < ptr<std::vector<std::pair<std::string, ptr<varDecNode>>>> > ()); }
 #line 1226 "/home/arch_/Work/Compiler-CC/src/parser/parse.cc"
     break;
 
   case 16: // func_dec: CONST_ID LP RP
-#line 120 "/home/arch_/Work/Compiler-CC/src/parser/parse.yy"
+#line 121 "/home/arch_/Work/Compiler-CC/src/parser/parse.yy"
                      { if(!yylhs.value.as < ptr<funcDecNode> > ()) yylhs.value.as < ptr<funcDecNode> > () = std::make_unique<funcDecNode>(); yylhs.value.as < ptr<funcDecNode> > ()->name = yystack_[2].value.as < std::string > (); }
 #line 1232 "/home/arch_/Work/Compiler-CC/src/parser/parse.cc"
     break;
 
-  case 17: // var_list: param_dec COMMA var_list
-#line 124 "/home/arch_/Work/Compiler-CC/src/parser/parse.yy"
-                             { yystack_[0].value.as < ptr<std::vector<std::pair<std::string, ptr<varDecNode>>>> > ()->push_back(move(yystack_[2].value.as < std::pair<std::string, ptr<varDecNode>> > ())); yylhs.value.as < ptr<std::vector<std::pair<std::string, ptr<varDecNode>>>> > () = move(yystack_[0].value.as < ptr<std::vector<std::pair<std::string, ptr<varDecNode>>>> > ()); }
+  case 17: // var_list: var_list COMMA param_dec
+#line 125 "/home/arch_/Work/Compiler-CC/src/parser/parse.yy"
+                             { yystack_[2].value.as < ptr<std::vector<std::pair<std::string, ptr<varDecNode>>>> > ()->push_back(move(yystack_[0].value.as < std::pair<std::string, ptr<varDecNode>> > ())); yylhs.value.as < ptr<std::vector<std::pair<std::string, ptr<varDecNode>>>> > () = move(yystack_[2].value.as < ptr<std::vector<std::pair<std::string, ptr<varDecNode>>>> > ()); }
 #line 1238 "/home/arch_/Work/Compiler-CC/src/parser/parse.cc"
     break;
 
   case 18: // var_list: param_dec
-#line 125 "/home/arch_/Work/Compiler-CC/src/parser/parse.yy"
+#line 126 "/home/arch_/Work/Compiler-CC/src/parser/parse.yy"
                 { if(!yylhs.value.as < ptr<std::vector<std::pair<std::string, ptr<varDecNode>>>> > ()) yylhs.value.as < ptr<std::vector<std::pair<std::string, ptr<varDecNode>>>> > () = std::make_unique<std::vector<std::pair<std::string, ptr<varDecNode>>>>(); yylhs.value.as < ptr<std::vector<std::pair<std::string, ptr<varDecNode>>>> > ()->push_back(move(yystack_[0].value.as < std::pair<std::string, ptr<varDecNode>> > ())); }
 #line 1244 "/home/arch_/Work/Compiler-CC/src/parser/parse.cc"
     break;
 
   case 19: // param_dec: type_spec var_dec
-#line 129 "/home/arch_/Work/Compiler-CC/src/parser/parse.yy"
+#line 130 "/home/arch_/Work/Compiler-CC/src/parser/parse.yy"
                       { yylhs.value.as < std::pair<std::string, ptr<varDecNode>> > () = std::make_pair(move(yystack_[1].value.as < std::string > ()), move(yystack_[0].value.as < ptr<varDecNode> > ()));}
 #line 1250 "/home/arch_/Work/Compiler-CC/src/parser/parse.cc"
     break;
 
   case 20: // compound_stat: LB def_list stmt_list RB
-#line 133 "/home/arch_/Work/Compiler-CC/src/parser/parse.yy"
+#line 134 "/home/arch_/Work/Compiler-CC/src/parser/parse.yy"
                              { if(!yylhs.value.as < ptr<cmpdNode> > ()) yylhs.value.as < ptr<cmpdNode> > () = std::make_unique<cmpdNode>(); yylhs.value.as < ptr<cmpdNode> > ()->def_list = move(*yystack_[2].value.as < ptr<std::vector<ptr<innerVarDefNode>>> > ()); yylhs.value.as < ptr<cmpdNode> > ()->stmt_list = move(*yystack_[1].value.as < ptr<std::vector<ptr<stmtNode>>> > ()); }
 #line 1256 "/home/arch_/Work/Compiler-CC/src/parser/parse.cc"
     break;
 
-  case 21: // stmt_list: stmt stmt_list
-#line 137 "/home/arch_/Work/Compiler-CC/src/parser/parse.yy"
-                   { yystack_[0].value.as < ptr<std::vector<ptr<stmtNode>>> > ()->push_back(move(yystack_[1].value.as < ptr<stmtNode> > ())); yylhs.value.as < ptr<std::vector<ptr<stmtNode>>> > () = move(yystack_[0].value.as < ptr<std::vector<ptr<stmtNode>>> > ());  }
+  case 21: // stmt_list: stmt_list stmt
+#line 138 "/home/arch_/Work/Compiler-CC/src/parser/parse.yy"
+                   { yystack_[1].value.as < ptr<std::vector<ptr<stmtNode>>> > ()->push_back(move(yystack_[0].value.as < ptr<stmtNode> > ())); yylhs.value.as < ptr<std::vector<ptr<stmtNode>>> > () = move(yystack_[1].value.as < ptr<std::vector<ptr<stmtNode>>> > ());  }
 #line 1262 "/home/arch_/Work/Compiler-CC/src/parser/parse.cc"
     break;
 
-  case 22: // stmt_list: %empty
-#line 138 "/home/arch_/Work/Compiler-CC/src/parser/parse.yy"
-               { if(!yylhs.value.as < ptr<std::vector<ptr<stmtNode>>> > ()) yylhs.value.as < ptr<std::vector<ptr<stmtNode>>> > () = std::make_unique<std::vector<ptr<stmtNode>>>(); }
+  case 22: // stmt_list: stmt
+#line 139 "/home/arch_/Work/Compiler-CC/src/parser/parse.yy"
+           { if(!yylhs.value.as < ptr<std::vector<ptr<stmtNode>>> > ()) yylhs.value.as < ptr<std::vector<ptr<stmtNode>>> > () = std::make_unique<std::vector<ptr<stmtNode>>>(); yylhs.value.as < ptr<std::vector<ptr<stmtNode>>> > ()->push_back(move(yystack_[0].value.as < ptr<stmtNode> > ())); }
 #line 1268 "/home/arch_/Work/Compiler-CC/src/parser/parse.cc"
     break;
 
   case 23: // stmt: exp SEMI
-#line 142 "/home/arch_/Work/Compiler-CC/src/parser/parse.yy"
+#line 143 "/home/arch_/Work/Compiler-CC/src/parser/parse.yy"
              { if(!yylhs.value.as < ptr<stmtNode> > ()) yylhs.value.as < ptr<stmtNode> > () = std::make_unique<stmtNode>(); yylhs.value.as < ptr<stmtNode> > ()->type = "expression"; yylhs.value.as < ptr<stmtNode> > ()->exp = move(yystack_[1].value.as < ptr<expNode> > ()); }
 #line 1274 "/home/arch_/Work/Compiler-CC/src/parser/parse.cc"
     break;
 
   case 24: // stmt: compound_stat
-#line 143 "/home/arch_/Work/Compiler-CC/src/parser/parse.yy"
+#line 144 "/home/arch_/Work/Compiler-CC/src/parser/parse.yy"
                     { yylhs.value.as < ptr<stmtNode> > () = move(yystack_[0].value.as < ptr<cmpdNode> > ()); }
 #line 1280 "/home/arch_/Work/Compiler-CC/src/parser/parse.cc"
     break;
 
   case 25: // stmt: RETURN exp SEMI
-#line 144 "/home/arch_/Work/Compiler-CC/src/parser/parse.yy"
+#line 145 "/home/arch_/Work/Compiler-CC/src/parser/parse.yy"
                       { if(!yylhs.value.as < ptr<stmtNode> > ()) yylhs.value.as < ptr<stmtNode> > () = std::make_unique<stmtNode>();  yylhs.value.as < ptr<stmtNode> > ()->exp = move(yystack_[1].value.as < ptr<expNode> > ()); yylhs.value.as < ptr<stmtNode> > ()->type = move(yystack_[2].value.as < std::string > ()); }
 #line 1286 "/home/arch_/Work/Compiler-CC/src/parser/parse.cc"
     break;
 
   case 26: // stmt: RETURN SEMI
-#line 145 "/home/arch_/Work/Compiler-CC/src/parser/parse.yy"
+#line 146 "/home/arch_/Work/Compiler-CC/src/parser/parse.yy"
                   { if(!yylhs.value.as < ptr<stmtNode> > ()) yylhs.value.as < ptr<stmtNode> > () = std::make_unique<stmtNode>(); yylhs.value.as < ptr<stmtNode> > ()->type = move(yystack_[1].value.as < std::string > ()); }
 #line 1292 "/home/arch_/Work/Compiler-CC/src/parser/parse.cc"
     break;
 
   case 27: // stmt: IF LP exp RP stmt
-#line 146 "/home/arch_/Work/Compiler-CC/src/parser/parse.yy"
+#line 147 "/home/arch_/Work/Compiler-CC/src/parser/parse.yy"
                                          { auto temp = std::make_unique<whileNode>(); temp->type = move(yystack_[4].value.as < std::string > ()); temp->condition = move(yystack_[2].value.as < ptr<expNode> > ()); temp->body = move(yystack_[0].value.as < ptr<stmtNode> > ()); yylhs.value.as < ptr<stmtNode> > () = move(temp); }
 #line 1298 "/home/arch_/Work/Compiler-CC/src/parser/parse.cc"
     break;
 
   case 28: // stmt: IF LP exp RP stmt ELSE stmt
-#line 147 "/home/arch_/Work/Compiler-CC/src/parser/parse.yy"
+#line 148 "/home/arch_/Work/Compiler-CC/src/parser/parse.yy"
                                   { auto temp = std::make_unique<ifNode>(); temp->type = move(yystack_[6].value.as < std::string > ()); temp->condition = move(yystack_[4].value.as < ptr<expNode> > ()); temp->body = move(yystack_[2].value.as < ptr<stmtNode> > ()); temp->else_body = move(yystack_[0].value.as < ptr<stmtNode> > ()); yylhs.value.as < ptr<stmtNode> > () = move(temp); }
 #line 1304 "/home/arch_/Work/Compiler-CC/src/parser/parse.cc"
     break;
 
   case 29: // stmt: WHILE LP exp RP stmt
-#line 148 "/home/arch_/Work/Compiler-CC/src/parser/parse.yy"
+#line 149 "/home/arch_/Work/Compiler-CC/src/parser/parse.yy"
                            { auto temp = std::make_unique<whileNode>(); temp->type = move(yystack_[4].value.as < std::string > ()); temp->condition = move(yystack_[2].value.as < ptr<expNode> > ()); temp->body = move(yystack_[0].value.as < ptr<stmtNode> > ()); yylhs.value.as < ptr<stmtNode> > () = move(temp); }
 #line 1310 "/home/arch_/Work/Compiler-CC/src/parser/parse.cc"
     break;
 
   case 30: // stmt: FOR LP exp SEMI exp SEMI exp RP stmt
-#line 149 "/home/arch_/Work/Compiler-CC/src/parser/parse.yy"
+#line 150 "/home/arch_/Work/Compiler-CC/src/parser/parse.yy"
                                            { auto temp = std::make_unique<forNode>(); temp->type = move(yystack_[8].value.as < std::string > ()); temp->initial = move(yystack_[6].value.as < ptr<expNode> > ()); temp->condition = move(yystack_[4].value.as < ptr<expNode> > ()); temp->change = move(yystack_[2].value.as < ptr<expNode> > ()); temp->body = move(yystack_[0].value.as < ptr<stmtNode> > ()); yylhs.value.as < ptr<stmtNode> > () = move(temp); }
 #line 1316 "/home/arch_/Work/Compiler-CC/src/parser/parse.cc"
     break;
 
   case 31: // stmt: BREAK SEMI
-#line 150 "/home/arch_/Work/Compiler-CC/src/parser/parse.yy"
+#line 151 "/home/arch_/Work/Compiler-CC/src/parser/parse.yy"
                  { if(!yylhs.value.as < ptr<stmtNode> > ()) yylhs.value.as < ptr<stmtNode> > () = std::make_unique<stmtNode>(); yylhs.value.as < ptr<stmtNode> > ()->type = move(yystack_[1].value.as < std::string > ()); }
 #line 1322 "/home/arch_/Work/Compiler-CC/src/parser/parse.cc"
     break;
 
   case 32: // stmt: CONTINUE SEMI
-#line 151 "/home/arch_/Work/Compiler-CC/src/parser/parse.yy"
+#line 152 "/home/arch_/Work/Compiler-CC/src/parser/parse.yy"
                     { if(!yylhs.value.as < ptr<stmtNode> > ()) yylhs.value.as < ptr<stmtNode> > () = std::make_unique<stmtNode>(); yylhs.value.as < ptr<stmtNode> > ()->type = move(yystack_[1].value.as < std::string > ()); }
 #line 1328 "/home/arch_/Work/Compiler-CC/src/parser/parse.cc"
     break;
 
   case 33: // stmt: SEMI
-#line 152 "/home/arch_/Work/Compiler-CC/src/parser/parse.yy"
+#line 153 "/home/arch_/Work/Compiler-CC/src/parser/parse.yy"
            { if(!yylhs.value.as < ptr<stmtNode> > ()) yylhs.value.as < ptr<stmtNode> > () = std::make_unique<stmtNode>(); yylhs.value.as < ptr<stmtNode> > ()->type = ";"; }
 #line 1334 "/home/arch_/Work/Compiler-CC/src/parser/parse.cc"
     break;
 
-  case 34: // def_list: def def_list
-#line 156 "/home/arch_/Work/Compiler-CC/src/parser/parse.yy"
-                 { yystack_[0].value.as < ptr<std::vector<ptr<innerVarDefNode>>> > ()->push_back(move(yystack_[1].value.as < ptr<innerVarDefNode> > ())); yylhs.value.as < ptr<std::vector<ptr<innerVarDefNode>>> > () = move(yystack_[0].value.as < ptr<std::vector<ptr<innerVarDefNode>>> > ()); }
+  case 34: // def_list: def_list def
+#line 157 "/home/arch_/Work/Compiler-CC/src/parser/parse.yy"
+                  { yystack_[1].value.as < ptr<std::vector<ptr<innerVarDefNode>>> > ()->push_back(move(yystack_[0].value.as < ptr<innerVarDefNode> > ())); yylhs.value.as < ptr<std::vector<ptr<innerVarDefNode>>> > () = move(yystack_[1].value.as < ptr<std::vector<ptr<innerVarDefNode>>> > ()); }
 #line 1340 "/home/arch_/Work/Compiler-CC/src/parser/parse.cc"
     break;
 
-  case 35: // def_list: %empty
-#line 157 "/home/arch_/Work/Compiler-CC/src/parser/parse.yy"
-               { if(!yylhs.value.as < ptr<std::vector<ptr<innerVarDefNode>>> > ()) yylhs.value.as < ptr<std::vector<ptr<innerVarDefNode>>> > () = std::make_unique<std::vector<ptr<innerVarDefNode>>>(); }
+  case 35: // def_list: def
+#line 158 "/home/arch_/Work/Compiler-CC/src/parser/parse.yy"
+           { if(!yylhs.value.as < ptr<std::vector<ptr<innerVarDefNode>>> > ()) yylhs.value.as < ptr<std::vector<ptr<innerVarDefNode>>> > () = std::make_unique<std::vector<ptr<innerVarDefNode>>>(); yylhs.value.as < ptr<std::vector<ptr<innerVarDefNode>>> > ()->push_back(move(yystack_[0].value.as < ptr<innerVarDefNode> > ())); }
 #line 1346 "/home/arch_/Work/Compiler-CC/src/parser/parse.cc"
     break;
 
   case 36: // def: type_spec dec_list SEMI
-#line 161 "/home/arch_/Work/Compiler-CC/src/parser/parse.yy"
+#line 162 "/home/arch_/Work/Compiler-CC/src/parser/parse.yy"
                             { if(!yylhs.value.as < ptr<innerVarDefNode> > ()) yylhs.value.as < ptr<innerVarDefNode> > () = std::make_unique<innerVarDefNode>(); yylhs.value.as < ptr<innerVarDefNode> > ()->type = yystack_[2].value.as < std::string > (); yylhs.value.as < ptr<innerVarDefNode> > ()->inner_dec = move(*yystack_[1].value.as < ptr<std::vector<ptr<innerVarDecNode>>> > ()); }
 #line 1352 "/home/arch_/Work/Compiler-CC/src/parser/parse.cc"
     break;
 
-  case 37: // dec_list: dec
-#line 165 "/home/arch_/Work/Compiler-CC/src/parser/parse.yy"
-        { if(!yylhs.value.as < ptr<std::vector<ptr<innerVarDecNode>>> > ()) yylhs.value.as < ptr<std::vector<ptr<innerVarDecNode>>> > () = std::make_unique<std::vector<ptr<innerVarDecNode>>>(); yylhs.value.as < ptr<std::vector<ptr<innerVarDecNode>>> > ()->push_back(move(yystack_[0].value.as < ptr<innerVarDecNode> > ())); }
+  case 37: // dec_list: dec_list COMMA dec
+#line 166 "/home/arch_/Work/Compiler-CC/src/parser/parse.yy"
+                        { yystack_[2].value.as < ptr<std::vector<ptr<innerVarDecNode>>> > ()->push_back(move(yystack_[0].value.as < ptr<innerVarDecNode> > ())); yylhs.value.as < ptr<std::vector<ptr<innerVarDecNode>>> > () = move(yystack_[2].value.as < ptr<std::vector<ptr<innerVarDecNode>>> > ()); }
 #line 1358 "/home/arch_/Work/Compiler-CC/src/parser/parse.cc"
     break;
 
-  case 38: // dec_list: dec COMMA dec_list
-#line 166 "/home/arch_/Work/Compiler-CC/src/parser/parse.yy"
-                         { yystack_[0].value.as < ptr<std::vector<ptr<innerVarDecNode>>> > ()->push_back(move(yystack_[2].value.as < ptr<innerVarDecNode> > ())); yylhs.value.as < ptr<std::vector<ptr<innerVarDecNode>>> > () = move(yystack_[0].value.as < ptr<std::vector<ptr<innerVarDecNode>>> > ()); }
+  case 38: // dec_list: dec
+#line 167 "/home/arch_/Work/Compiler-CC/src/parser/parse.yy"
+           { if(!yylhs.value.as < ptr<std::vector<ptr<innerVarDecNode>>> > ()) yylhs.value.as < ptr<std::vector<ptr<innerVarDecNode>>> > () = std::make_unique<std::vector<ptr<innerVarDecNode>>>(); yylhs.value.as < ptr<std::vector<ptr<innerVarDecNode>>> > ()->push_back(move(yystack_[0].value.as < ptr<innerVarDecNode> > ())); }
 #line 1364 "/home/arch_/Work/Compiler-CC/src/parser/parse.cc"
     break;
 
   case 39: // dec: var_dec
-#line 170 "/home/arch_/Work/Compiler-CC/src/parser/parse.yy"
+#line 171 "/home/arch_/Work/Compiler-CC/src/parser/parse.yy"
             { if(!yylhs.value.as < ptr<innerVarDecNode> > ()) yylhs.value.as < ptr<innerVarDecNode> > () = std::make_unique<innerVarDecNode>(); yylhs.value.as < ptr<innerVarDecNode> > ()->varDec = move(yystack_[0].value.as < ptr<varDecNode> > ()); }
 #line 1370 "/home/arch_/Work/Compiler-CC/src/parser/parse.cc"
     break;
 
   case 40: // dec: var_dec ASSIGN exp
-#line 171 "/home/arch_/Work/Compiler-CC/src/parser/parse.yy"
+#line 172 "/home/arch_/Work/Compiler-CC/src/parser/parse.yy"
                          { if(!yylhs.value.as < ptr<innerVarDecNode> > ()) yylhs.value.as < ptr<innerVarDecNode> > () = std::make_unique<innerVarDecNode>(); yylhs.value.as < ptr<innerVarDecNode> > ()->varDec = move(yystack_[2].value.as < ptr<varDecNode> > ()); yylhs.value.as < ptr<innerVarDecNode> > ()->assign_body = move(yystack_[0].value.as < ptr<expNode> > ()); }
 #line 1376 "/home/arch_/Work/Compiler-CC/src/parser/parse.cc"
     break;
 
   case 41: // exp: exp ASSIGN exp
-#line 175 "/home/arch_/Work/Compiler-CC/src/parser/parse.yy"
+#line 176 "/home/arch_/Work/Compiler-CC/src/parser/parse.yy"
                    { if(!yylhs.value.as < ptr<expNode> > ()) yylhs.value.as < ptr<expNode> > () = std::make_unique<expNode>(); yylhs.value.as < ptr<expNode> > ()->type = yystack_[1].value.as < char > (); yylhs.value.as < ptr<expNode> > ()->children.push_back(move(yystack_[2].value.as < ptr<expNode> > ())); yylhs.value.as < ptr<expNode> > ()->children.push_back(move(yystack_[0].value.as < ptr<expNode> > ())); }
 #line 1382 "/home/arch_/Work/Compiler-CC/src/parser/parse.cc"
     break;
 
   case 42: // exp: exp AND exp
-#line 176 "/home/arch_/Work/Compiler-CC/src/parser/parse.yy"
+#line 177 "/home/arch_/Work/Compiler-CC/src/parser/parse.yy"
                   { if(!yylhs.value.as < ptr<expNode> > ()) yylhs.value.as < ptr<expNode> > () = std::make_unique<expNode>(); yylhs.value.as < ptr<expNode> > ()->type = yystack_[1].value.as < std::string > (); yylhs.value.as < ptr<expNode> > ()->children.push_back(move(yystack_[2].value.as < ptr<expNode> > ())); yylhs.value.as < ptr<expNode> > ()->children.push_back(move(yystack_[0].value.as < ptr<expNode> > ())); }
 #line 1388 "/home/arch_/Work/Compiler-CC/src/parser/parse.cc"
     break;
 
   case 43: // exp: exp OR exp
-#line 177 "/home/arch_/Work/Compiler-CC/src/parser/parse.yy"
+#line 178 "/home/arch_/Work/Compiler-CC/src/parser/parse.yy"
                  { if(!yylhs.value.as < ptr<expNode> > ()) yylhs.value.as < ptr<expNode> > () = std::make_unique<expNode>(); yylhs.value.as < ptr<expNode> > ()->type = yystack_[1].value.as < std::string > (); yylhs.value.as < ptr<expNode> > ()->children.push_back(move(yystack_[2].value.as < ptr<expNode> > ())); yylhs.value.as < ptr<expNode> > ()->children.push_back(move(yystack_[0].value.as < ptr<expNode> > ())); }
 #line 1394 "/home/arch_/Work/Compiler-CC/src/parser/parse.cc"
     break;
 
   case 44: // exp: exp LT exp
-#line 178 "/home/arch_/Work/Compiler-CC/src/parser/parse.yy"
+#line 179 "/home/arch_/Work/Compiler-CC/src/parser/parse.yy"
                  { if(!yylhs.value.as < ptr<expNode> > ()) yylhs.value.as < ptr<expNode> > () = std::make_unique<expNode>(); yylhs.value.as < ptr<expNode> > ()->type = yystack_[1].value.as < std::string > (); yylhs.value.as < ptr<expNode> > ()->children.push_back(move(yystack_[2].value.as < ptr<expNode> > ())); yylhs.value.as < ptr<expNode> > ()->children.push_back(move(yystack_[0].value.as < ptr<expNode> > ())); }
 #line 1400 "/home/arch_/Work/Compiler-CC/src/parser/parse.cc"
     break;
 
   case 45: // exp: exp LE exp
-#line 179 "/home/arch_/Work/Compiler-CC/src/parser/parse.yy"
+#line 180 "/home/arch_/Work/Compiler-CC/src/parser/parse.yy"
                  { if(!yylhs.value.as < ptr<expNode> > ()) yylhs.value.as < ptr<expNode> > () = std::make_unique<expNode>(); yylhs.value.as < ptr<expNode> > ()->type = yystack_[1].value.as < std::string > (); yylhs.value.as < ptr<expNode> > ()->children.push_back(move(yystack_[2].value.as < ptr<expNode> > ())); yylhs.value.as < ptr<expNode> > ()->children.push_back(move(yystack_[0].value.as < ptr<expNode> > ())); }
 #line 1406 "/home/arch_/Work/Compiler-CC/src/parser/parse.cc"
     break;
 
   case 46: // exp: exp LSB exp RSB
-#line 180 "/home/arch_/Work/Compiler-CC/src/parser/parse.yy"
+#line 181 "/home/arch_/Work/Compiler-CC/src/parser/parse.yy"
                       { if(!yylhs.value.as < ptr<expNode> > ()) yylhs.value.as < ptr<expNode> > () = std::make_unique<expNode>(); yylhs.value.as < ptr<expNode> > ()->type = "ARRAY_CALL"; yylhs.value.as < ptr<expNode> > ()->children.push_back(move(yystack_[3].value.as < ptr<expNode> > ())); yylhs.value.as < ptr<expNode> > ()->children.push_back(move(yystack_[1].value.as < ptr<expNode> > ())); }
 #line 1412 "/home/arch_/Work/Compiler-CC/src/parser/parse.cc"
     break;
 
   case 47: // exp: exp EQ exp
-#line 181 "/home/arch_/Work/Compiler-CC/src/parser/parse.yy"
+#line 182 "/home/arch_/Work/Compiler-CC/src/parser/parse.yy"
                  { if(!yylhs.value.as < ptr<expNode> > ()) yylhs.value.as < ptr<expNode> > () = std::make_unique<expNode>(); yylhs.value.as < ptr<expNode> > ()->type = yystack_[1].value.as < std::string > (); yylhs.value.as < ptr<expNode> > ()->children.push_back(move(yystack_[2].value.as < ptr<expNode> > ())); yylhs.value.as < ptr<expNode> > ()->children.push_back(move(yystack_[0].value.as < ptr<expNode> > ())); }
 #line 1418 "/home/arch_/Work/Compiler-CC/src/parser/parse.cc"
     break;
 
   case 48: // exp: exp NE exp
-#line 182 "/home/arch_/Work/Compiler-CC/src/parser/parse.yy"
+#line 183 "/home/arch_/Work/Compiler-CC/src/parser/parse.yy"
                  { if(!yylhs.value.as < ptr<expNode> > ()) yylhs.value.as < ptr<expNode> > () = std::make_unique<expNode>(); yylhs.value.as < ptr<expNode> > ()->type = yystack_[1].value.as < std::string > (); yylhs.value.as < ptr<expNode> > ()->children.push_back(move(yystack_[2].value.as < ptr<expNode> > ())); yylhs.value.as < ptr<expNode> > ()->children.push_back(move(yystack_[0].value.as < ptr<expNode> > ())); }
 #line 1424 "/home/arch_/Work/Compiler-CC/src/parser/parse.cc"
     break;
 
   case 49: // exp: exp GT exp
-#line 183 "/home/arch_/Work/Compiler-CC/src/parser/parse.yy"
+#line 184 "/home/arch_/Work/Compiler-CC/src/parser/parse.yy"
                  { if(!yylhs.value.as < ptr<expNode> > ()) yylhs.value.as < ptr<expNode> > () = std::make_unique<expNode>(); yylhs.value.as < ptr<expNode> > ()->type = yystack_[1].value.as < std::string > (); yylhs.value.as < ptr<expNode> > ()->children.push_back(move(yystack_[2].value.as < ptr<expNode> > ())); yylhs.value.as < ptr<expNode> > ()->children.push_back(move(yystack_[0].value.as < ptr<expNode> > ())); }
 #line 1430 "/home/arch_/Work/Compiler-CC/src/parser/parse.cc"
     break;
 
   case 50: // exp: exp GE exp
-#line 184 "/home/arch_/Work/Compiler-CC/src/parser/parse.yy"
+#line 185 "/home/arch_/Work/Compiler-CC/src/parser/parse.yy"
                  { if(!yylhs.value.as < ptr<expNode> > ()) yylhs.value.as < ptr<expNode> > () = std::make_unique<expNode>(); yylhs.value.as < ptr<expNode> > ()->type = yystack_[1].value.as < std::string > (); yylhs.value.as < ptr<expNode> > ()->children.push_back(move(yystack_[2].value.as < ptr<expNode> > ())); yylhs.value.as < ptr<expNode> > ()->children.push_back(move(yystack_[0].value.as < ptr<expNode> > ())); }
 #line 1436 "/home/arch_/Work/Compiler-CC/src/parser/parse.cc"
     break;
 
   case 51: // exp: exp ADD exp
-#line 185 "/home/arch_/Work/Compiler-CC/src/parser/parse.yy"
+#line 186 "/home/arch_/Work/Compiler-CC/src/parser/parse.yy"
                   { if(!yylhs.value.as < ptr<expNode> > ()) yylhs.value.as < ptr<expNode> > () = std::make_unique<expNode>(); yylhs.value.as < ptr<expNode> > ()->type = yystack_[1].value.as < char > (); yylhs.value.as < ptr<expNode> > ()->children.push_back(move(yystack_[2].value.as < ptr<expNode> > ())); yylhs.value.as < ptr<expNode> > ()->children.push_back(move(yystack_[0].value.as < ptr<expNode> > ())); }
 #line 1442 "/home/arch_/Work/Compiler-CC/src/parser/parse.cc"
     break;
 
   case 52: // exp: exp MINUS exp
-#line 186 "/home/arch_/Work/Compiler-CC/src/parser/parse.yy"
+#line 187 "/home/arch_/Work/Compiler-CC/src/parser/parse.yy"
                     { if(!yylhs.value.as < ptr<expNode> > ()) yylhs.value.as < ptr<expNode> > () = std::make_unique<expNode>(); yylhs.value.as < ptr<expNode> > ()->type = yystack_[1].value.as < char > (); yylhs.value.as < ptr<expNode> > ()->children.push_back(move(yystack_[2].value.as < ptr<expNode> > ())); yylhs.value.as < ptr<expNode> > ()->children.push_back(move(yystack_[0].value.as < ptr<expNode> > ())); }
 #line 1448 "/home/arch_/Work/Compiler-CC/src/parser/parse.cc"
     break;
 
   case 53: // exp: exp TIMES exp
-#line 187 "/home/arch_/Work/Compiler-CC/src/parser/parse.yy"
+#line 188 "/home/arch_/Work/Compiler-CC/src/parser/parse.yy"
                     { if(!yylhs.value.as < ptr<expNode> > ()) yylhs.value.as < ptr<expNode> > () = std::make_unique<expNode>(); yylhs.value.as < ptr<expNode> > ()->type = yystack_[1].value.as < char > (); yylhs.value.as < ptr<expNode> > ()->children.push_back(move(yystack_[2].value.as < ptr<expNode> > ())); yylhs.value.as < ptr<expNode> > ()->children.push_back(move(yystack_[0].value.as < ptr<expNode> > ())); }
 #line 1454 "/home/arch_/Work/Compiler-CC/src/parser/parse.cc"
     break;
 
   case 54: // exp: exp DIV exp
-#line 188 "/home/arch_/Work/Compiler-CC/src/parser/parse.yy"
+#line 189 "/home/arch_/Work/Compiler-CC/src/parser/parse.yy"
                   { if(!yylhs.value.as < ptr<expNode> > ()) yylhs.value.as < ptr<expNode> > () = std::make_unique<expNode>(); yylhs.value.as < ptr<expNode> > ()->type = yystack_[1].value.as < char > (); yylhs.value.as < ptr<expNode> > ()->children.push_back(move(yystack_[2].value.as < ptr<expNode> > ())); yylhs.value.as < ptr<expNode> > ()->children.push_back(move(yystack_[0].value.as < ptr<expNode> > ())); }
 #line 1460 "/home/arch_/Work/Compiler-CC/src/parser/parse.cc"
     break;
 
   case 55: // exp: exp MOD exp
-#line 189 "/home/arch_/Work/Compiler-CC/src/parser/parse.yy"
+#line 190 "/home/arch_/Work/Compiler-CC/src/parser/parse.yy"
                   { if(!yylhs.value.as < ptr<expNode> > ()) yylhs.value.as < ptr<expNode> > () = std::make_unique<expNode>(); yylhs.value.as < ptr<expNode> > ()->type = yystack_[1].value.as < char > (); yylhs.value.as < ptr<expNode> > ()->children.push_back(move(yystack_[2].value.as < ptr<expNode> > ())); yylhs.value.as < ptr<expNode> > ()->children.push_back(move(yystack_[0].value.as < ptr<expNode> > ())); }
 #line 1466 "/home/arch_/Work/Compiler-CC/src/parser/parse.cc"
     break;
 
   case 56: // exp: MINUS exp
-#line 190 "/home/arch_/Work/Compiler-CC/src/parser/parse.yy"
+#line 191 "/home/arch_/Work/Compiler-CC/src/parser/parse.yy"
                              { if(!yylhs.value.as < ptr<expNode> > ()) yylhs.value.as < ptr<expNode> > () = std::make_unique<expNode>(); yylhs.value.as < ptr<expNode> > ()->type = "Negative"; yylhs.value.as < ptr<expNode> > ()->children.push_back(move(yystack_[0].value.as < ptr<expNode> > ())); }
 #line 1472 "/home/arch_/Work/Compiler-CC/src/parser/parse.cc"
     break;
 
-  case 57: // exp: CONST_ID
-#line 191 "/home/arch_/Work/Compiler-CC/src/parser/parse.yy"
-               { if(!yylhs.value.as < ptr<expNode> > ()) yylhs.value.as < ptr<expNode> > () = std::make_unique<expNode>(); yylhs.value.as < ptr<expNode> > ()->type = "CONST_ID"; yylhs.value.as < ptr<expNode> > ()->var = yystack_[0].value.as < std::string > (); }
+  case 57: // exp: CONST_CHAR
+#line 192 "/home/arch_/Work/Compiler-CC/src/parser/parse.yy"
+                 { if(!yylhs.value.as < ptr<expNode> > ()) yylhs.value.as < ptr<expNode> > () = std::make_unique<expNode>(); yylhs.value.as < ptr<expNode> > ()->type = "char"; yylhs.value.as < ptr<expNode> > ()->var = yystack_[0].value.as < char > (); }
 #line 1478 "/home/arch_/Work/Compiler-CC/src/parser/parse.cc"
     break;
 
-  case 58: // exp: CONST_INT
-#line 192 "/home/arch_/Work/Compiler-CC/src/parser/parse.yy"
-                { if(!yylhs.value.as < ptr<expNode> > ()) yylhs.value.as < ptr<expNode> > () = std::make_unique<expNode>(); yylhs.value.as < ptr<expNode> > ()->type = "CONST_INT"; yylhs.value.as < ptr<expNode> > ()->var = yystack_[0].value.as < int > (); }
+  case 58: // exp: CONST_ID
+#line 193 "/home/arch_/Work/Compiler-CC/src/parser/parse.yy"
+               { if(!yylhs.value.as < ptr<expNode> > ()) yylhs.value.as < ptr<expNode> > () = std::make_unique<expNode>(); yylhs.value.as < ptr<expNode> > ()->type = "id"; yylhs.value.as < ptr<expNode> > ()->var = yystack_[0].value.as < std::string > (); }
 #line 1484 "/home/arch_/Work/Compiler-CC/src/parser/parse.cc"
     break;
 
-  case 59: // exp: CONST_FLOAT
-#line 193 "/home/arch_/Work/Compiler-CC/src/parser/parse.yy"
-                  { if(!yylhs.value.as < ptr<expNode> > ()) yylhs.value.as < ptr<expNode> > () = std::make_unique<expNode>(); yylhs.value.as < ptr<expNode> > ()->type = "CONST_FLOAT"; yylhs.value.as < ptr<expNode> > ()->var = yystack_[0].value.as < float > (); }
+  case 59: // exp: CONST_INT
+#line 194 "/home/arch_/Work/Compiler-CC/src/parser/parse.yy"
+                { if(!yylhs.value.as < ptr<expNode> > ()) yylhs.value.as < ptr<expNode> > () = std::make_unique<expNode>(); yylhs.value.as < ptr<expNode> > ()->type = "int"; yylhs.value.as < ptr<expNode> > ()->var = yystack_[0].value.as < int > (); }
 #line 1490 "/home/arch_/Work/Compiler-CC/src/parser/parse.cc"
     break;
 
-  case 60: // exp: CONST_STRING
-#line 194 "/home/arch_/Work/Compiler-CC/src/parser/parse.yy"
-                   { if(!yylhs.value.as < ptr<expNode> > ()) yylhs.value.as < ptr<expNode> > () = std::make_unique<expNode>(); yylhs.value.as < ptr<expNode> > ()->type = "CONST_STRING"; yylhs.value.as < ptr<expNode> > ()->var = yystack_[0].value.as < std::string > (); }
+  case 60: // exp: CONST_FLOAT
+#line 195 "/home/arch_/Work/Compiler-CC/src/parser/parse.yy"
+                  { if(!yylhs.value.as < ptr<expNode> > ()) yylhs.value.as < ptr<expNode> > () = std::make_unique<expNode>(); yylhs.value.as < ptr<expNode> > ()->type = "float"; yylhs.value.as < ptr<expNode> > ()->var = yystack_[0].value.as < float > (); }
 #line 1496 "/home/arch_/Work/Compiler-CC/src/parser/parse.cc"
     break;
 
-  case 61: // exp: LP exp RP
-#line 195 "/home/arch_/Work/Compiler-CC/src/parser/parse.yy"
-                { if(!yylhs.value.as < ptr<expNode> > ()) yylhs.value.as < ptr<expNode> > () = std::make_unique<expNode>(); yylhs.value.as < ptr<expNode> > ()->type = "Prior"; yylhs.value.as < ptr<expNode> > ()->children.push_back(move(yystack_[1].value.as < ptr<expNode> > ())); }
+  case 61: // exp: CONST_STRING
+#line 196 "/home/arch_/Work/Compiler-CC/src/parser/parse.yy"
+                   { if(!yylhs.value.as < ptr<expNode> > ()) yylhs.value.as < ptr<expNode> > () = std::make_unique<expNode>(); yylhs.value.as < ptr<expNode> > ()->type = "string"; yylhs.value.as < ptr<expNode> > ()->var = yystack_[0].value.as < std::string > (); }
 #line 1502 "/home/arch_/Work/Compiler-CC/src/parser/parse.cc"
     break;
 
-  case 62: // exp: NOT exp
-#line 196 "/home/arch_/Work/Compiler-CC/src/parser/parse.yy"
-              { if(!yylhs.value.as < ptr<expNode> > ()) yylhs.value.as < ptr<expNode> > () = std::make_unique<expNode>(); yylhs.value.as < ptr<expNode> > ()->type = "NOT"; yylhs.value.as < ptr<expNode> > ()->children.push_back(move(yystack_[0].value.as < ptr<expNode> > ())); }
+  case 62: // exp: LP exp RP
+#line 197 "/home/arch_/Work/Compiler-CC/src/parser/parse.yy"
+                { if(!yylhs.value.as < ptr<expNode> > ()) yylhs.value.as < ptr<expNode> > () = std::make_unique<expNode>(); yylhs.value.as < ptr<expNode> > ()->type = "Prior"; yylhs.value.as < ptr<expNode> > ()->children.push_back(move(yystack_[1].value.as < ptr<expNode> > ())); }
 #line 1508 "/home/arch_/Work/Compiler-CC/src/parser/parse.cc"
     break;
 
-  case 63: // exp: CONST_ID LP args RP
-#line 197 "/home/arch_/Work/Compiler-CC/src/parser/parse.yy"
-                          { if(!yylhs.value.as < ptr<expNode> > ()) yylhs.value.as < ptr<expNode> > () = std::make_unique<expNode>(); yylhs.value.as < ptr<expNode> > ()->type = "FUNC_CALL"; yylhs.value.as < ptr<expNode> > ()->var = yystack_[3].value.as < std::string > (); yylhs.value.as < ptr<expNode> > ()->args = move(*yystack_[1].value.as < ptr<std::vector<ptr<expNode>>> > ()); }
+  case 63: // exp: NOT exp
+#line 198 "/home/arch_/Work/Compiler-CC/src/parser/parse.yy"
+              { if(!yylhs.value.as < ptr<expNode> > ()) yylhs.value.as < ptr<expNode> > () = std::make_unique<expNode>(); yylhs.value.as < ptr<expNode> > ()->type = "NOT"; yylhs.value.as < ptr<expNode> > ()->children.push_back(move(yystack_[0].value.as < ptr<expNode> > ())); }
 #line 1514 "/home/arch_/Work/Compiler-CC/src/parser/parse.cc"
     break;
 
-  case 64: // exp: CONST_ID LP RP
-#line 198 "/home/arch_/Work/Compiler-CC/src/parser/parse.yy"
-                      { if(!yylhs.value.as < ptr<expNode> > ()) yylhs.value.as < ptr<expNode> > () = std::make_unique<expNode>(); yylhs.value.as < ptr<expNode> > ()->type = "FUNC_CALL"; yylhs.value.as < ptr<expNode> > ()->var = yystack_[2].value.as < std::string > (); }
+  case 64: // exp: CONST_ID LP args RP
+#line 199 "/home/arch_/Work/Compiler-CC/src/parser/parse.yy"
+                          { if(!yylhs.value.as < ptr<expNode> > ()) yylhs.value.as < ptr<expNode> > () = std::make_unique<expNode>(); yylhs.value.as < ptr<expNode> > ()->type = "function"; yylhs.value.as < ptr<expNode> > ()->var = yystack_[3].value.as < std::string > (); yylhs.value.as < ptr<expNode> > ()->args = move(*yystack_[1].value.as < ptr<std::vector<ptr<expNode>>> > ()); }
 #line 1520 "/home/arch_/Work/Compiler-CC/src/parser/parse.cc"
     break;
 
-  case 65: // exp: exp LS exp
-#line 199 "/home/arch_/Work/Compiler-CC/src/parser/parse.yy"
-                 { if(!yylhs.value.as < ptr<expNode> > ()) yylhs.value.as < ptr<expNode> > () = std::make_unique<expNode>(); yylhs.value.as < ptr<expNode> > ()->type = yystack_[1].value.as < std::string > (); yylhs.value.as < ptr<expNode> > ()->children.push_back(move(yystack_[2].value.as < ptr<expNode> > ())); yylhs.value.as < ptr<expNode> > ()->children.push_back(move(yystack_[0].value.as < ptr<expNode> > ())); }
+  case 65: // exp: CONST_ID LP RP
+#line 200 "/home/arch_/Work/Compiler-CC/src/parser/parse.yy"
+                      { if(!yylhs.value.as < ptr<expNode> > ()) yylhs.value.as < ptr<expNode> > () = std::make_unique<expNode>(); yylhs.value.as < ptr<expNode> > ()->type = "function"; yylhs.value.as < ptr<expNode> > ()->var = yystack_[2].value.as < std::string > (); }
 #line 1526 "/home/arch_/Work/Compiler-CC/src/parser/parse.cc"
     break;
 
-  case 66: // exp: exp RS exp
-#line 200 "/home/arch_/Work/Compiler-CC/src/parser/parse.yy"
+  case 66: // exp: exp LS exp
+#line 201 "/home/arch_/Work/Compiler-CC/src/parser/parse.yy"
                  { if(!yylhs.value.as < ptr<expNode> > ()) yylhs.value.as < ptr<expNode> > () = std::make_unique<expNode>(); yylhs.value.as < ptr<expNode> > ()->type = yystack_[1].value.as < std::string > (); yylhs.value.as < ptr<expNode> > ()->children.push_back(move(yystack_[2].value.as < ptr<expNode> > ())); yylhs.value.as < ptr<expNode> > ()->children.push_back(move(yystack_[0].value.as < ptr<expNode> > ())); }
 #line 1532 "/home/arch_/Work/Compiler-CC/src/parser/parse.cc"
     break;
 
-  case 67: // exp: INC exp
-#line 201 "/home/arch_/Work/Compiler-CC/src/parser/parse.yy"
-              { if(!yylhs.value.as < ptr<expNode> > ()) yylhs.value.as < ptr<expNode> > () = std::make_unique<expNode>(); yylhs.value.as < ptr<expNode> > ()->type = "F_INC"; yylhs.value.as < ptr<expNode> > ()->children.push_back(move(yystack_[0].value.as < ptr<expNode> > ())); }
+  case 67: // exp: exp RS exp
+#line 202 "/home/arch_/Work/Compiler-CC/src/parser/parse.yy"
+                 { if(!yylhs.value.as < ptr<expNode> > ()) yylhs.value.as < ptr<expNode> > () = std::make_unique<expNode>(); yylhs.value.as < ptr<expNode> > ()->type = yystack_[1].value.as < std::string > (); yylhs.value.as < ptr<expNode> > ()->children.push_back(move(yystack_[2].value.as < ptr<expNode> > ())); yylhs.value.as < ptr<expNode> > ()->children.push_back(move(yystack_[0].value.as < ptr<expNode> > ())); }
 #line 1538 "/home/arch_/Work/Compiler-CC/src/parser/parse.cc"
     break;
 
-  case 68: // exp: DEC exp
-#line 202 "/home/arch_/Work/Compiler-CC/src/parser/parse.yy"
-              { if(!yylhs.value.as < ptr<expNode> > ()) yylhs.value.as < ptr<expNode> > () = std::make_unique<expNode>(); yylhs.value.as < ptr<expNode> > ()->type = "F_DEC"; yylhs.value.as < ptr<expNode> > ()->children.push_back(move(yystack_[0].value.as < ptr<expNode> > ())); }
+  case 68: // exp: INC exp
+#line 203 "/home/arch_/Work/Compiler-CC/src/parser/parse.yy"
+              { if(!yylhs.value.as < ptr<expNode> > ()) yylhs.value.as < ptr<expNode> > () = std::make_unique<expNode>(); yylhs.value.as < ptr<expNode> > ()->type = "F_INC"; yylhs.value.as < ptr<expNode> > ()->children.push_back(move(yystack_[0].value.as < ptr<expNode> > ())); }
 #line 1544 "/home/arch_/Work/Compiler-CC/src/parser/parse.cc"
     break;
 
-  case 69: // exp: exp INC
-#line 203 "/home/arch_/Work/Compiler-CC/src/parser/parse.yy"
-              { if(!yylhs.value.as < ptr<expNode> > ()) yylhs.value.as < ptr<expNode> > () = std::make_unique<expNode>(); yylhs.value.as < ptr<expNode> > ()->type = "B_INC"; yylhs.value.as < ptr<expNode> > ()->children.push_back(move(yystack_[1].value.as < ptr<expNode> > ())); }
+  case 69: // exp: DEC exp
+#line 204 "/home/arch_/Work/Compiler-CC/src/parser/parse.yy"
+              { if(!yylhs.value.as < ptr<expNode> > ()) yylhs.value.as < ptr<expNode> > () = std::make_unique<expNode>(); yylhs.value.as < ptr<expNode> > ()->type = "F_DEC"; yylhs.value.as < ptr<expNode> > ()->children.push_back(move(yystack_[0].value.as < ptr<expNode> > ())); }
 #line 1550 "/home/arch_/Work/Compiler-CC/src/parser/parse.cc"
     break;
 
-  case 70: // exp: exp DEC
-#line 204 "/home/arch_/Work/Compiler-CC/src/parser/parse.yy"
-              { if(!yylhs.value.as < ptr<expNode> > ()) yylhs.value.as < ptr<expNode> > () = std::make_unique<expNode>(); yylhs.value.as < ptr<expNode> > ()->type = "B_DEC"; yylhs.value.as < ptr<expNode> > ()->children.push_back(move(yystack_[1].value.as < ptr<expNode> > ())); }
+  case 70: // exp: exp INC
+#line 205 "/home/arch_/Work/Compiler-CC/src/parser/parse.yy"
+              { if(!yylhs.value.as < ptr<expNode> > ()) yylhs.value.as < ptr<expNode> > () = std::make_unique<expNode>(); yylhs.value.as < ptr<expNode> > ()->type = "B_INC"; yylhs.value.as < ptr<expNode> > ()->children.push_back(move(yystack_[1].value.as < ptr<expNode> > ())); }
 #line 1556 "/home/arch_/Work/Compiler-CC/src/parser/parse.cc"
     break;
 
-  case 71: // args: exp COMMA args
-#line 208 "/home/arch_/Work/Compiler-CC/src/parser/parse.yy"
-                   { yystack_[0].value.as < ptr<std::vector<ptr<expNode>>> > ()->push_back(move(yystack_[2].value.as < ptr<expNode> > ())); yylhs.value.as < ptr<std::vector<ptr<expNode>>> > () = move(yystack_[0].value.as < ptr<std::vector<ptr<expNode>>> > ()); }
+  case 71: // exp: exp DEC
+#line 206 "/home/arch_/Work/Compiler-CC/src/parser/parse.yy"
+              { if(!yylhs.value.as < ptr<expNode> > ()) yylhs.value.as < ptr<expNode> > () = std::make_unique<expNode>(); yylhs.value.as < ptr<expNode> > ()->type = "B_DEC"; yylhs.value.as < ptr<expNode> > ()->children.push_back(move(yystack_[1].value.as < ptr<expNode> > ())); }
 #line 1562 "/home/arch_/Work/Compiler-CC/src/parser/parse.cc"
     break;
 
-  case 72: // args: exp
-#line 209 "/home/arch_/Work/Compiler-CC/src/parser/parse.yy"
-          { if(!yylhs.value.as < ptr<std::vector<ptr<expNode>>> > ()) yylhs.value.as < ptr<std::vector<ptr<expNode>>> > () = std::make_unique<std::vector<ptr<expNode>>>(); yylhs.value.as < ptr<std::vector<ptr<expNode>>> > ()->push_back(move(yystack_[0].value.as < ptr<expNode> > ())); }
+  case 72: // args: exp COMMA args
+#line 210 "/home/arch_/Work/Compiler-CC/src/parser/parse.yy"
+                   { yystack_[0].value.as < ptr<std::vector<ptr<expNode>>> > ()->push_back(move(yystack_[2].value.as < ptr<expNode> > ())); yylhs.value.as < ptr<std::vector<ptr<expNode>>> > () = move(yystack_[0].value.as < ptr<std::vector<ptr<expNode>>> > ()); }
 #line 1568 "/home/arch_/Work/Compiler-CC/src/parser/parse.cc"
     break;
 
+  case 73: // args: exp
+#line 211 "/home/arch_/Work/Compiler-CC/src/parser/parse.yy"
+          { if(!yylhs.value.as < ptr<std::vector<ptr<expNode>>> > ()) yylhs.value.as < ptr<std::vector<ptr<expNode>>> > () = std::make_unique<std::vector<ptr<expNode>>>(); yylhs.value.as < ptr<std::vector<ptr<expNode>>> > ()->push_back(move(yystack_[0].value.as < ptr<expNode> > ())); }
+#line 1574 "/home/arch_/Work/Compiler-CC/src/parser/parse.cc"
+    break;
 
-#line 1572 "/home/arch_/Work/Compiler-CC/src/parser/parse.cc"
+
+#line 1578 "/home/arch_/Work/Compiler-CC/src/parser/parse.cc"
 
             default:
               break;
@@ -1920,210 +1926,224 @@ namespace cc_ {
   }
 
 
-  const signed char cc_parser::yypact_ninf_ = -114;
+  const signed char cc_parser::yypact_ninf_ = -54;
 
   const signed char cc_parser::yytable_ninf_ = -1;
 
   const short
   cc_parser::yypact_[] =
   {
-      54,  -114,  -114,  -114,  -114,     7,  -114,    54,   -12,  -114,
-    -114,   -29,   -18,   -33,   -20,    -4,  -114,     5,    17,    54,
-    -114,  -114,     5,    -7,    -3,  -114,  -114,    -5,     5,   459,
-      54,    16,  -114,    54,  -114,   -10,     0,     9,   541,   541,
-     541,  -114,  -114,  -114,    20,    21,    30,    39,   526,    41,
-      42,   541,  -114,   541,  -114,    37,   459,   100,  -114,  -114,
-     541,  -114,     5,    -6,    -6,    -6,   514,   541,   541,   541,
-    -114,   113,  -114,  -114,    43,   153,  -114,  -114,   541,   541,
-     541,   541,   541,   541,  -114,  -114,   541,   541,   541,   541,
-     541,   541,   541,   541,   541,   541,  -114,   541,   325,  -114,
-    -114,   166,    45,   206,   219,   259,  -114,  -114,   486,   486,
-     431,   431,   486,   486,   418,   378,   472,   472,   395,   395,
-      -6,    -6,    -6,   365,    59,   541,  -114,   459,   541,   459,
-    -114,  -114,  -114,   272,    55,   541,   459,   312,  -114,   459,
-    -114
+      12,   -54,   -54,   -54,   -54,    20,    12,   -54,     4,   -54,
+     -54,   -14,   -12,   -21,   -16,    45,   -54,    28,    24,    12,
+     -54,   -54,    28,   -32,   -54,   -54,   -54,    16,    28,   523,
+     -54,    30,    12,   -54,   -54,   -27,   -20,   -54,   610,   610,
+     610,   -54,   -54,   -54,   -54,    33,    34,    36,    38,   592,
+      31,    40,   610,   -54,   610,   -54,   491,   -54,   -54,   109,
+     -54,   610,    28,   -54,    -5,    -5,    -5,   473,   610,   610,
+     610,   -54,   149,   -54,   -54,    39,   162,   -54,   -54,   610,
+     610,   610,   610,   610,   610,   -54,   -54,   610,   610,   610,
+     610,   610,   610,   610,   610,   610,   610,   -54,   610,   361,
+     -54,   -54,   202,    41,   215,   255,   268,   -54,   -54,   582,
+     582,   463,   463,   582,   582,   427,   414,    29,    29,   445,
+     445,    -5,    -5,    -5,   374,    96,   610,   -54,   555,   610,
+     555,   -54,   -54,   -54,   308,    52,   610,   555,   321,   -54,
+     555,   -54
   };
 
   const signed char
   cc_parser::yydefact_[] =
   {
-       4,     9,     7,     8,    10,     0,     2,     4,     0,     1,
-       3,    13,     0,    11,     0,     0,     5,     0,     0,    35,
-       6,    16,     0,     0,    18,    13,    12,     0,     0,    22,
-      35,    19,    15,     0,    14,    39,     0,    37,     0,     0,
-       0,    58,    59,    60,    57,     0,     0,     0,     0,     0,
-       0,     0,    33,     0,    24,     0,    22,     0,    34,    17,
-       0,    36,     0,    67,    68,    62,     0,     0,     0,     0,
-      26,     0,    31,    32,    56,     0,    20,    21,     0,     0,
-       0,     0,     0,     0,    69,    70,     0,     0,     0,     0,
-       0,     0,     0,     0,     0,     0,    23,     0,    40,    38,
-      64,    72,     0,     0,     0,     0,    25,    61,    45,    50,
-      47,    48,    44,    49,    42,    43,    65,    66,    51,    52,
-      53,    54,    55,    41,     0,     0,    63,     0,     0,     0,
-      46,    71,    29,     0,    27,     0,     0,     0,    28,     0,
-      30
+       0,     9,     7,     8,    10,     0,     2,     4,     0,     1,
+       3,    13,     0,    11,     0,     0,     5,     0,     0,     0,
+       6,    16,     0,     0,    18,    13,    12,     0,     0,     0,
+      35,    19,     0,    15,    14,    39,     0,    38,     0,     0,
+       0,    59,    60,    57,    61,    58,     0,     0,     0,     0,
+       0,     0,     0,    33,     0,    24,     0,    22,    34,     0,
+      17,     0,     0,    36,    68,    69,    63,     0,     0,     0,
+       0,    26,     0,    31,    32,    56,     0,    20,    21,     0,
+       0,     0,     0,     0,     0,    70,    71,     0,     0,     0,
+       0,     0,     0,     0,     0,     0,     0,    23,     0,    40,
+      37,    65,    73,     0,     0,     0,     0,    25,    62,    45,
+      50,    47,    48,    44,    49,    42,    43,    66,    67,    51,
+      52,    53,    54,    55,    41,     0,     0,    64,     0,     0,
+       0,    46,    72,    29,     0,    27,     0,     0,     0,    28,
+       0,    30
   };
 
-  const short
+  const signed char
   cc_parser::yypgoto_[] =
   {
-    -114,  -114,    77,  -114,   376,    71,   -16,  -114,    56,  -114,
-      84,    44,  -113,    69,  -114,    49,  -114,   -38,    -1
+     -54,   -54,   -54,    77,    -7,    68,   -15,   -54,   -54,    57,
+      76,   -54,   -53,   -54,    63,   -54,    32,   -38,   -33
   };
 
   const signed char
   cc_parser::yydefgoto_[] =
   {
        0,     5,     6,     7,     8,    12,    13,    14,    23,    24,
-      54,    55,    56,    29,    30,    36,    37,    57,   102
+      55,    56,    57,    29,    30,    36,    37,    59,   103
   };
 
   const unsigned char
   cc_parser::yytable_[] =
   {
-      63,    64,    65,    84,    85,    17,    31,     9,    11,    18,
-      71,    15,    35,    74,   132,    75,   134,     1,     2,     3,
-       4,    16,    98,   138,    19,    25,   140,    60,   101,   103,
-     104,   105,    18,    27,    32,    33,    97,    21,    34,    61,
-     108,   109,   110,   111,   112,   113,    35,    62,   114,   115,
-     116,   117,   118,   119,   120,   121,   122,   123,    18,   124,
-      66,    67,    78,    79,    80,    81,    82,    83,    84,    85,
-      68,    86,    87,    88,    89,     1,     2,     3,     4,    69,
-      72,    73,    76,   136,    10,    97,   126,   101,    26,    59,
-     133,    90,    91,    92,    93,    94,    95,   137,    20,    58,
-      77,    97,   130,    78,    79,    80,    81,    82,    83,    84,
-      85,    99,    86,    87,    88,    89,    78,    79,    80,    81,
-      82,    83,    84,    85,   131,    86,    87,    88,    89,     0,
-       0,     0,    90,    91,    92,    93,    94,    95,     0,    96,
-       0,     0,    97,     0,     0,    90,    91,    92,    93,    94,
-      95,     0,   106,     0,     0,    97,    78,    79,    80,    81,
-      82,    83,    84,    85,     0,    86,    87,    88,    89,    78,
-      79,    80,    81,    82,    83,    84,    85,     0,    86,    87,
-      88,    89,     0,     0,     0,    90,    91,    92,    93,    94,
-      95,     0,     0,     0,   107,    97,     0,     0,    90,    91,
-      92,    93,    94,    95,   125,     0,     0,     0,    97,    78,
-      79,    80,    81,    82,    83,    84,    85,     0,    86,    87,
-      88,    89,    78,    79,    80,    81,    82,    83,    84,    85,
-       0,    86,    87,    88,    89,     0,     0,     0,    90,    91,
-      92,    93,    94,    95,     0,     0,     0,   127,    97,     0,
-       0,    90,    91,    92,    93,    94,    95,     0,   128,     0,
-       0,    97,    78,    79,    80,    81,    82,    83,    84,    85,
-       0,    86,    87,    88,    89,    78,    79,    80,    81,    82,
-      83,    84,    85,     0,    86,    87,    88,    89,     0,     0,
-       0,    90,    91,    92,    93,    94,    95,     0,     0,     0,
-     129,    97,     0,     0,    90,    91,    92,    93,    94,    95,
-       0,   135,     0,     0,    97,    78,    79,    80,    81,    82,
-      83,    84,    85,     0,    86,    87,    88,    89,    78,    79,
-      80,    81,    82,    83,    84,    85,     0,    86,    87,    88,
-      89,     0,     0,     0,    90,    91,    92,    93,    94,    95,
-       0,     0,     0,   139,    97,     0,     0,    90,    91,    92,
-      93,    94,    95,     0,     0,     0,     0,    97,    78,    79,
-      80,    81,    82,    83,    84,    85,     0,    86,    87,    88,
-      89,    78,    79,    80,    81,    82,    83,    84,    85,     0,
-      86,    22,    88,    89,     0,    28,     0,    90,    91,    92,
-      93,    94,     0,     0,    84,    85,    28,    97,     0,    22,
-      90,    91,    92,    93,    94,     0,     0,     0,     0,     0,
-      97,    78,    79,    80,    81,    82,    83,    84,    85,    92,
-      93,    94,    88,    89,    78,    79,     0,    97,    82,    83,
-      84,    85,     0,     0,     0,    88,    89,     0,     0,     0,
-      90,    91,    92,    93,    94,     0,     0,     0,     0,     0,
-      97,     0,     0,    90,    91,    92,    93,    94,    38,    39,
-      40,     0,     0,    97,     0,    41,    42,     0,    43,    44,
-       0,    84,    85,     0,    45,    46,    47,     0,    48,    49,
-      50,     0,    51,     0,     0,    84,    85,     0,    52,    53,
-      88,    89,     0,    19,    90,    91,    92,    93,    94,     0,
-       0,     0,     0,     0,    97,     0,     0,     0,    90,    91,
-      92,    93,    94,    38,    39,    40,     0,     0,    97,     0,
-      41,    42,     0,    43,    44,    38,    39,    40,     0,     0,
-       0,     0,    41,    42,     0,    43,    44,    51,     0,     0,
-      38,    39,    40,     0,    53,   100,     0,    41,    42,    51,
-      43,    44,     0,     0,     0,    70,    53,     0,     0,     0,
-       0,     0,     0,     0,    51,     0,     0,     0,     0,     0,
-       0,    53
+      64,    65,    66,    78,    85,    86,    32,    31,    22,    33,
+      61,    72,    28,    35,    75,    18,    76,    17,    62,    63,
+       9,    18,    28,    99,    11,    22,    15,    16,    19,   102,
+     104,   105,   106,     1,     2,     3,     4,    98,    85,    86,
+      27,   109,   110,   111,   112,   113,   114,    35,    25,   115,
+     116,   117,   118,   119,   120,   121,   122,   123,   124,    34,
+     125,    91,    92,    93,    94,    95,     1,     2,     3,     4,
+      73,    98,    18,    67,    68,   133,    69,   135,    70,    74,
+     137,    98,   127,    10,   139,    26,    21,   141,   102,    60,
+      20,   134,    58,   132,   100,     0,     0,     0,   138,    79,
+      80,    81,    82,    83,    84,    85,    86,     0,    87,    88,
+      89,    90,    79,    80,    81,    82,    83,    84,    85,    86,
+       0,    87,    88,    89,    90,     0,     0,     0,    91,    92,
+      93,    94,    95,    96,     0,     0,     0,     0,    98,   131,
+       0,    91,    92,    93,    94,    95,    96,     0,    97,     0,
+       0,    98,    79,    80,    81,    82,    83,    84,    85,    86,
+       0,    87,    88,    89,    90,    79,    80,    81,    82,    83,
+      84,    85,    86,     0,    87,    88,    89,    90,     0,     0,
+       0,    91,    92,    93,    94,    95,    96,     0,   107,     0,
+       0,    98,     0,     0,    91,    92,    93,    94,    95,    96,
+       0,     0,     0,   108,    98,    79,    80,    81,    82,    83,
+      84,    85,    86,     0,    87,    88,    89,    90,    79,    80,
+      81,    82,    83,    84,    85,    86,     0,    87,    88,    89,
+      90,     0,     0,     0,    91,    92,    93,    94,    95,    96,
+     126,     0,     0,     0,    98,     0,     0,    91,    92,    93,
+      94,    95,    96,     0,     0,     0,   128,    98,    79,    80,
+      81,    82,    83,    84,    85,    86,     0,    87,    88,    89,
+      90,    79,    80,    81,    82,    83,    84,    85,    86,     0,
+      87,    88,    89,    90,     0,     0,     0,    91,    92,    93,
+      94,    95,    96,     0,   129,     0,     0,    98,     0,     0,
+      91,    92,    93,    94,    95,    96,     0,     0,     0,   130,
+      98,    79,    80,    81,    82,    83,    84,    85,    86,     0,
+      87,    88,    89,    90,    79,    80,    81,    82,    83,    84,
+      85,    86,     0,    87,    88,    89,    90,     0,     0,     0,
+      91,    92,    93,    94,    95,    96,     0,   136,     0,     0,
+      98,     0,     0,    91,    92,    93,    94,    95,    96,     0,
+       0,     0,   140,    98,    79,    80,    81,    82,    83,    84,
+      85,    86,     0,    87,    88,    89,    90,    79,    80,    81,
+      82,    83,    84,    85,    86,     0,    87,    88,    89,    90,
+       0,     0,     0,    91,    92,    93,    94,    95,    96,     0,
+       0,     0,     0,    98,     0,     0,    91,    92,    93,    94,
+      95,     0,     0,     0,     0,     0,    98,    79,    80,    81,
+      82,    83,    84,    85,    86,     0,    87,     0,    89,    90,
+      79,    80,    81,    82,    83,    84,    85,    86,     0,     0,
+       0,    89,    90,     0,     0,     0,    91,    92,    93,    94,
+      95,     0,     0,     0,    85,    86,    98,     0,     0,    91,
+      92,    93,    94,    95,     0,     0,    79,    80,     0,    98,
+      83,    84,    85,    86,     0,     0,     0,    89,    90,    93,
+      94,    95,    38,    39,    40,     0,     0,    98,     0,    41,
+      42,    43,    44,    45,     0,    91,    92,    93,    94,    95,
+      38,    39,    40,     0,     0,    98,    52,    41,    42,    43,
+      44,    45,     0,    54,   101,     0,    46,    47,    48,     0,
+      49,    50,    51,     0,    52,     0,     0,     0,     0,     0,
+      53,    54,    38,    39,    40,    19,    77,     0,     0,    41,
+      42,    43,    44,    45,     1,     2,     3,     4,    46,    47,
+      48,     0,    49,    50,    51,     0,    52,     0,     0,     0,
+       0,     0,    53,    54,    38,    39,    40,    19,     0,     0,
+       0,    41,    42,    43,    44,    45,     0,     0,     0,     0,
+      46,    47,    48,     0,    49,    50,    51,     0,    52,     0,
+       0,    85,    86,     0,    53,    54,    89,    90,     0,    19,
+       0,    38,    39,    40,     0,     0,     0,     0,    41,    42,
+      43,    44,    45,     0,    91,    92,    93,    94,    95,    38,
+      39,    40,     0,     0,    98,    52,    41,    42,    43,    44,
+      45,    71,    54,     0,     0,     0,     0,     0,     0,     0,
+       0,     0,     0,    52,     0,     0,     0,     0,     0,     0,
+      54
   };
 
   const short
   cc_parser::yycheck_[] =
   {
-      38,    39,    40,     9,    10,    38,    22,     0,    20,    42,
-      48,    40,    28,    51,   127,    53,   129,    21,    22,    23,
-      24,    39,    60,   136,    44,    20,   139,    37,    66,    67,
-      68,    69,    42,    16,    41,    38,    42,    41,    43,    39,
-      78,    79,    80,    81,    82,    83,    62,    38,    86,    87,
-      88,    89,    90,    91,    92,    93,    94,    95,    42,    97,
-      40,    40,     3,     4,     5,     6,     7,     8,     9,    10,
-      40,    12,    13,    14,    15,    21,    22,    23,    24,    40,
-      39,    39,    45,    28,     7,    42,    41,   125,    17,    33,
-     128,    32,    33,    34,    35,    36,    37,   135,    14,    30,
-      56,    42,    43,     3,     4,     5,     6,     7,     8,     9,
-      10,    62,    12,    13,    14,    15,     3,     4,     5,     6,
-       7,     8,     9,    10,   125,    12,    13,    14,    15,    -1,
-      -1,    -1,    32,    33,    34,    35,    36,    37,    -1,    39,
-      -1,    -1,    42,    -1,    -1,    32,    33,    34,    35,    36,
-      37,    -1,    39,    -1,    -1,    42,     3,     4,     5,     6,
-       7,     8,     9,    10,    -1,    12,    13,    14,    15,     3,
-       4,     5,     6,     7,     8,     9,    10,    -1,    12,    13,
-      14,    15,    -1,    -1,    -1,    32,    33,    34,    35,    36,
-      37,    -1,    -1,    -1,    41,    42,    -1,    -1,    32,    33,
-      34,    35,    36,    37,    38,    -1,    -1,    -1,    42,     3,
+      38,    39,    40,    56,     9,    10,    38,    22,    15,    41,
+      37,    49,    19,    28,    52,    42,    54,    38,    38,    39,
+       0,    42,    29,    61,    20,    32,    40,    39,    44,    67,
+      68,    69,    70,    21,    22,    23,    24,    42,     9,    10,
+      16,    79,    80,    81,    82,    83,    84,    62,    20,    87,
+      88,    89,    90,    91,    92,    93,    94,    95,    96,    43,
+      98,    32,    33,    34,    35,    36,    21,    22,    23,    24,
+      39,    42,    42,    40,    40,   128,    40,   130,    40,    39,
+      28,    42,    41,     6,   137,    17,    41,   140,   126,    32,
+      14,   129,    29,   126,    62,    -1,    -1,    -1,   136,     3,
        4,     5,     6,     7,     8,     9,    10,    -1,    12,    13,
       14,    15,     3,     4,     5,     6,     7,     8,     9,    10,
       -1,    12,    13,    14,    15,    -1,    -1,    -1,    32,    33,
-      34,    35,    36,    37,    -1,    -1,    -1,    41,    42,    -1,
+      34,    35,    36,    37,    -1,    -1,    -1,    -1,    42,    43,
       -1,    32,    33,    34,    35,    36,    37,    -1,    39,    -1,
       -1,    42,     3,     4,     5,     6,     7,     8,     9,    10,
       -1,    12,    13,    14,    15,     3,     4,     5,     6,     7,
        8,     9,    10,    -1,    12,    13,    14,    15,    -1,    -1,
-      -1,    32,    33,    34,    35,    36,    37,    -1,    -1,    -1,
-      41,    42,    -1,    -1,    32,    33,    34,    35,    36,    37,
-      -1,    39,    -1,    -1,    42,     3,     4,     5,     6,     7,
+      -1,    32,    33,    34,    35,    36,    37,    -1,    39,    -1,
+      -1,    42,    -1,    -1,    32,    33,    34,    35,    36,    37,
+      -1,    -1,    -1,    41,    42,     3,     4,     5,     6,     7,
        8,     9,    10,    -1,    12,    13,    14,    15,     3,     4,
        5,     6,     7,     8,     9,    10,    -1,    12,    13,    14,
       15,    -1,    -1,    -1,    32,    33,    34,    35,    36,    37,
-      -1,    -1,    -1,    41,    42,    -1,    -1,    32,    33,    34,
-      35,    36,    37,    -1,    -1,    -1,    -1,    42,     3,     4,
+      38,    -1,    -1,    -1,    42,    -1,    -1,    32,    33,    34,
+      35,    36,    37,    -1,    -1,    -1,    41,    42,     3,     4,
        5,     6,     7,     8,     9,    10,    -1,    12,    13,    14,
       15,     3,     4,     5,     6,     7,     8,     9,    10,    -1,
-      12,    15,    14,    15,    -1,    19,    -1,    32,    33,    34,
-      35,    36,    -1,    -1,     9,    10,    30,    42,    -1,    33,
-      32,    33,    34,    35,    36,    -1,    -1,    -1,    -1,    -1,
-      42,     3,     4,     5,     6,     7,     8,     9,    10,    34,
-      35,    36,    14,    15,     3,     4,    -1,    42,     7,     8,
-       9,    10,    -1,    -1,    -1,    14,    15,    -1,    -1,    -1,
-      32,    33,    34,    35,    36,    -1,    -1,    -1,    -1,    -1,
-      42,    -1,    -1,    32,    33,    34,    35,    36,     9,    10,
-      11,    -1,    -1,    42,    -1,    16,    17,    -1,    19,    20,
-      -1,     9,    10,    -1,    25,    26,    27,    -1,    29,    30,
-      31,    -1,    33,    -1,    -1,     9,    10,    -1,    39,    40,
-      14,    15,    -1,    44,    32,    33,    34,    35,    36,    -1,
-      -1,    -1,    -1,    -1,    42,    -1,    -1,    -1,    32,    33,
-      34,    35,    36,     9,    10,    11,    -1,    -1,    42,    -1,
-      16,    17,    -1,    19,    20,     9,    10,    11,    -1,    -1,
-      -1,    -1,    16,    17,    -1,    19,    20,    33,    -1,    -1,
-       9,    10,    11,    -1,    40,    41,    -1,    16,    17,    33,
-      19,    20,    -1,    -1,    -1,    39,    40,    -1,    -1,    -1,
-      -1,    -1,    -1,    -1,    33,    -1,    -1,    -1,    -1,    -1,
-      -1,    40
+      12,    13,    14,    15,    -1,    -1,    -1,    32,    33,    34,
+      35,    36,    37,    -1,    39,    -1,    -1,    42,    -1,    -1,
+      32,    33,    34,    35,    36,    37,    -1,    -1,    -1,    41,
+      42,     3,     4,     5,     6,     7,     8,     9,    10,    -1,
+      12,    13,    14,    15,     3,     4,     5,     6,     7,     8,
+       9,    10,    -1,    12,    13,    14,    15,    -1,    -1,    -1,
+      32,    33,    34,    35,    36,    37,    -1,    39,    -1,    -1,
+      42,    -1,    -1,    32,    33,    34,    35,    36,    37,    -1,
+      -1,    -1,    41,    42,     3,     4,     5,     6,     7,     8,
+       9,    10,    -1,    12,    13,    14,    15,     3,     4,     5,
+       6,     7,     8,     9,    10,    -1,    12,    13,    14,    15,
+      -1,    -1,    -1,    32,    33,    34,    35,    36,    37,    -1,
+      -1,    -1,    -1,    42,    -1,    -1,    32,    33,    34,    35,
+      36,    -1,    -1,    -1,    -1,    -1,    42,     3,     4,     5,
+       6,     7,     8,     9,    10,    -1,    12,    -1,    14,    15,
+       3,     4,     5,     6,     7,     8,     9,    10,    -1,    -1,
+      -1,    14,    15,    -1,    -1,    -1,    32,    33,    34,    35,
+      36,    -1,    -1,    -1,     9,    10,    42,    -1,    -1,    32,
+      33,    34,    35,    36,    -1,    -1,     3,     4,    -1,    42,
+       7,     8,     9,    10,    -1,    -1,    -1,    14,    15,    34,
+      35,    36,     9,    10,    11,    -1,    -1,    42,    -1,    16,
+      17,    18,    19,    20,    -1,    32,    33,    34,    35,    36,
+       9,    10,    11,    -1,    -1,    42,    33,    16,    17,    18,
+      19,    20,    -1,    40,    41,    -1,    25,    26,    27,    -1,
+      29,    30,    31,    -1,    33,    -1,    -1,    -1,    -1,    -1,
+      39,    40,     9,    10,    11,    44,    45,    -1,    -1,    16,
+      17,    18,    19,    20,    21,    22,    23,    24,    25,    26,
+      27,    -1,    29,    30,    31,    -1,    33,    -1,    -1,    -1,
+      -1,    -1,    39,    40,     9,    10,    11,    44,    -1,    -1,
+      -1,    16,    17,    18,    19,    20,    -1,    -1,    -1,    -1,
+      25,    26,    27,    -1,    29,    30,    31,    -1,    33,    -1,
+      -1,     9,    10,    -1,    39,    40,    14,    15,    -1,    44,
+      -1,     9,    10,    11,    -1,    -1,    -1,    -1,    16,    17,
+      18,    19,    20,    -1,    32,    33,    34,    35,    36,     9,
+      10,    11,    -1,    -1,    42,    33,    16,    17,    18,    19,
+      20,    39,    40,    -1,    -1,    -1,    -1,    -1,    -1,    -1,
+      -1,    -1,    -1,    33,    -1,    -1,    -1,    -1,    -1,    -1,
+      40
   };
 
   const signed char
   cc_parser::yystos_[] =
   {
        0,    21,    22,    23,    24,    49,    50,    51,    52,     0,
-      50,    20,    53,    54,    55,    40,    39,    38,    42,    44,
+      51,    20,    53,    54,    55,    40,    39,    38,    42,    44,
       58,    41,    52,    56,    57,    20,    53,    16,    52,    61,
-      62,    54,    41,    38,    43,    54,    63,    64,     9,    10,
-      11,    16,    17,    19,    20,    25,    26,    27,    29,    30,
-      31,    33,    39,    40,    58,    59,    60,    65,    61,    56,
-      37,    39,    38,    65,    65,    65,    40,    40,    40,    40,
-      39,    65,    39,    39,    65,    65,    45,    59,     3,     4,
-       5,     6,     7,     8,     9,    10,    12,    13,    14,    15,
-      32,    33,    34,    35,    36,    37,    39,    42,    65,    63,
-      41,    65,    66,    65,    65,    65,    39,    41,    65,    65,
+      62,    54,    38,    41,    43,    54,    63,    64,     9,    10,
+      11,    16,    17,    18,    19,    20,    25,    26,    27,    29,
+      30,    31,    33,    39,    40,    58,    59,    60,    62,    65,
+      57,    37,    38,    39,    65,    65,    65,    40,    40,    40,
+      40,    39,    65,    39,    39,    65,    65,    45,    60,     3,
+       4,     5,     6,     7,     8,     9,    10,    12,    13,    14,
+      15,    32,    33,    34,    35,    36,    37,    39,    42,    65,
+      64,    41,    65,    66,    65,    65,    65,    39,    41,    65,
       65,    65,    65,    65,    65,    65,    65,    65,    65,    65,
-      65,    65,    65,    65,    65,    38,    41,    41,    39,    41,
-      43,    66,    60,    65,    60,    39,    28,    65,    60,    41,
-      60
+      65,    65,    65,    65,    65,    65,    38,    41,    41,    39,
+      41,    43,    66,    60,    65,    60,    39,    28,    65,    60,
+      41,    60
   };
 
   const signed char
@@ -2136,20 +2156,20 @@ namespace cc_ {
       64,    65,    65,    65,    65,    65,    65,    65,    65,    65,
       65,    65,    65,    65,    65,    65,    65,    65,    65,    65,
       65,    65,    65,    65,    65,    65,    65,    65,    65,    65,
-      65,    66,    66
+      65,    65,    66,    66
   };
 
   const signed char
   cc_parser::yyr2_[] =
   {
-       0,     2,     1,     2,     0,     3,     3,     1,     1,     1,
+       0,     2,     1,     2,     1,     3,     3,     1,     1,     1,
        1,     1,     3,     1,     4,     4,     3,     3,     1,     2,
-       4,     2,     0,     2,     1,     3,     2,     5,     7,     5,
-       9,     2,     2,     1,     2,     0,     3,     1,     3,     1,
+       4,     2,     1,     2,     1,     3,     2,     5,     7,     5,
+       9,     2,     2,     1,     2,     1,     3,     3,     1,     1,
        3,     3,     3,     3,     3,     3,     4,     3,     3,     3,
        3,     3,     3,     3,     3,     3,     2,     1,     1,     1,
-       1,     3,     2,     4,     3,     3,     3,     2,     2,     2,
-       2,     3,     1
+       1,     1,     3,     2,     4,     3,     3,     3,     2,     2,
+       2,     2,     3,     1
   };
 
 
@@ -2177,14 +2197,14 @@ namespace cc_ {
   const unsigned char
   cc_parser::yyrline_[] =
   {
-       0,    88,    88,    92,    93,    97,    98,   102,   103,   104,
-     105,   109,   110,   114,   115,   119,   120,   124,   125,   129,
-     133,   137,   138,   142,   143,   144,   145,   146,   147,   148,
-     149,   150,   151,   152,   156,   157,   161,   165,   166,   170,
-     171,   175,   176,   177,   178,   179,   180,   181,   182,   183,
-     184,   185,   186,   187,   188,   189,   190,   191,   192,   193,
-     194,   195,   196,   197,   198,   199,   200,   201,   202,   203,
-     204,   208,   209
+       0,    89,    89,    93,    94,    98,    99,   103,   104,   105,
+     106,   110,   111,   115,   116,   120,   121,   125,   126,   130,
+     134,   138,   139,   143,   144,   145,   146,   147,   148,   149,
+     150,   151,   152,   153,   157,   158,   162,   166,   167,   171,
+     172,   176,   177,   178,   179,   180,   181,   182,   183,   184,
+     185,   186,   187,   188,   189,   190,   191,   192,   193,   194,
+     195,   196,   197,   198,   199,   200,   201,   202,   203,   204,
+     205,   206,   210,   211
   };
 
   void
@@ -2217,9 +2237,9 @@ namespace cc_ {
 
 #line 14 "/home/arch_/Work/Compiler-CC/src/parser/parse.yy"
 } // cc_
-#line 2221 "/home/arch_/Work/Compiler-CC/src/parser/parse.cc"
+#line 2241 "/home/arch_/Work/Compiler-CC/src/parser/parse.cc"
 
-#line 212 "/home/arch_/Work/Compiler-CC/src/parser/parse.yy"
+#line 214 "/home/arch_/Work/Compiler-CC/src/parser/parse.yy"
 
 
 void cc_::cc_parser::error(const Location &loc, const std::string &msg) {

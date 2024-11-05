@@ -4,7 +4,6 @@
 #include <variant>
 #include "log.hh"
 
-class argsNode;
 template<class T>
 using ptr = std::unique_ptr<T>;
 
@@ -84,14 +83,14 @@ public:
     ~whileNode() = default;
     ptr<expNode> condition;
     ptr<stmtNode> body;
-    void print(int i);
+    void print(int i) override;
 };
 
 class forNode : public stmtNode {
 public:
     forNode() = default;
     ~forNode() = default;
-    void print(int i);
+    void print(int i) override;
     ptr<expNode> initial, condition, change;
     ptr<stmtNode> body;
 };
@@ -100,7 +99,7 @@ class ifNode : public stmtNode {
 public:
     ifNode() = default;
     ~ifNode() = default;
-    void print(int i);
+    void print(int i) override;
     ptr<expNode> condition;
     ptr<stmtNode> body, else_body;
 };
@@ -109,7 +108,7 @@ class innerVarDecNode {
 public:
     innerVarDecNode() : assign_body{std::nullopt} {}
     ~innerVarDecNode() = default;
-    void print(int i);
+    void print(int i) const;
     ptr<varDecNode> varDec;
     std::optional<ptr<expNode>> assign_body;
 };
@@ -127,7 +126,7 @@ class cmpdNode : public stmtNode {
 public:
     cmpdNode() = default;
     ~cmpdNode() = default;
-    void print(int i);
+    void print(int i) override;
     std::vector<ptr<innerVarDefNode>> def_list;
     std::vector<ptr<stmtNode>> stmt_list;
 };

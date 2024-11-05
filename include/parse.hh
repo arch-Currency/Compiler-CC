@@ -48,6 +48,7 @@
 #line 18 "/home/arch_/Work/Compiler-CC/src/parser/parse.yy"
 
     #include <iostream>
+    #include <type_traits>
     #include <string>
     #include <memory>
     #include "location.h"
@@ -61,7 +62,7 @@
     using std::move;
     extern std::unique_ptr<programNode> startNode;
 
-#line 65 "/home/arch_/Work/Compiler-CC/src/parser/parse.hh"
+#line 66 "/home/arch_/Work/Compiler-CC/src/parser/parse.hh"
 
 # include <cassert>
 # include <cstdlib> // std::abort
@@ -202,7 +203,7 @@
 
 #line 14 "/home/arch_/Work/Compiler-CC/src/parser/parse.yy"
 namespace cc_ {
-#line 206 "/home/arch_/Work/Compiler-CC/src/parser/parse.hh"
+#line 207 "/home/arch_/Work/Compiler-CC/src/parser/parse.hh"
 
 
 
@@ -2306,7 +2307,7 @@ switch (yykind)
     static const signed char yydefact_[];
 
     // YYPGOTO[NTERM-NUM].
-    static const short yypgoto_[];
+    static const signed char yypgoto_[];
 
     // YYDEFGOTO[NTERM-NUM].
     static const signed char yydefgoto_[];
@@ -2558,7 +2559,7 @@ switch (yykind)
     /// Constants.
     enum
     {
-      yylast_ = 581,     ///< Last index in yytable_.
+      yylast_ = 650,     ///< Last index in yytable_.
       yynnts_ = 19,  ///< Number of nonterminal symbols.
       yyfinal_ = 9 ///< Termination state number.
     };
@@ -2971,7 +2972,7 @@ switch (yykind)
 
 #line 14 "/home/arch_/Work/Compiler-CC/src/parser/parse.yy"
 } // cc_
-#line 2975 "/home/arch_/Work/Compiler-CC/src/parser/parse.hh"
+#line 2976 "/home/arch_/Work/Compiler-CC/src/parser/parse.hh"
 
 
 

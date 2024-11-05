@@ -28,12 +28,12 @@ set(CMAKE_INSTALL_PREFIX ${BINARY_DIR})
 find_program(FLEX_EXECUTABLE flex)
 if (NOT FLEX_EXECUTABLE)
     message(FATAL_ERROR "Flex not found!")
-endif()
+endif ()
 
 find_program(BISON_EXECUTABLE bison)
 if (NOT BISON_EXECUTABLE)
     message(FATAL_ERROR "Bison not found!")
-endif()
+endif ()
 
 find_package(spdlog REQUIRED)
 find_package(nlohmann_json REQUIRED)
@@ -41,51 +41,53 @@ find_package(nlohmann_json REQUIRED)
 include_directories(${LIB_DIR}/spdlog/include)
 
 option(BISON "Compile bison file" OFF)
-if(BISON)
+if (BISON)
     add_custom_target(generate_parser ALL
-    DEPENDS ${BISON_OUTPUT}
-)
+            DEPENDS ${BISON_OUTPUT}
+    )
     add_custom_command(
-    OUTPUT ${BISON_OUTPUT}
-    COMMAND ${BISON_EXECUTABLE} -d -Wcounterexamples -o ${BISON_OUTPUT} ${BISON_FILE}
-    DEPENDS ${BISON_FILE}
-    COMMENT "Generating parser from bison.yy"
-    COMMAND mv ${BISON_HEADER} ${INCLUDE_DIR}
-)
-endif()
+            OUTPUT ${BISON_OUTPUT}
+            COMMAND ${BISON_EXECUTABLE} -d -Wcounterexamples -o ${BISON_OUTPUT} ${BISON_FILE}
+            DEPENDS ${BISON_FILE}
+            COMMENT "Generating parser from bison.yy"
+            COMMAND mv ${BISON_HEADER} ${INCLUDE_DIR}
+    )
+endif ()
 
 option(FLEX "Compile flex file" OFF)
-if(FLEX)
-add_custom_target(generate_lexer ALL
-    DEPENDS ${FLEX_OUTPUT}
-)
-add_custom_command(
-    OUTPUT ${FLEX_OUTPUT}
-    COMMAND ${FLEX_EXECUTABLE} -o ${FLEX_OUTPUT} ${FLEX_FILE}
-    DEPENDS ${FLEX_FILE}
-    COMMENT "Generating lexer from lex.l"
-)
-endif()
+if (FLEX)
+    add_custom_target(generate_lexer ALL
+            DEPENDS ${FLEX_OUTPUT}
+    )
+    add_custom_command(
+            OUTPUT ${FLEX_OUTPUT}
+            COMMAND ${FLEX_EXECUTABLE} -o ${FLEX_OUTPUT} ${FLEX_FILE}
+            DEPENDS ${FLEX_FILE}
+            COMMENT "Generating lexer from lex.l"
+    )
+endif ()
 
 file(GLOB_RECURSE FILE ${SOURCE_DIR}/*.cpp ${SOURCE_DIR}/*.cc)
 file(GLOB_RECURSE HEADER ${INCLUDE_DIR}/*.hh ${INCLUDE_DIR}/*.hpp ${INCLUDE_DIR}/*.h)
 
+list(REMOVE_ITEM FILE ${SOURCE_DIR}/parser/parser.cpp)
+
 # add_executable(lexer ${FLEX_OUTPUT} ${SOURCE_DIR}/lexer/lexer.cpp)
-add_executable(parser ${FILE} ${HEADER})
+add_executable(table ${FILE} ${HEADER})
 
-target_link_libraries(parser PRIVATE 
-                            spdlog::spdlog
-                            nlohmann_json::nlohmann_json
-                            )
-target_include_directories(parser PRIVATE 
-                            ${INCLUDE_DIR} 
-                            ${LIB_DIR}/spdlog/include
-                            )
+target_link_libraries(table PRIVATE
+        spdlog::spdlog
+        nlohmann_json::nlohmann_json
+)
+target_include_directories(table PRIVATE
+        ${INCLUDE_DIR}
+        ${LIB_DIR}/spdlog/include
+)
 
-install(TARGETS parser RUNTIME DESTINATION ${CMAKE_INSTALL_PREFIX}/parser)  
+install(TARGETS table RUNTIME DESTINATION ${CMAKE_INSTALL_PREFIX}/table)
 
 
 add_custom_target(clean-all
-    COMMAND rm -rf *
-    COMMENT "Removing all files in the build directory"
+        COMMAND rm -rf *
+        COMMENT "Removing all files in the build directory"
 )

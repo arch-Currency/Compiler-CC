@@ -60,7 +60,6 @@ void externFuncDefNode::print(int i) {
 }
 
 void programNode::print(int i) {
-    std::reverse(children.begin(), children.end());
     for (auto &child: children) {
         externDefNode *rawPtr = child.get();
         if (dynamic_cast<externVarDefNode *>(rawPtr)) {
@@ -76,7 +75,6 @@ void programNode::print(int i) {
 void funcDecNode::print(int i) {
     print_space(i);
     std::cout << "id: " << name << std::endl;
-    std::reverse(params.begin(), params.end());
     if (!params.empty()) {
         print_space(i);
         std::cout << "params:" << std::endl;
@@ -101,7 +99,6 @@ void cmpdNode::print(int i) {
     if (!stmt_list.empty()) {
         print_space(i + 1);
         std::cout << "Local Statements: " << std::endl;
-        std::reverse(stmt_list.begin(), stmt_list.end());
         for (const auto &x: stmt_list) {
             x->print(i + 2);
         }
@@ -118,7 +115,7 @@ void innerVarDefNode::print(int i) {
     }
 }
 
-void innerVarDecNode::print(int i) {
+void innerVarDecNode::print(int i) const {
     if (assign_body) {
         print_space(i);
         std::cout << "ASSIGN" << std::endl;
